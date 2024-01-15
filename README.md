@@ -1,2 +1,2 @@
 # merge-frontend
-Team merge frontend repository
+Project merge frontend repository
