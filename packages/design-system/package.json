@@ -1,8 +1,10 @@
 {
-  "name": "design-system",
-  "private": true,
+  "name": "@merge/design-system",
   "version": "0.0.0",
   "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "exports": "./dist/index.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

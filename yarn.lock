@@ -2274,6 +2274,58 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@merge/design-system@workspace:^, @merge/design-system@workspace:packages/design-system":
+  version: 0.0.0-use.local
+  resolution: "@merge/design-system@workspace:packages/design-system"
+  dependencies:
+    "@emotion/babel-preset-css-prop": "npm:^11.11.0"
+    "@emotion/react": "npm:^11.11.3"
+    "@emotion/styled": "npm:^11.11.0"
+    "@storybook/addon-essentials": "npm:7.6.8"
+    "@storybook/addon-interactions": "npm:7.6.8"
+    "@storybook/addon-links": "npm:7.6.8"
+    "@storybook/addon-onboarding": "npm:1.0.10"
+    "@storybook/blocks": "npm:7.6.8"
+    "@storybook/react": "npm:7.6.8"
+    "@storybook/react-vite": "npm:7.6.8"
+    "@storybook/test": "npm:7.6.8"
+    "@types/react": "npm:^18.2.43"
+    "@types/react-dom": "npm:^18.2.17"
+    "@typescript-eslint/eslint-plugin": "npm:^6.14.0"
+    "@typescript-eslint/parser": "npm:^6.14.0"
+    "@vitejs/plugin-react": "npm:^4.2.1"
+    eslint: "npm:^8.55.0"
+    eslint-plugin-react-hooks: "npm:^4.6.0"
+    eslint-plugin-react-refresh: "npm:^0.4.5"
+    eslint-plugin-storybook: "npm:^0.6.15"
+    react: "npm:^18.2.0"
+    react-dom: "npm:^18.2.0"
+    storybook: "npm:7.6.8"
+    typescript: "npm:^5.2.2"
+    vite: "npm:^5.0.8"
+  languageName: unknown
+  linkType: soft
+
+"@merge/user@workspace:packages/user":
+  version: 0.0.0-use.local
+  resolution: "@merge/user@workspace:packages/user"
+  dependencies:
+    "@merge/design-system": "workspace:^"
+    "@types/react": "npm:^18.2.43"
+    "@types/react-dom": "npm:^18.2.17"
+    "@typescript-eslint/eslint-plugin": "npm:^6.14.0"
+    "@typescript-eslint/parser": "npm:^6.14.0"
+    "@vitejs/plugin-react-swc": "npm:^3.5.0"
+    eslint: "npm:^8.55.0"
+    eslint-plugin-react-hooks: "npm:^4.6.0"
+    eslint-plugin-react-refresh: "npm:^0.4.5"
+    react: "npm:^18.2.0"
+    react-dom: "npm:^18.2.0"
+    typescript: "npm:^5.2.2"
+    vite: "npm:^5.0.8"
+  languageName: unknown
+  linkType: soft
+
 "@ndelangen/get-tarball@npm:^3.0.7":
   version: 3.0.9
   resolution: "@ndelangen/get-tarball@npm:3.0.9"
@@ -5968,38 +6020,6 @@ __metadata:
   checksum: f98860cdf58b64991ae10205137c0e97d384c3a4edc7f807603887b7c4b850af1224a33d88012009f150861cbee4fa2d322c4cc04b9313bee312e47f6ecaa888
   languageName: node
   linkType: hard
-
-"design-system@workspace:packages/design-system":
-  version: 0.0.0-use.local
-  resolution: "design-system@workspace:packages/design-system"
-  dependencies:
-    "@emotion/babel-preset-css-prop": "npm:^11.11.0"
-    "@emotion/react": "npm:^11.11.3"
-    "@emotion/styled": "npm:^11.11.0"
-    "@storybook/addon-essentials": "npm:7.6.8"
-    "@storybook/addon-interactions": "npm:7.6.8"
-    "@storybook/addon-links": "npm:7.6.8"
-    "@storybook/addon-onboarding": "npm:1.0.10"
-    "@storybook/blocks": "npm:7.6.8"
-    "@storybook/react": "npm:7.6.8"
-    "@storybook/react-vite": "npm:7.6.8"
-    "@storybook/test": "npm:7.6.8"
-    "@types/react": "npm:^18.2.43"
-    "@types/react-dom": "npm:^18.2.17"
-    "@typescript-eslint/eslint-plugin": "npm:^6.14.0"
-    "@typescript-eslint/parser": "npm:^6.14.0"
-    "@vitejs/plugin-react": "npm:^4.2.1"
-    eslint: "npm:^8.55.0"
-    eslint-plugin-react-hooks: "npm:^4.6.0"
-    eslint-plugin-react-refresh: "npm:^0.4.5"
-    eslint-plugin-storybook: "npm:^0.6.15"
-    react: "npm:^18.2.0"
-    react-dom: "npm:^18.2.0"
-    storybook: "npm:7.6.8"
-    typescript: "npm:^5.2.2"
-    vite: "npm:^5.0.8"
-  languageName: unknown
-  linkType: soft
 
 "destroy@npm:1.2.0":
   version: 1.2.0
@@ -11760,25 +11780,6 @@ __metadata:
   checksum: 89f0018fd9aee1fc17c85ac18c4bf8944d460d453d0d0e04ddbc8eaddf3fa591e9c74a1f8a438a1bff368a7a2417fab380bdb3df899d2194c4375b0982736de0
   languageName: node
   linkType: hard
-
-"user@workspace:packages/user":
-  version: 0.0.0-use.local
-  resolution: "user@workspace:packages/user"
-  dependencies:
-    "@types/react": "npm:^18.2.43"
-    "@types/react-dom": "npm:^18.2.17"
-    "@typescript-eslint/eslint-plugin": "npm:^6.14.0"
-    "@typescript-eslint/parser": "npm:^6.14.0"
-    "@vitejs/plugin-react-swc": "npm:^3.5.0"
-    eslint: "npm:^8.55.0"
-    eslint-plugin-react-hooks: "npm:^4.6.0"
-    eslint-plugin-react-refresh: "npm:^0.4.5"
-    react: "npm:^18.2.0"
-    react-dom: "npm:^18.2.0"
-    typescript: "npm:^5.2.2"
-    vite: "npm:^5.0.8"
-  languageName: unknown
-  linkType: soft
 
 "util-deprecate@npm:^1.0.1, util-deprecate@npm:^1.0.2, util-deprecate@npm:~1.0.1":
   version: 1.0.2
