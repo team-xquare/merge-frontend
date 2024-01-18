@@ -2,13 +2,13 @@ const fontGenerator = (size: number, weight: number, letterSpace: number) =>
   `
   font-size: ${size}px;
   font-weight: ${weight};
-  letter-spacing: ${letterSpace}px;
+  letter-spacing: ${(size/100)*letterSpace}px;
 `;
 
 // bold = 700 , semi-bold = 600 , medium = 500 , reqular = 400
 
 export const font = {
-  heading1: fontGenerator(64,700,-0.96),
+  heading1: fontGenerator(64,700,-1.5),
   heading2: fontGenerator(,,),
   heading3: fontGenerator(,,),
   heading4: fontGenerator(,,),
