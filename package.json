@@ -8,7 +8,8 @@
   },
   "scripts": {
     "start": "yarn workspace @merge/user dev",
-    "story": "yarn workspace @merge/design-system storybook"
+    "story": "yarn workspace @merge/design-system storybook",
+    "DSbuild": "yarn workspace @merge/design-system tsc"
   },
   "packageManager": "yarn@4.0.2",
   "devDependencies": {
