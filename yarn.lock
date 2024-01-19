@@ -2311,6 +2311,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@merge/user@workspace:packages/user"
   dependencies:
+    "@emotion/react": "npm:^11.11.3"
+    "@emotion/styled": "npm:^11.11.0"
     "@merge/design-system": "workspace:^"
     "@types/react": "npm:^18.2.43"
     "@types/react-dom": "npm:^18.2.17"
