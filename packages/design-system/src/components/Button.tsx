@@ -81,13 +81,17 @@ const Wrapper = styled.button<button>`
   background-color: ${({ buttonStyle, isDisable }) =>
     buttonStyle === 'solid' ? (isDisable ? color.gray100 : color.primary800) : color.gray50};
   ${({ buttonStyle, isDisable }) =>
-    !isDisable && buttonStyle === 'ghost'
+    isDisable && buttonStyle === 'ghost'
       ? css`
-          border: 2px solid ${color.primary800};
-        `
-      : css`
           border: 0.5px solid ${color.primary500};
-        `};
+        `
+      : buttonStyle === 'solid'
+        ? css`
+            border: 0;
+          `
+        : css`
+            border: 2px solid ${color.primary800};
+          `};
 
   min-width: ${({ size }) => `${buttonSizeGenerator(size)[0]}px`};
   height: ${({ size }) => `${buttonSizeGenerator(size)[1]}px`};
