@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { theme } from '../../design-system/src/style';
+import { theme } from '../style/index';
 import { css } from '@emotion/react';
 
 //type inputStyleType = 'field' | 'fieldLabel';
@@ -92,10 +92,10 @@ const InputBox = styled.input<{ isDisable: boolean; err: boolean }>`
         ? undefined
         : err
           ? css`
-              border: 1px solid ${theme.color.danger500};
+              outline: 1px solid ${theme.color.danger500};
             `
           : css`
-              border: 1px solid ${theme.color.primary500};
+              outline: 1px solid ${theme.color.primary500};
             `}
   }
 
