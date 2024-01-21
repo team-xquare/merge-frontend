@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { theme } from '../../design-system/src/style';
 import { css } from '@emotion/react';
 
-type inputStyleType = 'only' | 'label' | 'borderLabel';
+type inputStyleType = 'field' | 'fieldLabel';
 type inputType = 'text' | 'password';
 
 interface input {
@@ -32,7 +32,7 @@ export const Input = ({
     <Wrapper width={width}>
       {label && <Label>{label}</Label>}
       <InputBox value={value} placeholder={placehorder} isDisable={isDisable} disabled={isDisable && true} err={err} />
-      {supportText && <Support>{supportText}</Support>}
+      {supportText && <Support err={err}>{supportText}</Support>}
     </Wrapper>
   );
 };
@@ -40,13 +40,18 @@ export const Input = ({
 const Wrapper = styled.div<{ width: number }>`
   width: ${({ width }) => `${width}px`};
   height: 40px;
-
+  position: relative;
   margin: 100px;
 `;
 
 const Label = styled.label`
   width: 0px;
   height: 0px;
+  cursor: pointer;
+  position: absolute;
+  top: -20px;
+  ${theme.font.label}
+  color:${theme.color.gray900}
 `;
 
 const InputBox = styled.input<{ isDisable: boolean; err: boolean }>`
@@ -82,7 +87,11 @@ const InputBox = styled.input<{ isDisable: boolean; err: boolean }>`
   }
 `;
 
-const Support = styled.div`
+const Support = styled.div<{ err: boolean }>`
   width: 0px;
   height: 0px;
+  position: absolute;
+  top: 40px;
+  ${theme.font.label};
+  color: ${({ err }) => (err ? theme.color.danger500 : theme.color.gray800)};
 `;
