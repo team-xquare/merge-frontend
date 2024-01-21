@@ -7,7 +7,7 @@ type inputType = 'text' | 'password';
 
 interface input {
   width: number;
-  inputStyle: inputStyleType;
+  inputStyle?: inputStyleType;
   inputType?: inputType;
   placehorder?: string;
   isDisable?: boolean;
@@ -15,11 +15,11 @@ interface input {
   supportText?: string;
   value?: string | number;
   err?: boolean;
+  onChange: (e: React.FormEvent<HTMLInputElement>) => void;
 }
 
 export const Input = ({
   width,
-  inputStyle,
   inputType = 'text',
   placehorder,
   isDisable = false,
@@ -27,11 +27,20 @@ export const Input = ({
   supportText,
   value,
   err = false,
+  onChange,
 }: input) => {
   return (
     <Wrapper width={width}>
       {label && <Label>{label}</Label>}
-      <InputBox value={value} placeholder={placehorder} isDisable={isDisable} disabled={isDisable && true} err={err} />
+      <InputBox
+        value={value}
+        placeholder={placehorder}
+        isDisable={isDisable}
+        disabled={isDisable && true}
+        err={err}
+        type={inputType}
+        onChange={onChange}
+      />
       {supportText && <Support err={err}>{supportText}</Support>}
     </Wrapper>
   );
@@ -65,21 +74,29 @@ const InputBox = styled.input<{ isDisable: boolean; err: boolean }>`
   border: 1px solid ${({ err }) => (err ? theme.color.danger500 : theme.color.gray50)};
 
   &:hover {
-    ${({ isDisable }) =>
+    ${({ isDisable, err }) =>
       isDisable
         ? undefined
-        : css`
-            border: 1px solid ${theme.color.gray300};
-          `}
+        : err
+          ? css`
+              border: 1px solid ${theme.color.danger500};
+            `
+          : css`
+              border: 1px solid ${theme.color.gray300};
+            `}
   }
 
   &:focus {
-    ${({ isDisable }) =>
+    ${({ isDisable, err }) =>
       isDisable
         ? undefined
-        : css`
-            border: 1px solid ${theme.color.primary500};
-          `}
+        : err
+          ? css`
+              border: 1px solid ${theme.color.danger500};
+            `
+          : css`
+              border: 1px solid ${theme.color.primary500};
+            `}
   }
 
   &::placeholder {
