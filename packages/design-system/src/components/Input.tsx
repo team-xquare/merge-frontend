@@ -7,6 +7,7 @@ type inputType = 'text' | 'password';
 
 interface input {
   width: number;
+  onChange: (e: React.FormEvent<HTMLInputElement>) => void;
   //inputStyle?: inputStyleType;
   inputType?: inputType;
   placehorder?: string;
@@ -15,7 +16,6 @@ interface input {
   supportText?: string;
   value?: string | number;
   err?: boolean;
-  onChange: (e: React.FormEvent<HTMLInputElement>) => void;
 }
 
 export const Input = ({
@@ -50,7 +50,6 @@ const Wrapper = styled.div<{ width: number }>`
   width: ${({ width }) => `${width}px`};
   height: 40px;
   position: relative;
-  margin: 100px;
 `;
 
 const Label = styled.label`

@@ -66,7 +66,6 @@ function buttonSizeGenerator(size: sizeType | undefined): number[] {
 }
 
 const Wrapper = styled.button<button>`
-  margin: 100px;
   display: inline-flex;
   flex-direction: row;
   justify-content: center;
