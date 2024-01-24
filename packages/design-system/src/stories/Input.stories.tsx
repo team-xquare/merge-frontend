@@ -19,5 +19,6 @@ export const Argument = {
     supportText: 'supportText',
     value: '',
     err: false,
+    margin: [100],
   },
 };
