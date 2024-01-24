@@ -17,6 +17,7 @@ interface input extends marginCssType {
   supportText?: string;
   value?: string | number;
   err?: boolean;
+  important?: boolean;
 }
 
 export const Input = ({
@@ -30,10 +31,16 @@ export const Input = ({
   err = false,
   onChange,
   margin,
+  important,
 }: input) => {
   return (
     <Wrapper width={width} margin={margin}>
-      {label && <Label>{label}</Label>}
+      {label && (
+        <Label>
+          {important && <Important />}
+          {label}
+        </Label>
+      )}
       <InputBox
         value={value}
         placeholder={placehorder}
@@ -61,8 +68,10 @@ const Label = styled.label`
   cursor: pointer;
   position: absolute;
   top: -20px;
-  ${theme.font.label}
-  color:${theme.color.gray900}
+  ${theme.font.label};
+  color: ${theme.color.gray900};
+  display: flex;
+  align-items: center;
 `;
 
 const InputBox = styled.input<{ isDisable: boolean; err: boolean }>`
@@ -113,4 +122,12 @@ const Support = styled.div<{ err: boolean }>`
   top: 40px;
   ${theme.font.label};
   color: ${({ err }) => (err ? theme.color.danger500 : theme.color.gray800)};
+`;
+
+const Important = styled.div`
+  width: 5px;
+  height: 5px;
+  background-color: ${theme.color.primaryA400};
+  margin-right: 4px;
+  border-radius: 50%;
 `;
