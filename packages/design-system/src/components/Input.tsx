@@ -34,7 +34,7 @@ export const Input = ({
   important,
 }: input) => {
   return (
-    <Wrapper width={width} margin={margin}>
+    <Wrapper width={width} margin={margin} label={!!label} supportText={!!supportText}>
       {label && (
         <Label>
           {important && <Important />}
@@ -55,23 +55,22 @@ export const Input = ({
   );
 };
 
-const Wrapper = styled.div<{ width: number; margin?: marginType | marginType[] }>`
+const Wrapper = styled.div<{ width: number; margin?: marginType | marginType[]; label: boolean; supportText: boolean }>`
   width: ${({ width }) => `${width}px`};
-  height: 40px;
+  height: ${({ label, supportText }) => (label && supportText ? '90px' : label ? '70px' : '40px')};
   position: relative;
   ${({ margin }) => marginToCss({ margin })};
 `;
 
 const Label = styled.label`
-  width: 0px;
-  height: 0px;
+  width: 100%;
+  height: 16px;
   cursor: pointer;
-  position: absolute;
-  top: -20px;
   ${theme.font.label};
   color: ${theme.color.gray900};
   display: flex;
   align-items: center;
+  margin-bottom: 14px;
 `;
 
 const InputBox = styled.input<{ isDisable: boolean; err: boolean }>`
@@ -79,7 +78,7 @@ const InputBox = styled.input<{ isDisable: boolean; err: boolean }>`
   width: calc(100% - 50px);
   padding-left: 24px;
   padding-right: 24px;
-  height: 38px;
+  height: 40px;
   ${theme.font.caption};
   background-color: ${({ err }) => (err ? theme.color.danger50 : theme.color.gray50)};
   border: 1px solid ${({ err }) => (err ? theme.color.danger500 : theme.color.gray50)};
@@ -116,12 +115,11 @@ const InputBox = styled.input<{ isDisable: boolean; err: boolean }>`
 `;
 
 const Support = styled.div<{ err: boolean }>`
-  width: 0px;
-  height: 0px;
-  position: absolute;
-  top: 40px;
+  width: 100%;
+  height: 16px;
   ${theme.font.label};
   color: ${({ err }) => (err ? theme.color.danger500 : theme.color.gray800)};
+  margin-top: 4px;
 `;
 
 const Important = styled.div`
