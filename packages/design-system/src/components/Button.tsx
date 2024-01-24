@@ -96,38 +96,41 @@ const Wrapper = styled.button<button>`
   height: ${({ size }) => `${buttonSizeGenerator(size)[1]}px`};
   padding: 0px 20px 0px 20px;
 
-  &:hover {
-    background-color: ${({ buttonStyle, isDisable }) =>
-      !isDisable && (buttonStyle === 'solid' ? color.primary500 : color.gray50)};
-    ${({ buttonStyle, isDisable }) =>
-      !isDisable &&
-      buttonStyle === 'ghost' &&
-      css`
-        border: 2px solid ${color.primary500};
-      `};
-    color: ${({ isDisable, buttonStyle }) => !isDisable && buttonStyle === 'ghost' && color.primary500};
-  }
+  //hover
+  ${({ buttonStyle, isDisable }) =>
+    !isDisable &&
+    css`
+      &:hover {
+        background-color: ${buttonStyle === 'solid' ? color.primary500 : color.gray50};
+        border: ${buttonStyle === 'ghost' && css`2px solid ${color.primary500}`};
+        color: ${buttonStyle === 'ghost' && color.primary500};
+      }
+    `}
 
-  &:focus {
-    ${({ isDisable }) =>
-      !isDisable &&
-      css`
+  //focus
+  ${({ buttonStyle, isDisable }) =>
+    !isDisable &&
+    css`
+      &focus {
         border: 2px solid ${color.primary200};
-      `}
-    color: ${({ isDisable, buttonStyle }) => !isDisable && buttonStyle === 'ghost' && color.primary400};
-  }
+        color: ${buttonStyle === 'ghost' && color.primary400};
+      }
+    `}
 
-  &:active {
-    transition: 0.05s ease-in-out;
-    background-color: ${({ buttonStyle, isDisable }) => !isDisable && buttonStyle === 'solid' && color.primary200};
-    ${({ buttonStyle, isDisable }) =>
-      !isDisable &&
-      buttonStyle === 'ghost' &&
-      css`
-        border: 2px solid ${color.primary200};
-      `}
-    color: ${({ isDisable, buttonStyle }) => !isDisable && buttonStyle === 'ghost' && color.primary200};
-  }
+  //active
+  ${({ buttonStyle, isDisable }) =>
+    !isDisable &&
+    css`
+      &:active {
+        transition: 0.05s ease-in-out;
+        background-color: ${buttonStyle === 'solid' && color.primary200};
+        ${buttonStyle === 'ghost' &&
+        css`
+          border: 2px solid ${color.primary200};
+          color: ${color.primary200};
+        `}
+      }
+    `}
 `;
 
 const Text = styled.div<button>`
