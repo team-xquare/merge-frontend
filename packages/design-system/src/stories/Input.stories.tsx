@@ -20,5 +20,6 @@ export const Argument = {
     value: '',
     err: false,
     margin: [100],
+    important: false,
   },
 };
