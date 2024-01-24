@@ -10,5 +10,5 @@ const Template: StoryFn<typeof Button> = (args) => <Button {...args} />;
 
 export const Argument = {
   ...Template,
-  args: { size: 'medium', buttonStyle: 'solid', isDisable: false, children: 'button' },
+  args: { size: 'medium', buttonStyle: 'solid', isDisable: false, children: 'button', margin: [100] },
 };
