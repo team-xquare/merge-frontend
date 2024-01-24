@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
+import { marginCssType, marginToCss, marginType } from '../utils/margin';
 import { theme } from '../style/index';
 import { css } from '@emotion/react';
 
 //type inputStyleType = 'field' | 'fieldLabel';
 type inputType = 'text' | 'password';
 
-interface input {
+interface input extends marginCssType {
   width: number;
   onChange: (e: React.FormEvent<HTMLInputElement>) => void;
   //inputStyle?: inputStyleType;
@@ -28,9 +29,10 @@ export const Input = ({
   value,
   err = false,
   onChange,
+  margin,
 }: input) => {
   return (
-    <Wrapper width={width}>
+    <Wrapper width={width} margin={margin}>
       {label && <Label>{label}</Label>}
       <InputBox
         value={value}
@@ -46,10 +48,11 @@ export const Input = ({
   );
 };
 
-const Wrapper = styled.div<{ width: number }>`
+const Wrapper = styled.div<{ width: number; margin?: marginType | marginType[] }>`
   width: ${({ width }) => `${width}px`};
   height: 40px;
   position: relative;
+  ${({ margin }) => marginToCss({ margin })};
 `;
 
 const Label = styled.label`
