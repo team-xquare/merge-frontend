@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import styled from '@emotion/styled';
+import { marginCssType, marginToCss } from '../utils/margin';
 import { color } from '../style/color';
 import { font } from '../style/font';
 import { css } from '@emotion/react';
@@ -7,7 +8,7 @@ import { css } from '@emotion/react';
 type buttonStyleType = 'solid' | 'ghost';
 type sizeType = 'large' | 'normal' | 'medium' | 'small' | 'extraSmall';
 
-interface button {
+interface button extends marginCssType {
   buttonStyle: buttonStyleType;
   size?: sizeType;
   isDisable?: boolean;
@@ -18,9 +19,15 @@ interface buttonProps extends button {
   onClick: () => void;
 }
 
-export const Button = ({ buttonStyle, size = 'medium', children, onClick, isDisable }: buttonProps) => {
+export const Button = ({ buttonStyle, size = 'medium', children, onClick, isDisable, margin }: buttonProps) => {
   return (
-    <Wrapper buttonStyle={buttonStyle} size={size} isDisable={isDisable} onClick={isDisable ? undefined : onClick}>
+    <Wrapper
+      buttonStyle={buttonStyle}
+      size={size}
+      isDisable={isDisable}
+      onClick={isDisable ? undefined : onClick}
+      margin={margin ?? [0, 0]}
+    >
       <Text size={size} isDisable={isDisable} buttonStyle={buttonStyle}>
         {children}
       </Text>
@@ -73,6 +80,7 @@ const Wrapper = styled.button<button>`
   transition: 0.1s linear;
   cursor: ${({ isDisable }) => (isDisable ? 'not-allowed' : 'pointer')};
   border-radius: 4px;
+  ${({ margin }) => marginToCss({ margin })};
 
   color: ${({ isDisable, buttonStyle }) =>
     isDisable ? color.gray500 : buttonStyle === 'solid' ? color.gray50 : color.primary800};
