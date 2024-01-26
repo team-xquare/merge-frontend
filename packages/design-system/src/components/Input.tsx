@@ -1,37 +1,32 @@
+import React, { InputHTMLAttributes } from 'react';
 import styled from '@emotion/styled';
 import { marginCssType, marginToCss, marginType } from '../utils/margin';
 import { theme } from '../style/index';
 import { css } from '@emotion/react';
 
 //type inputStyleType = 'field' | 'fieldLabel';
-type inputType = 'text' | 'password';
 
-interface input extends marginCssType {
+interface input extends marginCssType, InputHTMLAttributes<HTMLInputElement> {
   width: number;
   onChange: (e: React.FormEvent<HTMLInputElement>) => void;
   //inputStyle?: inputStyleType;
-  inputType?: inputType;
-  placehorder?: string;
   isDisable?: boolean;
   label?: string;
   supportText?: string;
-  value?: string | number;
   err?: boolean;
   important?: boolean;
 }
 
 export const Input = ({
   width,
-  inputType = 'text',
-  placehorder,
   isDisable = false,
   label,
   supportText,
-  value,
   err = false,
   onChange,
   margin,
   important,
+  ...props
 }: input) => {
   return (
     <Wrapper width={width} margin={margin} label={!!label} supportText={!!supportText}>
@@ -41,15 +36,7 @@ export const Input = ({
           {label}
         </Label>
       )}
-      <InputBox
-        value={value}
-        placeholder={placehorder}
-        isDisable={isDisable}
-        disabled={isDisable && true}
-        err={err}
-        type={inputType}
-        onChange={onChange}
-      />
+      <InputBox {...props} isDisable={isDisable} disabled={isDisable && true} err={err} onChange={onChange} />
       {supportText && <Support err={err}>{supportText}</Support>}
     </Wrapper>
   );
@@ -65,7 +52,7 @@ const Wrapper = styled.div<{ width: number; margin?: marginType | marginType[]; 
 const Label = styled.label`
   width: 100%;
   height: 16px;
-  cursor: pointer;
+  cursor: default;
   ${theme.font.label};
   color: ${theme.color.gray900};
   display: flex;
@@ -82,6 +69,7 @@ const InputBox = styled.input<{ isDisable: boolean; err: boolean }>`
   ${theme.font.caption};
   background-color: ${({ err }) => (err ? theme.color.danger50 : theme.color.gray50)};
   border: 1px solid ${({ err }) => (err ? theme.color.danger500 : theme.color.gray50)};
+  cursor: ${({ isDisable }) => (isDisable ? 'not-allowed' : 'text')};
 
   &:hover {
     ${({ isDisable, err }) =>
@@ -120,6 +108,7 @@ const Support = styled.div<{ err: boolean }>`
   ${theme.font.label};
   color: ${({ err }) => (err ? theme.color.danger500 : theme.color.gray800)};
   margin-top: 4px;
+  cursor: default;
 `;
 
 const Important = styled.div`
