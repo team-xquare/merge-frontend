@@ -1,18 +1,11 @@
-import { StyledProvider, Button } from '@merge/design-system';
+import { StyledProvider } from '@merge/design-system';
+import { RouterProvider } from 'react-router-dom';
+import { Router } from './router';
 
 export default function App() {
   return (
     <StyledProvider>
-      <Button
-        buttonStyle="solid"
-        onClick={() => {
-          console.log(13);
-        }}
-        size="large"
-        isDisable={false}
-      >
-        버튼
-      </Button>
+      <RouterProvider router={Router} />
     </StyledProvider>
   );
 }
