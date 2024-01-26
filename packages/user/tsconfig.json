@@ -19,10 +19,7 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "paths": {
-      "@merge/design-system": ["../design-system/src"]
-    }
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
