@@ -8,7 +8,7 @@ import { css } from '@emotion/react';
 
 interface input extends marginCssType, InputHTMLAttributes<HTMLInputElement> {
   width: number;
-  onChange: (e: React.FormEvent<HTMLInputElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   //inputStyle?: inputStyleType;
   isDisable?: boolean;
   label?: string;
