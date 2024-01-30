@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Header } from './components/Header';
+import { Header } from './components/Header/index';
 import { Main } from './pages/Main';
 import { Project } from './pages/Projects/Project';
 import { MyProject } from './pages/Projects/MyProject';
