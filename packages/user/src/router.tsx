@@ -32,5 +32,6 @@ export const Router = createBrowserRouter([
         ],
       },
     ],
+    errorElement: <>error</>,
   },
 ]);
