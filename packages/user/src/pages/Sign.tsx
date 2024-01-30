@@ -1,8 +1,29 @@
 import styled from '@emotion/styled';
 import sign from '../assets/sign.svg';
 import { theme, Input, Button } from '@merge/design-system';
+import { useState } from 'react';
 
 export const Sign = () => {
+  const [data, setData] = useState({ id: '', password: '' });
+
+  const { id, password } = data;
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setData({
+      ...data,
+      [name]: value,
+    });
+  };
+
+  const onClick = () => {
+    console.log(data);
+  };
+
+  const canSubmit = () => {
+    if (id === '' || password === '') return true;
+  };
+
   return (
     <Wrapper>
       <Container1>
@@ -13,10 +34,26 @@ export const Sign = () => {
           <strong>Log In</strong>
           <div>스퀘어 계정으로 로그인 해주세요.</div>
         </Title>
-        <Input width={400} placeholder="아이디" margin={['top', 44]} />
-        <Input width={400} placeholder="아이디" margin={['top', 48]} />
+        <Input
+          width={400}
+          placeholder="아이디"
+          margin={['top', 44]}
+          type="text"
+          name="id"
+          onChange={onChange}
+          value={id}
+        />
+        <Input
+          width={400}
+          placeholder="아이디"
+          margin={['top', 48]}
+          type="password"
+          name="password"
+          onChange={onChange}
+          value={password}
+        />
         <BtnContainer>
-          <Button buttonStyle="solid" margin={['top', 52]} size="medium">
+          <Button buttonStyle="solid" margin={['top', 52]} size="medium" onClick={onClick} isDisable={canSubmit()}>
             로그인
           </Button>
         </BtnContainer>
