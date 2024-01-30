@@ -45,7 +45,7 @@ export const Sign = () => {
         />
         <Input
           width={400}
-          placeholder="아이디"
+          placeholder="비밀번호"
           margin={['top', 48]}
           type="password"
           name="password"
