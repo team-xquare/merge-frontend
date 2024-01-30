@@ -62,7 +62,7 @@ const Label = styled.label`
 
 const InputBox = styled.input<{ isDisable: boolean; err: boolean }>`
   border-radius: 8px;
-  width: calc(100% - 50px);
+  width: 100%;
   padding-left: 24px;
   padding-right: 24px;
   height: 40px;
