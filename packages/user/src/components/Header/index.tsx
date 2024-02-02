@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { theme } from '@merge/design-system';
 import { Logo } from './Logo';
 import { Menu } from './Menu';
+import { Outlet } from 'react-router-dom';
 
 export const Header = () => {
   return (
@@ -10,6 +11,7 @@ export const Header = () => {
         <Logo />
         <Menu isLogin={true} />
       </Wrapper>
+      <Outlet />
     </>
   );
 };
