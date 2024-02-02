@@ -1,0 +1,7 @@
+config:
+  name: merge-user
+  service_type: fe
+  port: 5173
+  domain:
+    prod: merge-user.xquare.app
+    stag: merge-user-stag.xquare.app
