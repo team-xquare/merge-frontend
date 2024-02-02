@@ -6,5 +6,3 @@ config:
     prod: merge-user.xquare.app
     stag: merge-user-stag.xquare.app
 
-
-
