@@ -7,6 +7,7 @@
     ]
   },
   "scripts": {
+    "build:user": "yarn workspace @merge/user build",
     "start": "yarn workspace @merge/user dev",
     "story": "yarn workspace @merge/design-system storybook",
     "DSbuild": "yarn workspace @merge/design-system tsc"
