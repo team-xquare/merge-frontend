@@ -24,4 +24,6 @@ COPY --from=builder --chown=nextjs:nodejs /app/./ ./
 
 USER nextjs
 
+EXPOSE 3000
+
 CMD yarn workspace @merge/user dev
