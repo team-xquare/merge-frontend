@@ -10,7 +10,7 @@ RUN yarn install --immutable
 
 COPY packs ./
 
-RUN yarn workspace @merge/user build
+RUN yarn workspace @merge/user dev
 
 FROM node:16-alpine AS runner
 WORKDIR /app
@@ -24,4 +24,4 @@ COPY --from=builder --chown=nextjs:nodejs /app/./ ./
 
 USER nextjs
 
-CMD yarn workspace @merge/user dev
+CMD yarn workspace @merge/user start
