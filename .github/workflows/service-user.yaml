@@ -43,4 +43,4 @@ jobs:
           base_url: packages/${{ env.SERVICE_NAME }}
           config_file_path: packages/${{ env.SERVICE_NAME }}/.xquare/config.yaml
           yarn_docker_build: true
-          yarn_workspace: "@packages/${{ env.SERVICE_NAME }}"
+          yarn_workspace: "@merge/${{ env.SERVICE_NAME }}"
