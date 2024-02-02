@@ -31,7 +31,7 @@ export const SignUp = () => {
       </Container1>
       <Container2>
         <Title>
-          <strong>Log In</strong>
+          <strong>Sign Up</strong>
           <div>스퀘어 계정으로 로그인 해주세요.</div>
         </Title>
         <Input
