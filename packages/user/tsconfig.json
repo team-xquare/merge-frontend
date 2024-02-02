@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["vite-plugin-svgr/client"],
     "baseUrl": ".",
     "target": "ES2020",
     "useDefineForClassFields": true,
@@ -21,6 +22,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/main.tsx", "src/custom.d.ts"],
+  "include": ["src/main.tsx", "src/svg.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

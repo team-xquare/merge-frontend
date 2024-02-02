@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import sign from '../assets/sign.svg';
+import SignImg from '../assets/sign.svg';
 import { theme, Input, Button } from '@merge/design-system';
 import { useState } from 'react';
 
@@ -27,7 +27,7 @@ export const SignUp = () => {
   return (
     <Wrapper>
       <Container1>
-        <img src={sign} />
+        <SignImg />
       </Container1>
       <Container2>
         <Title>
