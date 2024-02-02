@@ -1,6 +1,6 @@
 FROM node:16-alpine AS builder
-WORKDIR /app
 
+WORKDIR /app
 
 RUN apk add --no-cache libc6-compat
 
@@ -12,18 +12,23 @@ COPY packs ./
 
 RUN yarn workspace @merge/user build
 
-FROM node:16-alpine AS runner
-WORKDIR /app
+# 실행 단계
+FROM nginx:alpine AS runner
 
-ENV NODE_ENV production
+RUN echo "\
+server {\
+    listen 3000;\
+    location / {\
+        root   /usr/share/nginx/html;\
+        index  index.html index.htm;\
+        try_files \$uri \$uri/ /index.html =404;\
+    }\
+}" > /etc/nginx/conf.d/default.conf
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+COPY --from=builder /app/packages/user/dist /usr/share/nginx/html
 
-COPY --from=builder --chown=nextjs:nodejs /app/./ ./
-
-USER nextjs
-
+# 3000포트 열기
 EXPOSE 3000
 
-CMD yarn workspace @merge/user dev
+# Nginx 시작
+CMD ["nginx", "-g", "daemon off;"]
