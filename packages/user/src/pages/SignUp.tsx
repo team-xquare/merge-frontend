@@ -3,7 +3,7 @@ import sign from '../assets/sign.svg';
 import { theme, Input, Button } from '@merge/design-system';
 import { useState } from 'react';
 
-export const SignIn = () => {
+export const SignUp = () => {
   const [data, setData] = useState({ id: '', password: '' });
 
   const { id, password } = data;
