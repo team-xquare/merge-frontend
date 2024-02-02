@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
+import LogoImg from '../../assets/logo.svg';
 import { theme } from '@merge/design-system';
 
 export const Logo = () => {
   return (
     <Wrapper>
+      <img src={LogoImg} />
       Merge
     </Wrapper>
   );
