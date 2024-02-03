@@ -1,11 +1,18 @@
 import styled from '@emotion/styled';
 import { Button } from '@merge/design-system';
+import { useNavigate } from 'react-router-dom';
 
 type menuProps = {
   isLogin: boolean;
 };
 
 export const Menu = ({ isLogin }: menuProps) => {
+  const link = useNavigate();
+
+  const onSignIn = () => {
+    link('/signin');
+  };
+
   return (
     <Wrapper>
       {isLogin ? (
@@ -22,13 +29,7 @@ export const Menu = ({ isLogin }: menuProps) => {
           </Button>
         </>
       ) : (
-        <Button
-          buttonStyle="solid"
-          size="extraSmall"
-          onClick={() => {
-            console.log(123);
-          }}
-        >
+        <Button buttonStyle="solid" size="extraSmall" onClick={onSignIn}>
           로그인
         </Button>
       )}

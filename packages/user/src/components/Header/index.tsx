@@ -9,7 +9,7 @@ export const Header = () => {
     <>
       <Wrapper>
         <Logo />
-        <Menu isLogin={true} />
+        <Menu isLogin={false} />
       </Wrapper>
       <Outlet />
     </>
