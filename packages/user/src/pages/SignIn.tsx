@@ -1,11 +1,14 @@
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import SignImg from '../assets/sign.svg';
 import { theme, Input, Button } from '@merge/design-system';
 import { useState } from 'react';
 import { login } from '../apis/sign';
+import { Cookie } from '../utils/cookie';
 
 export const SignIn = () => {
   const [data, setData] = useState({ account_id: '', password: '' });
+  const link = useNavigate();
 
   const { account_id, password } = data;
 
@@ -20,10 +23,12 @@ export const SignIn = () => {
   const onClick = () => {
     login(data)
       .then((res) => {
-        console.log(res);
+        Cookie.set('accessToken', res.data.access_token);
+        Cookie.set('refreshToken', res.data.refresh_token);
+        link('/');
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
 
