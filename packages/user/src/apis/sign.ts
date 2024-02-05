@@ -1,4 +1,5 @@
 import { instance } from './axios';
+import { signinType } from '../types/signType';
 
 export const signUp = async () => {
   return await instance.post('/auth', {
@@ -11,9 +12,6 @@ export const signUp = async () => {
   });
 };
 
-export const login = async () => {
-  return await instance.post('/auth/login', {
-    account_id: '김희찬짠ㄴㅇㅇ',
-    password: 'asdfg123!',
-  });
+export const login = async (data: signinType) => {
+  return await instance.post('/auth/login', data);
 };

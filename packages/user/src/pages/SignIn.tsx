@@ -2,11 +2,12 @@ import styled from '@emotion/styled';
 import SignImg from '../assets/sign.svg';
 import { theme, Input, Button } from '@merge/design-system';
 import { useState } from 'react';
+import { login } from '../apis/sign';
 
 export const SignIn = () => {
-  const [data, setData] = useState({ id: '', password: '' });
+  const [data, setData] = useState({ account_id: '', password: '' });
 
-  const { id, password } = data;
+  const { account_id, password } = data;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -17,11 +18,17 @@ export const SignIn = () => {
   };
 
   const onClick = () => {
-    console.log(data);
+    login(data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const canSubmit = () => {
-    if (id === '' || password === '') return true;
+    if (account_id === '' || password === '') return true;
   };
 
   return (
@@ -39,9 +46,9 @@ export const SignIn = () => {
           placeholder="아이디"
           margin={['top', 44]}
           type="text"
-          name="id"
+          name="account_id"
           onChange={onChange}
-          value={id}
+          value={account_id}
         />
         <Input
           width={400}
