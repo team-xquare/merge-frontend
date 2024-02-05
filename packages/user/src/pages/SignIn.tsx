@@ -1,12 +1,16 @@
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import SignImg from '../assets/sign.svg';
 import { theme, Input, Button } from '@merge/design-system';
 import { useState } from 'react';
+import { login } from '../apis/sign';
+import { Cookie } from '../utils/cookie';
 
 export const SignIn = () => {
-  const [data, setData] = useState({ id: '', password: '' });
+  const [data, setData] = useState({ account_id: '', password: '' });
+  const link = useNavigate();
 
-  const { id, password } = data;
+  const { account_id, password } = data;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -17,11 +21,19 @@ export const SignIn = () => {
   };
 
   const onClick = () => {
-    console.log(data);
+    login(data)
+      .then((res) => {
+        Cookie.set('accessToken', res.data.access_token);
+        Cookie.set('refreshToken', res.data.refresh_token);
+        link('/');
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   const canSubmit = () => {
-    if (id === '' || password === '') return true;
+    if (account_id === '' || password === '') return true;
   };
 
   return (
@@ -39,9 +51,9 @@ export const SignIn = () => {
           placeholder="아이디"
           margin={['top', 44]}
           type="text"
-          name="id"
+          name="account_id"
           onChange={onChange}
-          value={id}
+          value={account_id}
         />
         <Input
           width={400}
