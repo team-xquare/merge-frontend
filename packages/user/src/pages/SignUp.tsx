@@ -57,7 +57,7 @@ export const SignUp = () => {
         />
         <BtnContainer>
           <Button buttonStyle="solid" margin={['top', 52]} size="medium" onClick={onClick} isDisable={canSubmit()}>
-            로그인
+            회원가입
           </Button>
         </BtnContainer>
       </Container2>
