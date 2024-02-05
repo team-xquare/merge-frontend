@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import SignImg from '../assets/sign.svg';
 import { theme, Input, Button } from '@merge/design-system';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export const SignUp = () => {
   const [data, setData] = useState({ id: '', password: '' });
@@ -32,7 +33,9 @@ export const SignUp = () => {
       <Container2>
         <Title>
           <strong>Sign Up</strong>
-          <div>스퀘어 계정으로 로그인 해주세요.</div>
+          <div>
+            이미 계정이 있다면? <_Link to="/signin">로그인</_Link>
+          </div>
         </Title>
         <Input
           width={400}
@@ -95,4 +98,9 @@ const BtnContainer = styled.div`
   width: 400px;
   display: flex;
   justify-content: end;
+`;
+
+const _Link = styled(Link)`
+  color: ${theme.color.primaryA200};
+  text-decoration: none;
 `;
