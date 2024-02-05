@@ -6,9 +6,10 @@ import { useState } from 'react';
 import { login } from '../apis/sign';
 import { Cookie } from '../utils/cookie';
 import { Link } from 'react-router-dom';
+import { signinType } from 'src/types/signType';
 
 export const SignIn = () => {
-  const [data, setData] = useState({ account_id: '', password: '' });
+  const [data, setData] = useState<signinType>({ account_id: '', password: '' });
   const link = useNavigate();
 
   const { account_id, password } = data;
