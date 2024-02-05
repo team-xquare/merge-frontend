@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Cookie } from '../utils/cookie';
+import { toast } from 'react-toastify';
 
 export const instance = axios.create({
   baseURL: import.meta.env.VITE_SERVER_BASE_URL,
@@ -13,6 +14,7 @@ instance.interceptors.request.use(
     return res;
   },
   (err) => {
+    toast.error('오류가 발생헀습니다');
     return Promise.reject(err);
   },
 );
@@ -29,6 +31,7 @@ instance.interceptors.response.use(
     if (status === 403) {
       const token = Cookie.get('refreshToken');
     } else {
+      toast.error('오류가 발생헀습니다');
       return Promise.reject(err);
     }
   },
