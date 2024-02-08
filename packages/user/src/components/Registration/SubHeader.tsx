@@ -13,7 +13,7 @@ export const SubHeader = () => {
 const Wrapper = styled.div`
   width: 100%;
   height: 80px;
-  padding: 0 365px 0 280px;
+  padding: 0 280px;
   display: flex;
   justify-content: space-between;
   align-items: center;
