@@ -25,11 +25,11 @@ instance.interceptors.response.use(
   },
   (err) => {
     const {
-      config,
+      //config,
       response: { status },
     } = err;
     if (status === 403) {
-      const token = Cookie.get('refreshToken');
+      //const token = Cookie.get('refreshToken');
     } else {
       toast.error('오류가 발생헀습니다');
       return Promise.reject(err);
