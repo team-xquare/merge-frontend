@@ -1,13 +1,30 @@
 import styled from '@emotion/styled';
 import SignImg from '../assets/sign.svg';
-import { theme, Input, Button } from '@merge/design-system';
+import { theme } from '@merge/design-system';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { signupType } from '../types/signType';
+import { signUp } from '../apis/sign';
+import { SignupFormFirst, SignupFormSecond, SignupFormThird } from '../components/Signup/index';
+
+interface signupInputType extends signupType {
+  okPassword: string;
+}
 
 export const SignUp = () => {
-  const [data, setData] = useState({ id: '', password: '' });
+  const [data, setData] = useState<signupInputType>({
+    student_name: '',
+    github: '',
+    password: '',
+    school_gcn: '',
+    email: '',
+    account_id: '',
+    okPassword: '',
+  });
 
-  const { id, password } = data;
+  const [progress, setProgress] = useState<number>(1);
+
+  const { student_name, github, password, school_gcn, email, account_id, okPassword } = data;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -17,12 +34,15 @@ export const SignUp = () => {
     });
   };
 
-  const onClick = () => {
-    console.log(data);
-  };
+  const onNext = () => {
+    if (progress !== 3) {
+      setProgress(progress + 1);
+      return;
+    }
 
-  const canSubmit = () => {
-    if (id === '' || password === '') return true;
+    signUp(data)
+      .then((res) => console.log(res))
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -37,29 +57,12 @@ export const SignUp = () => {
             이미 계정이 있다면? <_Link to="/signin">로그인</_Link>
           </div>
         </Title>
-        <Input
-          width={400}
-          placeholder="아이디"
-          margin={['top', 44]}
-          type="text"
-          name="id"
-          onChange={onChange}
-          value={id}
-        />
-        <Input
-          width={400}
-          placeholder="비밀번호"
-          margin={['top', 48]}
-          type="password"
-          name="password"
-          onChange={onChange}
-          value={password}
-        />
-        <BtnContainer>
-          <Button buttonStyle="solid" margin={['top', 52]} size="medium" onClick={onClick} isDisable={canSubmit()}>
-            회원가입
-          </Button>
-        </BtnContainer>
+        <Progress>
+          <span>{progress}</span>/3
+        </Progress>
+        {progress === 1 && <SignupFormFirst onChange={onChange} value={[student_name, school_gcn]} onNext={onNext} />}
+        {progress === 2 && <SignupFormSecond onChange={onChange} value={[email, account_id, github]} onNext={onNext} />}
+        {progress === 3 && <SignupFormThird onChange={onChange} value={[password, okPassword]} onNext={onNext} />}
       </Container2>
     </Wrapper>
   );
@@ -94,10 +97,16 @@ const Title = styled.div`
   }
 `;
 
-const BtnContainer = styled.div`
+const Progress = styled.div`
+  margin-top: 4px;
   width: 400px;
   display: flex;
   justify-content: end;
+  ${theme.font.heading6};
+  color: ${theme.color.gray900};
+  span {
+    color: ${theme.color.primaryA400};
+  }
 `;
 
 const _Link = styled(Link)`
