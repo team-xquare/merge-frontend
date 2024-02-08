@@ -98,8 +98,8 @@ export const SignupFormSecond = ({ onChange, value, onNext }: formType) => {
 export const SignupFormThird = ({ onChange, value, onNext }: formType) => {
   const [password, okPassword] = value;
 
-  const samePassword = () => {
-    return password === okPassword;
+  const notSamePassword = () => {
+    return password !== okPassword;
   };
 
   return (
@@ -130,9 +130,9 @@ export const SignupFormThird = ({ onChange, value, onNext }: formType) => {
           margin={['top', 48]}
           size="medium"
           onClick={onNext}
-          isDisable={cantSubmit(value) && samePassword()}
+          isDisable={cantSubmit(value) || notSamePassword()}
         >
-          다음
+          회원가입
         </Button>
       </BtnContainer>
     </>
