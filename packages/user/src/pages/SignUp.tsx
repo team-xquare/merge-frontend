@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { signupType } from '../types/signType';
 import { dataWhiteSpace } from '../func/dataWhiteSpace';
-import { signUp } from 'src/apis/sign';
+import { signUp } from '../apis/sign';
 
 interface signupInputType extends signupType {
   okPassword: string;
@@ -60,6 +60,9 @@ export const SignUp = () => {
             이미 계정이 있다면? <_Link to="/signin">로그인</_Link>
           </div>
         </Title>
+        <Progress>
+          <span>1</span>/3
+        </Progress>
         <Input
           width={400}
           label="이름"
@@ -166,6 +169,18 @@ const Title = styled.div`
   ${theme.font.subTitle3}
   div {
     margin-top: 6px;
+  }
+`;
+
+const Progress = styled.div`
+  margin-top: 4px;
+  width: 400px;
+  display: flex;
+  justify-content: end;
+  ${theme.font.heading6};
+  color: ${theme.color.gray900};
+  span {
+    color: ${theme.color.primaryA400};
   }
 `;
 
