@@ -88,7 +88,7 @@ const ProgressLevelWrapper = styled.div`
 `;
 
 const LevelText = styled.div`
-  ${theme.font.subTitle3};
+  ${theme.font.subTitle2};
   color: ${theme.color.gray900};
 `;
 
