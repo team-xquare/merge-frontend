@@ -38,6 +38,22 @@ const style = css`
     list-style: none;
     font-style: normal;
     font-family: 'Pretendard', sans-serif;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: #e7e7e7;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background-color: #363636;
+    }
+  }
+
+  body {
+    overflow: hidden;
   }
 `;
 
