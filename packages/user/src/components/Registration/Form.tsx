@@ -2,6 +2,8 @@ import { ChangeEvent, useState } from 'react';
 import styled from '@emotion/styled';
 import { theme, Input } from '@merge/design-system';
 import RegisterLogoImg from '../../assets/registerLogo.svg';
+import CheckBoxTrueImg from '../../assets/checkBoxTrue.svg';
+import CheckBoxFalseImg from '../../assets/checkBoxFalse.svg';
 
 export const RegisterFormFirst = () => {
   const [logo, setLogo] = useState<string | null>(null);
@@ -65,7 +67,23 @@ export const RegisterFormThird = () => {
 };
 
 export const RegisterFormForth = () => {
-  return <div></div>;
+  const [check, setCheck] = useState<boolean>(false);
+
+  return (
+    <Wrapper height={560}>
+      <TipTextContainer>
+        <TipText>ouath 사용을 원하는 경우에만 작성해주세요.</TipText>
+      </TipTextContainer>
+      <TextContainer>
+        <InputText>oauth 사용 여부</InputText>
+      </TextContainer>
+      <CheckBox onClick={() => setCheck(!check)} check={check}>
+        <span>oauth 사용 여부</span>
+        <img src={check ? CheckBoxTrueImg : CheckBoxFalseImg} />
+      </CheckBox>
+      <Input width={668} label="redirect_url" placeholder="redirect_url" margin={['top', 52]} />
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.div<{ height: number }>`
@@ -123,4 +141,18 @@ const LabelLogoInput = styled.label`
 const LogoInput = styled.input`
   width: 0;
   height: 0;
+`;
+
+const CheckBox = styled.div<{ check: boolean }>`
+  width: 668px;
+  height: 40px;
+  padding: 0 40px;
+  display: flex;
+  background-color: ${theme.color.gray50};
+  border-radius: 12px;
+  margin-top: 14px;
+  color: ${({ check }) => (check ? theme.color.primaryA200 : theme.color.gray500)};
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
 `;
