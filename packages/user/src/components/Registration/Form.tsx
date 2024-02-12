@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import styled from '@emotion/styled';
-import { theme } from '@merge/design-system';
+import { theme, Input } from '@merge/design-system';
 import RegisterLogoImg from '../../assets/registerLogo.svg';
 
 export const RegisterFormFirst = () => {
@@ -40,20 +40,38 @@ export const RegisterFormFirst = () => {
 };
 
 export const RegisterFormSecond = () => {
-  return <Wrapper></Wrapper>;
+  return (
+    <Wrapper height={1184}>
+      <TipTextContainer>
+        <Important />
+        <TipText>가 있는 필드는 필수 입력란 입니다.</TipText>
+      </TipTextContainer>
+      <Input width={668} important={true} label="프로젝트 명(한글)" placeholder="한글" />
+      <Input width={668} important={true} label="프로젝트 명(영어)" placeholder="영어" margin={['top', 52]} />
+      <Input width={668} important={true} label="팀 명(영어)" placeholder="영어" margin={['top', 52]} />
+    </Wrapper>
+  );
 };
 
 export const RegisterFormThird = () => {
-  return <Wrapper></Wrapper>;
+  return (
+    <Wrapper height={560}>
+      <Input width={668} important={true} label="깃허브 주소" placeholder="링크" margin={['top', 0]} />
+      <Input width={668} important={true} label="웹 주소" placeholder="링크" margin={['top', 52]} />
+      <Input width={668} important={true} label="플레이 스토어 주소" placeholder="링크" margin={['top', 52]} />
+      <Input width={668} important={true} label="앱 스토어 주소" placeholder="링크" margin={['top', 52]} />
+    </Wrapper>
+  );
 };
 
 export const RegisterFormForth = () => {
-  return <Wrapper></Wrapper>;
+  return <div></div>;
 };
 
 const Wrapper = styled.div<{ height: number }>`
   width: 832px;
   height: ${({ height }) => height + 'px'};
+  margin-bottom: ${({ height }) => height >= 1000 && '94px'};
   padding: 62px 68px 0 68px;
   display: flex;
   flex-direction: column;
