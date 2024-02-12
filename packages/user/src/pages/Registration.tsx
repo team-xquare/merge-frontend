@@ -39,8 +39,9 @@ const Wrapper = styled.div`
 
 const Container = styled.div`
   height: calc(100% - 80px);
-  padding: 40px 394px;
+  padding: 40px 0 0 0;
   overflow: auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 40px;
 `;
