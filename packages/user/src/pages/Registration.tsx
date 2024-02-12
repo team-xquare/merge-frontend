@@ -19,7 +19,7 @@ const registerFormArray: ReactElement[] = [
 type pageKindType = 'register' | 'deploy';
 
 export const Registration = () => {
-  const [progress, setProgress] = useState<number>(1);
+  const [progress, setProgress] = useState<number>(0);
   const [nowProgress, setNowProgress] = useState<number>(0);
 
   return (
