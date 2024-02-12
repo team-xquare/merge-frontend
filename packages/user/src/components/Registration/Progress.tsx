@@ -14,21 +14,30 @@ type progressStateType = 'success' | 'now' | 'disable';
 
 type ProgressStateProps = {
   state: progressStateType;
-  level?: string;
+  level: string;
+  onClick: (event: React.MouseEvent<HTMLElement>) => void;
 };
 
-const ProgressLevel = ({ state, level }: ProgressStateProps) => {
+const ProgressLevel = ({ state, level, onClick }: ProgressStateProps) => {
   return (
     <ProgressLevelWrapper>
       <Icon state={state}>
         <img src={CheckImg} />
       </Icon>
-      <LevelText>{level}</LevelText>
+      <LevelText onClick={onClick}>{level}</LevelText>
     </ProgressLevelWrapper>
   );
 };
 
-export const Progress = ({ progress, kind }: { progress: number; kind: pageKindType }) => {
+export const Progress = ({
+  progress,
+  kind,
+  onClick,
+}: {
+  progress: number;
+  kind: pageKindType;
+  onClick: (index: number) => void;
+}) => {
   const levels = kind === 'deploy' ? containerLevels : projectLevels;
 
   return (
@@ -42,6 +51,7 @@ export const Progress = ({ progress, kind }: { progress: number; kind: pageKindT
                 <ProgressLevel
                   state={index === progress ? 'now' : index < progress ? 'success' : 'disable'}
                   level={level}
+                  onClick={() => onClick(index)}
                 />
                 {index !== levels.length - 1 && (
                   <LineBox>
@@ -104,9 +114,10 @@ const ProgressLevelWrapper = styled.div`
 const LevelText = styled.div`
   ${theme.font.subTitle2};
   color: ${theme.color.gray900};
+  cursor: pointer;
 `;
 
-const Icon = styled.div<ProgressStateProps>`
+const Icon = styled.div<{ state: progressStateType }>`
   width: 20px;
   height: 20px;
   border-radius: 50%;
