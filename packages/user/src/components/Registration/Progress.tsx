@@ -4,6 +4,10 @@ import { theme, Button } from '@merge/design-system';
 import CheckImg from '../../assets/check.svg';
 import LineImg from '../../assets/line.svg';
 
+const nullFunc = () => {
+  return null;
+};
+
 const projectLevels: string[] = ['로고 등록', '상세 설명', '링크 입력', 'oauth 사용'];
 
 const containerLevels: string[] = ['상세 설명', '타입, 사용 여부 선택', '환경 변수 입력'];
@@ -16,15 +20,17 @@ type ProgressStateProps = {
   state: progressStateType;
   level: string;
   onClick: (event: React.MouseEvent<HTMLElement>) => void;
+  progress: number;
+  index: number;
 };
 
-const ProgressLevel = ({ state, level, onClick }: ProgressStateProps) => {
+const ProgressLevel = ({ state, level, onClick, progress, index }: ProgressStateProps) => {
   return (
     <ProgressLevelWrapper>
       <Icon state={state}>
         <img src={CheckImg} />
       </Icon>
-      <LevelText onClick={onClick}>{level}</LevelText>
+      <LevelText onClick={progress >= index ? onClick : nullFunc}>{level}</LevelText>
     </ProgressLevelWrapper>
   );
 };
@@ -49,6 +55,8 @@ export const Progress = ({
             return (
               <React.Fragment key={index}>
                 <ProgressLevel
+                  progress={progress}
+                  index={index}
                   state={index === progress ? 'now' : index < progress ? 'success' : 'disable'}
                   level={level}
                   onClick={() => onClick(index)}
