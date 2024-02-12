@@ -56,10 +56,10 @@ export const RegisterFormSecond = () => {
 export const RegisterFormThird = () => {
   return (
     <Wrapper height={560}>
-      <Input width={668} important={true} label="깃허브 주소" placeholder="링크" margin={['top', 0]} />
-      <Input width={668} important={true} label="웹 주소" placeholder="링크" margin={['top', 52]} />
-      <Input width={668} important={true} label="플레이 스토어 주소" placeholder="링크" margin={['top', 52]} />
-      <Input width={668} important={true} label="앱 스토어 주소" placeholder="링크" margin={['top', 52]} />
+      <Input width={668} label="깃허브 주소" placeholder="링크" margin={['top', 0]} />
+      <Input width={668} label="웹 주소" placeholder="링크" margin={['top', 52]} />
+      <Input width={668} label="플레이 스토어 주소" placeholder="링크" margin={['top', 52]} />
+      <Input width={668} label="앱 스토어 주소" placeholder="링크" margin={['top', 52]} />
     </Wrapper>
   );
 };
