@@ -4,6 +4,7 @@ import { theme, Input } from '@merge/design-system';
 import RegisterLogoImg from '../../assets/registerLogo.svg';
 import CheckBoxTrueImg from '../../assets/checkBoxTrue.svg';
 import CheckBoxFalseImg from '../../assets/checkBoxFalse.svg';
+import ScreenshotLabelImg from '../../assets/screenshotLabel.svg';
 
 export const RegisterFormFirst = () => {
   const [logo, setLogo] = useState<string | null>(null);
@@ -29,7 +30,7 @@ export const RegisterFormFirst = () => {
         <Important />
         <InputText>프로젝트 로고 등록하기</InputText>
       </TextContainer>
-      <LogoInput type="file" id="logo" onChange={handleLogoChange} />
+      <FileInput type="file" id="logo" onChange={handleLogoChange} />
       <LabelLogoInput htmlFor="logo">
         {logo === null ? (
           <img src={RegisterLogoImg} />
@@ -51,6 +52,23 @@ export const RegisterFormSecond = () => {
       <Input width={668} important={true} label="프로젝트 명(한글)" placeholder="한글" />
       <Input width={668} important={true} label="프로젝트 명(영어)" placeholder="영어" margin={['top', 52]} />
       <Input width={668} important={true} label="팀 명(영어)" placeholder="영어" margin={['top', 52]} />
+      <AreaTextContainer>
+        <TextContainer>
+          <Important />
+          <InputText>프로젝트 로고 등록하기</InputText>
+        </TextContainer>
+        <AreaTextLength>
+          <span>100</span>/500
+        </AreaTextLength>
+      </AreaTextContainer>
+      <Area placeholder="프로젝트 설명을 작성해주세요." maxLength={500} />
+      <TextContainer style={{ marginTop: '52px' }}>
+        <InputText>프로젝트 스크린샷 또는 사진 등록하기</InputText>
+      </TextContainer>
+      <FileInput type="file" id="screenshot" />
+      <LabelScreenshotInput htmlFor="screenshot">
+        <img src={ScreenshotLabelImg} />
+      </LabelScreenshotInput>
     </Wrapper>
   );
 };
@@ -138,9 +156,46 @@ const LabelLogoInput = styled.label`
   cursor: pointer;
 `;
 
-const LogoInput = styled.input`
+const FileInput = styled.input`
   width: 0;
   height: 0;
+`;
+
+const AreaTextContainer = styled.div`
+  width: 668px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 52px;
+  margin-bottom: 14px;
+`;
+
+const AreaTextLength = styled.div`
+  color: ${theme.color.primary400};
+  ${theme.font.subTitle3};
+  span {
+    color: ${theme.color.primaryA200};
+  }
+`;
+
+const Area = styled.textarea`
+  width: 668px;
+  height: 216px;
+  ${theme.font.caption};
+  border-radius: 8px;
+  background-color: ${theme.color.gray50};
+  color: ${theme.color.gray800};
+  padding: 8px 24px;
+  resize: none;
+  border: 1px solid ${theme.color.gray50};
+  &::placeholder {
+    color: ${theme.color.gray500};
+  }
+  &:hover {
+    border: 1px solid ${theme.color.gray300};
+  }
+  &:focus {
+    outline: 1px solid ${theme.color.primary500};
+  }
 `;
 
 const CheckBox = styled.div<{ check: boolean }>`
@@ -154,5 +209,17 @@ const CheckBox = styled.div<{ check: boolean }>`
   color: ${({ check }) => (check ? theme.color.primaryA200 : theme.color.gray500)};
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
+`;
+
+const LabelScreenshotInput = styled.label`
+  width: 668px;
+  height: 160px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${theme.color.gray50};
+  margin-top: 14px;
   cursor: pointer;
 `;
