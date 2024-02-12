@@ -78,6 +78,7 @@ export const Progress = ({
           onClick={() => {
             console.log(123);
           }}
+          isDisable={true}
         >
           등록하기
         </Button>
