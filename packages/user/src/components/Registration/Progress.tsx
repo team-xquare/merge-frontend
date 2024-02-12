@@ -4,6 +4,12 @@ import { theme, Button } from '@merge/design-system';
 import CheckImg from '../../assets/check.svg';
 import LineImg from '../../assets/line.svg';
 
+const projectLevels: string[] = ['로고 등록', '상세 설명', '링크 입력', 'oauth 사용'];
+
+const containerLevels: string[] = ['상세 설명', '타입, 사용 여부 선택', '환경 변수 입력'];
+
+type pageKindType = 'register' | 'deploy';
+
 type progressStateType = 'success' | 'now' | 'disable';
 
 type ProgressStateProps = {
@@ -22,11 +28,13 @@ const ProgressLevel = ({ state, level }: ProgressStateProps) => {
   );
 };
 
-export const Progress = ({ progress, levels }: { progress: number; levels: string[] }) => {
+export const Progress = ({ progress, kind }: { progress: number; kind: pageKindType }) => {
+  const levels = kind === 'deploy' ? containerLevels : projectLevels;
+
   return (
     <Wrapper>
       <div>
-        <Text>프로젝트 등록</Text>
+        <Text>{kind === 'deploy' ? '배포 정보 입력하기' : '프로젝트 등록하기'}</Text>
         <Container>
           {levels.map((level, index) => {
             return (
@@ -46,7 +54,13 @@ export const Progress = ({ progress, levels }: { progress: number; levels: strin
         </Container>
       </div>
       <ButtonContainer>
-        <Button buttonStyle="solid" size="medium">
+        <Button
+          buttonStyle="solid"
+          size="medium"
+          onClick={() => {
+            console.log(123);
+          }}
+        >
           등록하기
         </Button>
       </ButtonContainer>
