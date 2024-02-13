@@ -115,9 +115,9 @@ const NameContainer = styled.div`
 `;
 
 const ProjectName = styled.div`
-  ${theme.font.subTitle1}; //강해민이 지정을 안 해서 임시로 지정
+  ${theme.font.subTitle2};
 `;
 
 const TeamName = styled.div`
-  ${theme.font.subTitle1}; //임시로 지정
+  ${theme.font.body1};
 `;
