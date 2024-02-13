@@ -5,21 +5,27 @@ import RegisterLogoImg from '../../assets/registerLogo.svg';
 import CheckBoxTrueImg from '../../assets/checkBoxTrue.svg';
 import CheckBoxFalseImg from '../../assets/checkBoxFalse.svg';
 import ScreenshotLabelImg from '../../assets/screenshotLabel.svg';
+import { projectType } from 'src/types/projectType';
 
-export const RegisterFormFirst = () => {
-  const [logo, setLogo] = useState<string | null>(null);
+type RegisterFormFirstPropsType = {
+  logo: File | null;
+  func: (event: ChangeEvent<HTMLInputElement>) => void;
+};
 
-  const handleLogoChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files && e.target.files.length > 0 ? e.target.files[0] : null;
-    if (!file) return;
+type RegisterFormSecondPropsType = {
+  value: projectType;
+  projectImage: File[] | null;
+  func1: (e: ChangeEvent<HTMLInputElement>) => void;
+  func2: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  func3: (event: ChangeEvent<HTMLInputElement>) => void;
+};
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setLogo(reader.result as string);
-    };
-    reader.readAsDataURL(file);
-  };
+type RegisterFormThirdPropsType = {
+  value: projectType;
+  func: (e: ChangeEvent<HTMLInputElement>) => void;
+};
 
+export const RegisterFormFirst = ({ logo, func }: RegisterFormFirstPropsType) => {
   return (
     <Wrapper height={472}>
       <TipTextContainer>
@@ -30,79 +36,147 @@ export const RegisterFormFirst = () => {
         <Important />
         <InputText>프로젝트 로고 등록하기</InputText>
       </TextContainer>
-      <FileInput type="file" id="logo" onChange={handleLogoChange} />
+      <FileInput type="file" id="logo" onChange={func} />
       <LabelLogoInput htmlFor="logo">
         {logo === null ? (
           <img src={RegisterLogoImg} />
         ) : (
-          <img src={logo} style={{ width: '100%', height: '100%', borderRadius: '8px' }} />
+          <img src={URL.createObjectURL(logo)} style={{ width: '100%', height: '100%', borderRadius: '8px' }} />
         )}
       </LabelLogoInput>
     </Wrapper>
   );
 };
 
-export const RegisterFormSecond = () => {
+export const RegisterFormSecond = ({ value, projectImage, func1, func2, func3 }: RegisterFormSecondPropsType) => {
   return (
     <Wrapper height={1184}>
       <TipTextContainer>
         <Important />
         <TipText>가 있는 필드는 필수 입력란 입니다.</TipText>
       </TipTextContainer>
-      <Input width={668} important={true} label="프로젝트 명(한글)" placeholder="한글" />
-      <Input width={668} important={true} label="프로젝트 명(영어)" placeholder="영어" margin={['top', 52]} />
-      <Input width={668} important={true} label="팀 명(영어)" placeholder="영어" margin={['top', 52]} />
+      <Input
+        width={668}
+        important={true}
+        label="프로젝트 명(한글)"
+        placeholder="한글"
+        value={value.project_name_ko}
+        name="project_name_ko"
+        onChange={func1}
+      />
+      <Input
+        width={668}
+        important={true}
+        label="프로젝트 명(영어)"
+        placeholder="영어"
+        margin={['top', 52]}
+        value={value.project_name_en}
+        name="project_name_en"
+        onChange={func1}
+      />
+      <Input
+        width={668}
+        important={true}
+        label="팀 명(영어)"
+        placeholder="영어"
+        margin={['top', 52]}
+        value={value.team_name_en}
+        name="team_name_en"
+        onChange={func1}
+      />
       <AreaTextContainer>
         <TextContainer>
           <Important />
-          <InputText>프로젝트 로고 등록하기</InputText>
+          <InputText>프로젝트 개요 혹은 프로젝트 설명을 작성하기</InputText>
         </TextContainer>
         <AreaTextLength>
           <span>100</span>/500
         </AreaTextLength>
       </AreaTextContainer>
-      <Area placeholder="프로젝트 설명을 작성해주세요." maxLength={500} />
+      <Area
+        placeholder="프로젝트 설명을 작성해주세요."
+        maxLength={500}
+        value={value.description}
+        name="description"
+        onChange={func2}
+      />
       <TextContainer style={{ marginTop: '52px' }}>
         <InputText>프로젝트 스크린샷 또는 사진 등록하기</InputText>
       </TextContainer>
-      <FileInput type="file" id="screenshot" />
+      <FileInput type="file" id="screenshot" onChange={func3} />
       <LabelScreenshotInput htmlFor="screenshot">
         <img src={ScreenshotLabelImg} />
       </LabelScreenshotInput>
+      {projectImage &&
+        projectImage.map((element, index) => {
+          return <img src={URL.createObjectURL(element)} key={index} />;
+        })}
     </Wrapper>
   );
 };
 
-export const RegisterFormThird = () => {
+export const RegisterFormThird = ({ value, func }: RegisterFormThirdPropsType) => {
   return (
     <Wrapper height={560}>
-      <Input width={668} label="깃허브 주소" placeholder="링크" margin={['top', 0]} />
-      <Input width={668} label="웹 주소" placeholder="링크" margin={['top', 52]} />
-      <Input width={668} label="플레이 스토어 주소" placeholder="링크" margin={['top', 52]} />
-      <Input width={668} label="앱 스토어 주소" placeholder="링크" margin={['top', 52]} />
+      <Input
+        width={668}
+        label="깃허브 주소"
+        placeholder="링크"
+        margin={['top', 0]}
+        value={value.github_url}
+        name="github_url"
+        onChange={func}
+      />
+      <Input
+        width={668}
+        label="웹 주소"
+        placeholder="링크"
+        margin={['top', 52]}
+        value={value.web_url}
+        name="web_url"
+        onChange={func}
+      />
+      <Input
+        width={668}
+        label="플레이 스토어 주소"
+        placeholder="링크"
+        margin={['top', 52]}
+        value={value.play_store_url}
+        name="play_store_url"
+        onChange={func}
+      />
+      <Input
+        width={668}
+        label="앱 스토어 주소"
+        placeholder="링크"
+        margin={['top', 52]}
+        value={value.app_store_url}
+        name="app_store_url"
+        onChange={func}
+      />
     </Wrapper>
   );
 };
 
-export const RegisterFormForth = () => {
-  const [check, setCheck] = useState<boolean>(false);
+// export const RegisterFormForth = ({ value }: RegisterFormPropsType) => {
+//   const [check, setCheck] = useState<boolean>(false);
 
-  return (
-    <Wrapper height={560}>
-      <TipTextContainer>
-        <TipText>ouath 사용을 원하는 경우에만 작성해주세요.</TipText>
-      </TipTextContainer>
-      <TextContainer>
-        <InputText>oauth 사용 여부</InputText>
-      </TextContainer>
-      <CheckBox onClick={() => setCheck(!check)} check={check}>
-        <span>oauth 사용 여부</span>
-        <img src={check ? CheckBoxTrueImg : CheckBoxFalseImg} />
-      </CheckBox>
-      <Input width={668} label="redirect_url" placeholder="redirect_url" margin={['top', 52]} />
-    </Wrapper>
-  );
-};
+//   return (
+//     <Wrapper height={560}>
+//       <TipTextContainer>
+//         <TipText>ouath 사용을 원하는 경우에만 작성해주세요.</TipText>
+//       </TipTextContainer>
+//       <TextContainer>
+//         <InputText>oauth 사용 여부</InputText>
+//       </TextContainer>
+//       <CheckBox onClick={() => setCheck(!check)} check={check}>
+//         <span>oauth 사용 여부</span>
+//         <img src={check ? CheckBoxTrueImg : CheckBoxFalseImg} />
+//       </CheckBox>
+//       <Input width={668} label="redirect_url" placeholder="redirect_url" margin={['top', 52]} />
+//     </Wrapper>
+//   );
+// };
 
 const Wrapper = styled.div<{ height: number }>`
   width: 832px;
