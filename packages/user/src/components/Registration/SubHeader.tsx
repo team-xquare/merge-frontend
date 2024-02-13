@@ -5,7 +5,7 @@ export const SubHeader = () => {
   return (
     <Wrapper>
       <Heading>프로젝트 등록하기</Heading>
-      <Button>임시 저장하기</Button>
+      {/* <Button>임시 저장하기</Button> */}
     </Wrapper>
   );
 };

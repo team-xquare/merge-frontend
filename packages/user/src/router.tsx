@@ -6,6 +6,8 @@ import { MyProject } from './pages/Projects/MyProject';
 import { SignIn } from './pages/SignIn';
 import { SignUp } from './pages/SignUp';
 import { Registration } from './pages/Registration';
+import { MyPage } from './pages/MyPage';
+import { HideProjects } from './pages/HideProjects';
 
 export const Router = createBrowserRouter([
   {
@@ -40,6 +42,13 @@ export const Router = createBrowserRouter([
       {
         path: 'register',
         element: <Registration />,
+      },
+      {
+        path: 'my',
+        children: [
+          { index: true, element: <MyPage /> },
+          { path: 'hide', element: <HideProjects /> },
+        ],
       },
     ],
     errorElement: <>error</>,
