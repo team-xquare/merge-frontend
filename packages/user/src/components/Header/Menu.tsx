@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Button } from '@merge/design-system';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 type menuProps = {
   isLogin: boolean;
@@ -21,7 +21,7 @@ export const Menu = ({ isLogin }: menuProps) => {
     <Wrapper>
       {isLogin ? (
         <>
-          <Profile />
+          <Profile to={'/my'} />
           <Button buttonStyle="solid" size="extraSmall" onClick={onRegister}>
             프로젝트 등록하기
           </Button>
@@ -42,7 +42,7 @@ const Wrapper = styled.div`
   height: 32px;
 `;
 
-const Profile = styled.div`
+const Profile = styled(Link)`
   width: 32px;
   height: 32px;
   border-radius: 50%;
