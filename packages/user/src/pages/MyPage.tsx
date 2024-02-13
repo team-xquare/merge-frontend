@@ -5,30 +5,11 @@ import dummyLogoImg from '../assets/logo.svg';
 type projectType = {
   name: string;
   team: string;
-  data: string;
+  date: string;
   logo: string;
 };
 
-const dummyProjects: projectType[] = [
-  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
-  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
-  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
-  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
-  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
-  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
-  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
-  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
-  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
-  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
-  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
-  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
-  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
-  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
-  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
-  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
-  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
-  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
-];
+const dummyProjects: projectType[] = [{ name: '머지merge', team: '정', date: '2023-01-01', logo: dummyLogoImg }];
 
 export const MyPage = () => {
   return (
@@ -41,8 +22,15 @@ export const MyPage = () => {
         <a href="https://github.com/nimeahgnak">https://github.com/nimeahgnak</a>
       </Header>
       <Container>
-        {dummyProjects.map((element) => {
-          return <Div></Div>;
+        {dummyProjects.map((element, index) => {
+          return (
+            <Project key={index}>
+              <img src="" />
+              <div className="first">{element.name}</div>
+              <div className="second">{element.team}</div>
+              <div className="third">{element.date}</div>
+            </Project>
+          );
         })}
       </Container>
     </Wrapper>
@@ -88,8 +76,38 @@ const Container = styled.div`
   margin-bottom: 60px;
 `;
 
-const Div = styled.div`
+const Project = styled.div`
   width: 184px;
-  height: 230px;
-  background-color: black;
+  height: 264px;
+  background-color: white;
+  border: 1px solid ${theme.color.gray100};
+  padding: 12px;
+  border-radius: 8px;
+  img {
+    width: 160px;
+    height: 160px;
+    border-radius: 4px;
+  }
+  & > .first {
+    ${theme.font.subTitle2};
+    color: ${theme.color.gray900};
+  }
+  & > .second {
+    ${theme.font.subTitle3};
+    color: ${theme.color.gray700};
+    margin: 4px 0 8px 0;
+  }
+  & > .third {
+    width: 58px;
+    height: 22px;
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 0.008px;
+    color: ${theme.color.gray800};
+    background-color: ${theme.color.gray100};
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
