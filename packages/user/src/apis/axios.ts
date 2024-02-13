@@ -30,6 +30,9 @@ instance.interceptors.response.use(
     } = err;
     if (status === 403) {
       //const token = Cookie.get('refreshToken');
+      Cookie.remove('accessToken');
+      Cookie.remove('refreshToken');
+      window.location.href = '/login';
     } else {
       toast.error('오류가 발생헀습니다');
       return Promise.reject(err);
