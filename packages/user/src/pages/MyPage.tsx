@@ -79,10 +79,10 @@ const Header = styled.div`
 `;
 
 const Container = styled.div`
-  width: 1132px;
+  width: 1128px;
   display: flex;
   justify-content: start;
-  gap: 53px;
+  gap: 52px;
   flex-wrap: wrap;
   margin-top: 56px;
   margin-bottom: 60px;
