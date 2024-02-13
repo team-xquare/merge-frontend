@@ -19,7 +19,7 @@ const style = css`
     font-family: 'Pretendard';
     font-weight: 500;
     font-style: normal;
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medeum.woff') format('woff');
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff') format('woff');
   }
 
   @font-face {
