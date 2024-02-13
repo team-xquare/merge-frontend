@@ -1,5 +1,34 @@
 import styled from '@emotion/styled';
 import { theme } from '@merge/design-system';
+import dummyLogoImg from '../assets/logo.svg';
+
+type projectType = {
+  name: string;
+  team: string;
+  data: string;
+  logo: string;
+};
+
+const dummyProjects: projectType[] = [
+  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
+  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
+  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
+  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
+  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
+  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
+  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
+  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
+  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
+  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
+  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
+  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
+  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
+  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
+  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
+  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
+  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
+  { name: '머지merge', team: '정', data: '2023-01-01', logo: dummyLogoImg },
+];
 
 export const MyPage = () => {
   return (
@@ -11,12 +40,19 @@ export const MyPage = () => {
         </div>
         <a href="https://github.com/nimeahgnak">https://github.com/nimeahgnak</a>
       </Header>
+      <Container>
+        {dummyProjects.map((element) => {
+          return <Div></Div>;
+        })}
+      </Container>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
   padding: 66px 396px 0 396px;
+  height: calc(100vh - 52px);
+  overflow-y: auto;
 `;
 
 const Header = styled.div`
@@ -40,4 +76,20 @@ const Header = styled.div`
     text-decoration: none;
     color: ${theme.color.link800};
   }
+`;
+
+const Container = styled.div`
+  width: 1132px;
+  display: flex;
+  justify-content: start;
+  gap: 53px;
+  flex-wrap: wrap;
+  margin-top: 56px;
+  margin-bottom: 60px;
+`;
+
+const Div = styled.div`
+  width: 184px;
+  height: 230px;
+  background-color: black;
 `;
