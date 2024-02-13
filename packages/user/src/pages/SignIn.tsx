@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import SignImg from '../assets/sign.svg';
 import { theme, Input, Button } from '@merge/design-system';
@@ -10,7 +9,6 @@ import { signinType } from 'src/types/signType';
 
 export const SignIn = () => {
   const [data, setData] = useState<signinType>({ account_id: '', password: '' });
-  const link = useNavigate();
 
   const { account_id, password } = data;
 
@@ -27,7 +25,7 @@ export const SignIn = () => {
       .then((res) => {
         Cookie.set('accessToken', res.data.access_token);
         Cookie.set('refreshToken', res.data.refresh_token);
-        link('/');
+        window.location.href = '/';
       })
       .catch((err) => {
         console.error(err);
