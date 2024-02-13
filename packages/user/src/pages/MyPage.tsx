@@ -11,8 +11,6 @@ type projectType = {
   logo: string;
 };
 
-const dummyProjects: projectType[] = [];
-
 export const MyPage = () => {
   const [projects, setProjects] = useState<projectType[] | null>();
 
@@ -146,22 +144,22 @@ const Project = styled.div`
   }
 `;
 
-const Badge = styled.div`
-  position: absolute;
-  right: 0px;
-  top: 0;
-  width: 28px;
-  height: 28px;
-  background-color: ${theme.color.primaryA200};
-  font-size: 8px;
-  font-weight: 500;
-  letter-spacing: 0.008px;
-  border-radius: 50%;
-  color: ${theme.color.white};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+// const Badge = styled.div`
+//   position: absolute;
+//   right: 0px;
+//   top: 0;
+//   width: 28px;
+//   height: 28px;
+//   background-color: ${theme.color.primaryA200};
+//   font-size: 8px;
+//   font-weight: 500;
+//   letter-spacing: 0.008px;
+//   border-radius: 50%;
+//   color: ${theme.color.white};
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// `;
 
 const ButtonContainer = styled(Link)`
   position: absolute;

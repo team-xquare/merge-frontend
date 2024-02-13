@@ -111,6 +111,7 @@ export const RegisterFormSecond = ({ value, projectImage, func1, func2, func3 }:
         projectImage.map((element, index) => {
           return <img src={URL.createObjectURL(element)} key={index} />;
         })} */}
+      {projectImage && <img src={URL.createObjectURL(projectImage)} />}
     </Wrapper>
   );
 };

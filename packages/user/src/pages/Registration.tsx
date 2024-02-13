@@ -11,10 +11,10 @@ import {
 } from '../components/Registration/Form';
 import { projectType } from '../types/projectType';
 import { dataWhiteSpace } from '../func/dataWhiteSpace';
-import { createProject } from '../apis/project';
+// import { createProject } from '../apis/project';
 import { instance } from '../apis/axios';
 
-type pageKindType = 'register' | 'deploy';
+// type pageKindType = 'register' | 'deploy';
 
 export const Registration = () => {
   const [progress, setProgress] = useState<number>(0);

@@ -25,15 +25,15 @@ const Heading = styled.div`
   color: ${theme.color.white};
 `;
 
-const Button = styled.div`
-  width: 126px;
-  height: 40px;
-  border-radius: 4px;
-  ${theme.font.buttonSmall};
-  color: ${theme.color.primary600};
-  background-color: ${theme.color.white};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-`;
+// const Button = styled.div`
+//   width: 126px;
+//   height: 40px;
+//   border-radius: 4px;
+//   ${theme.font.buttonSmall};
+//   color: ${theme.color.primary600};
+//   background-color: ${theme.color.white};
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   cursor: pointer;
+// `;
