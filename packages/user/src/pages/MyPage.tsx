@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
-import { theme } from '@merge/design-system';
+import { Button, theme } from '@merge/design-system';
 import dummyLogoImg from '../assets/logo.svg';
+import { Link } from 'react-router-dom';
 
 type projectType = {
   name: string;
@@ -40,6 +41,17 @@ export const MyPage = () => {
           );
         })}
       </Container>
+      <ButtonContainer to={'/my/hide'}>
+        <Button
+          onClick={() => {
+            console.log(13);
+          }}
+          buttonStyle="solid"
+          size="extraSmall"
+        >
+          숨긴 프로젝트 보기
+        </Button>
+      </ButtonContainer>
     </Wrapper>
   );
 };
@@ -137,4 +149,11 @@ const Badge = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const ButtonContainer = styled(Link)`
+  position: absolute;
+  right: 36px;
+  bottom: 72px;
+  text-decoration: none;
 `;
