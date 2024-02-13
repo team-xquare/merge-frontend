@@ -1,22 +1,30 @@
+import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Button, theme } from '@merge/design-system';
-import dummyLogoImg from '../assets/logo.svg';
+import { getMyProject } from '../apis/project';
 import { Link } from 'react-router-dom';
 
 type projectType = {
-  name: string;
-  team: string;
-  date: string;
+  project_name_en: string;
+  team_name_en: string;
+  id: string;
   logo: string;
-  admin: boolean;
 };
 
-const dummyProjects: projectType[] = [
-  { name: '머지merge', team: '정', date: '2023-01-01', logo: dummyLogoImg, admin: true },
-  { name: '머지merge', team: '정', date: '2023-01-01', logo: dummyLogoImg, admin: false },
-];
+const dummyProjects: projectType[] = [];
 
 export const MyPage = () => {
+  const [projects, setProjects] = useState<projectType[] | null>();
+
+  useEffect(() => {
+    getMyProject('dutexion@dsm.hs.kr')
+      .then((res) => {
+        setProjects(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <Wrapper>
       <Header>
@@ -27,19 +35,20 @@ export const MyPage = () => {
         <a href="https://github.com/nimeahgnak">https://github.com/nimeahgnak</a>
       </Header>
       <Container>
-        {dummyProjects.map((element, index) => {
-          return (
-            <Project key={index}>
-              <img src="" />
-              <div>
-                {element.admin && <Badge>관리자</Badge>}
-                <div className="first">{element.name}</div>
-                <div className="second">{element.team}</div>
-                <div className="third">{element.date}</div>
-              </div>
-            </Project>
-          );
-        })}
+        {projects &&
+          projects.map((element, index) => {
+            return (
+              <Project key={index}>
+                <img src={element.logo} />
+                <div>
+                  {/* {element.admin && <Badge>관리자</Badge>} */}
+                  <div className="first">{element.project_name_en}</div>
+                  <div className="second">{element.team_name_en}</div>
+                  {/* <div className="third">{element.}</div> */}
+                </div>
+              </Project>
+            );
+          })}
       </Container>
       <ButtonContainer to={'/my/hide'}>
         <Button
