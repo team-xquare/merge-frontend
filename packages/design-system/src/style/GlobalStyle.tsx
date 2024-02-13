@@ -38,7 +38,6 @@ const style = css`
     list-style: none;
     font-style: normal;
     font-family: 'Pretendard', sans-serif;
-    overflow-x: hidden;
 
     &::-webkit-scrollbar {
       width: 8px;
