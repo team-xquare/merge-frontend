@@ -57,15 +57,18 @@ export const MyPage = () => {
 };
 
 const Wrapper = styled.div`
-  padding: 66px 396px 0 396px;
   height: calc(100vh - 52px);
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Header = styled.div`
   width: 1128px;
   height: 70px;
   padding: 0 40px;
+  margin-top: 66px;
   display: flex;
   justify-content: space-between;
   background-color: ${theme.color.gray50};
