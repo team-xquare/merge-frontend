@@ -3,13 +3,16 @@ import { theme } from '@merge/design-system';
 import { Logo } from './Logo';
 import { Menu } from './Menu';
 import { Outlet } from 'react-router-dom';
+import { Cookie } from '../../utils/cookie';
 
 export const Header = () => {
+  const token = Cookie.get('accessToken');
+
   return (
     <>
       <Wrapper>
         <Logo />
-        <Menu isLogin={false} />
+        <Menu isLogin={!!token} />
       </Wrapper>
       <Outlet />
     </>
