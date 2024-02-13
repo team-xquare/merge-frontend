@@ -9,7 +9,7 @@ export const MyPage = () => {
           1학년 1반 1번
           <span>강해민</span>
         </div>
-        <span>https://github.com/nimeahgnak</span>
+        <a href="https://github.com/nimeahgnak">https://github.com/nimeahgnak</a>
       </Header>
     </Wrapper>
   );
@@ -36,7 +36,8 @@ const Header = styled.div`
       margin-left: 20px;
     }
   }
-  & > span {
+  & > a {
+    text-decoration: none;
     color: ${theme.color.link800};
   }
 `;
