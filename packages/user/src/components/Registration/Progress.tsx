@@ -7,8 +7,8 @@ import LineImg from '../../assets/line.svg';
 const nullFunc = () => {
   return null;
 };
-
-const projectLevels: string[] = ['로고 등록', '상세 설명', '링크 입력', 'oauth 사용'];
+// 'oauth 사용'
+const projectLevels: string[] = ['로고 등록', '상세 설명', '링크 입력'];
 
 const containerLevels: string[] = ['상세 설명', '타입, 사용 여부 선택', '환경 변수 입력'];
 
@@ -39,10 +39,12 @@ export const Progress = ({
   progress,
   kind,
   onClick,
+  func,
 }: {
   progress: number;
   kind: pageKindType;
   onClick: (index: number) => void;
+  func: () => void;
 }) => {
   const levels = kind === 'deploy' ? containerLevels : projectLevels;
 
@@ -72,14 +74,7 @@ export const Progress = ({
         </Container>
       </div>
       <ButtonContainer>
-        <Button
-          buttonStyle="solid"
-          size="medium"
-          onClick={() => {
-            console.log(123);
-          }}
-          isDisable={true}
-        >
+        <Button buttonStyle="solid" size="medium" onClick={func} isDisable={false}>
           등록하기
         </Button>
       </ButtonContainer>

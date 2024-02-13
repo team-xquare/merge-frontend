@@ -11,6 +11,7 @@ import {
 } from '../components/Registration/Form';
 import { projectType } from '../types/projectType';
 import { dataWhiteSpace } from '../func/dataWhiteSpace';
+import { createProject } from '../apis/project';
 
 type pageKindType = 'register' | 'deploy';
 
@@ -118,11 +119,23 @@ export const Registration = () => {
     // <RegisterFormForth value={projectData} />,
   ];
 
+  const onSubmit = () => {
+    if (logo && projectImage) {
+      createProject({ project: projectData, logo: logo, projectImage: projectImage })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   return (
     <Wrapper>
       <SubHeader />
       <Container>
-        <Progress progress={progress} kind={'register'} onClick={setNowProgress} />
+        <Progress progress={progress} kind={'register'} onClick={setNowProgress} func={onSubmit} />
         {registerFormArray[nowProgress]}
       </Container>
     </Wrapper>
