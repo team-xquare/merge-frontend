@@ -41,6 +41,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 24px;
+  height: 32px;
 `;
 
 const Profile = styled.div`
