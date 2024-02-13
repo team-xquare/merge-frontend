@@ -14,7 +14,7 @@ export const Menu = ({ isLogin }: menuProps) => {
   };
 
   const onRegister = () => {
-    link('/signin');
+    link('/register');
   };
 
   return (
