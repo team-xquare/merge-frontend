@@ -13,18 +13,16 @@ export const Menu = ({ isLogin }: menuProps) => {
     link('/signin');
   };
 
+  const onRegister = () => {
+    link('/signin');
+  };
+
   return (
     <Wrapper>
       {isLogin ? (
         <>
           <Profile />
-          <Button
-            buttonStyle="solid"
-            size="extraSmall"
-            onClick={() => {
-              console.log(123);
-            }}
-          >
+          <Button buttonStyle="solid" size="extraSmall" onClick={onRegister}>
             프로젝트 등록하기
           </Button>
         </>
