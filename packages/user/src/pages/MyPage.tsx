@@ -7,9 +7,13 @@ type projectType = {
   team: string;
   date: string;
   logo: string;
+  admin: boolean;
 };
 
-const dummyProjects: projectType[] = [{ name: '머지merge', team: '정', date: '2023-01-01', logo: dummyLogoImg }];
+const dummyProjects: projectType[] = [
+  { name: '머지merge', team: '정', date: '2023-01-01', logo: dummyLogoImg, admin: true },
+  { name: '머지merge', team: '정', date: '2023-01-01', logo: dummyLogoImg, admin: false },
+];
 
 export const MyPage = () => {
   return (
@@ -26,9 +30,12 @@ export const MyPage = () => {
           return (
             <Project key={index}>
               <img src="" />
-              <div className="first">{element.name}</div>
-              <div className="second">{element.team}</div>
-              <div className="third">{element.date}</div>
+              <div>
+                {element.admin && <Badge>관리자</Badge>}
+                <div className="first">{element.name}</div>
+                <div className="second">{element.team}</div>
+                <div className="third">{element.date}</div>
+              </div>
             </Project>
           );
         })}
@@ -88,26 +95,46 @@ const Project = styled.div`
     height: 160px;
     border-radius: 4px;
   }
-  & > .first {
-    ${theme.font.subTitle2};
-    color: ${theme.color.gray900};
+  > div {
+    position: relative;
+    & > .first {
+      ${theme.font.subTitle2};
+      color: ${theme.color.gray900};
+    }
+    & > .second {
+      ${theme.font.subTitle3};
+      color: ${theme.color.gray700};
+      margin: 4px 0 8px 0;
+    }
+    & > .third {
+      width: 58px;
+      height: 22px;
+      font-size: 8px;
+      font-weight: 500;
+      letter-spacing: 0.008px;
+      color: ${theme.color.gray800};
+      background-color: ${theme.color.gray100};
+      border-radius: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
-  & > .second {
-    ${theme.font.subTitle3};
-    color: ${theme.color.gray700};
-    margin: 4px 0 8px 0;
-  }
-  & > .third {
-    width: 58px;
-    height: 22px;
-    font-size: 8px;
-    font-weight: 500;
-    letter-spacing: 0.008px;
-    color: ${theme.color.gray800};
-    background-color: ${theme.color.gray100};
-    border-radius: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+`;
+
+const Badge = styled.div`
+  position: absolute;
+  right: 0px;
+  top: 0;
+  width: 28px;
+  height: 28px;
+  background-color: ${theme.color.primaryA200};
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.008px;
+  border-radius: 50%;
+  color: ${theme.color.white};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
