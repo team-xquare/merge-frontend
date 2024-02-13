@@ -49,4 +49,5 @@ const Profile = styled.div`
   height: 32px;
   border-radius: 50%;
   background-color: gray;
+  cursor: pointer;
 `;
