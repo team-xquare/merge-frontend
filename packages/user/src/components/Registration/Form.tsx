@@ -1,20 +1,20 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 import styled from '@emotion/styled';
 import { theme, Input } from '@merge/design-system';
 import RegisterLogoImg from '../../assets/registerLogo.svg';
-import CheckBoxTrueImg from '../../assets/checkBoxTrue.svg';
-import CheckBoxFalseImg from '../../assets/checkBoxFalse.svg';
+// import CheckBoxTrueImg from '../../assets/checkBoxTrue.svg';
+// import CheckBoxFalseImg from '../../assets/checkBoxFalse.svg';
 import ScreenshotLabelImg from '../../assets/screenshotLabel.svg';
 import { projectType } from 'src/types/projectType';
 
 type RegisterFormFirstPropsType = {
-  logo: File | null;
+  logo: Blob | null;
   func: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
 type RegisterFormSecondPropsType = {
   value: projectType;
-  projectImage: File[] | null;
+  projectImage: Blob | null;
   func1: (e: ChangeEvent<HTMLInputElement>) => void;
   func2: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   func3: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -107,10 +107,10 @@ export const RegisterFormSecond = ({ value, projectImage, func1, func2, func3 }:
       <LabelScreenshotInput htmlFor="screenshot">
         <img src={ScreenshotLabelImg} />
       </LabelScreenshotInput>
-      {projectImage &&
+      {/* {projectImage &&
         projectImage.map((element, index) => {
           return <img src={URL.createObjectURL(element)} key={index} />;
-        })}
+        })} */}
     </Wrapper>
   );
 };
@@ -272,19 +272,19 @@ const Area = styled.textarea`
   }
 `;
 
-const CheckBox = styled.div<{ check: boolean }>`
-  width: 668px;
-  height: 40px;
-  padding: 0 40px;
-  display: flex;
-  background-color: ${theme.color.gray50};
-  border-radius: 12px;
-  margin-top: 14px;
-  color: ${({ check }) => (check ? theme.color.primaryA200 : theme.color.gray500)};
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-`;
+// const CheckBox = styled.div<{ check: boolean }>`
+//   width: 668px;
+//   height: 40px;
+//   padding: 0 40px;
+//   display: flex;
+//   background-color: ${theme.color.gray50};
+//   border-radius: 12px;
+//   margin-top: 14px;
+//   color: ${({ check }) => (check ? theme.color.primaryA200 : theme.color.gray500)};
+//   align-items: center;
+//   justify-content: space-between;
+//   cursor: pointer;
+// `;
 
 const LabelScreenshotInput = styled.label`
   width: 668px;

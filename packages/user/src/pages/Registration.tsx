@@ -12,6 +12,7 @@ import {
 import { projectType } from '../types/projectType';
 import { dataWhiteSpace } from '../func/dataWhiteSpace';
 import { createProject } from '../apis/project';
+import { instance } from '../apis/axios';
 
 type pageKindType = 'register' | 'deploy';
 
@@ -19,7 +20,7 @@ export const Registration = () => {
   const [progress, setProgress] = useState<number>(0);
   const [nowProgress, setNowProgress] = useState<number>(0);
 
-  const [logo, setLogo] = useState<File | null>(null);
+  const [logo, setLogo] = useState<Blob | null>(null);
   const [projectData, setProjectData] = useState<projectType>({
     project_name_ko: '',
     project_name_en: '',
@@ -30,7 +31,7 @@ export const Registration = () => {
     play_store_url: '',
     app_store_url: '',
   });
-  const [projectImage, setProjectImage] = useState<File[] | null>(null);
+  const [projectImage, setProjectImage] = useState<Blob | null>(null);
 
   const handleLogoChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -50,21 +51,31 @@ export const Registration = () => {
 
   const handleProjectImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
-    console.log(projectImage);
-
     if (files) {
-      const validatedFiles = Array.from(files).filter((file) => {
-        const extension = file.name.split('.').pop()?.toLowerCase();
-        const allowedExtensions = ['png', 'jpg', 'jpeg', 'gif', 'pdf', 'tiff', 'psd', 'bmp'];
-        return extension && allowedExtensions.includes(extension);
-      });
+      const file = files[0];
+      const extension = file.name.split('.').pop()?.toLowerCase();
 
-      if (validatedFiles.length !== files.length) {
-        toast.error('하나 이상의 파일이 허용되지 않은 형식입니다.');
+      const allowedExtensions = ['png', 'jpg', 'jpeg', 'gif', 'pdf', 'tiff', 'psd', 'bmp'];
+
+      if (extension && allowedExtensions.includes(extension)) {
+        setProjectImage(file);
       } else {
-        setProjectImage(validatedFiles);
+        toast.error('허용되지 않은 파일 형식입니다.');
       }
     }
+    // if (files) {
+    //   const validatedFiles = Array.from(files).filter((file) => {
+    //     const extension = file.name.split('.').pop()?.toLowerCase();
+    //     const allowedExtensions = ['png', 'jpg', 'jpeg', 'gif', 'pdf', 'tiff', 'psd', 'bmp'];
+    //     return extension && allowedExtensions.includes(extension);
+    //   });
+
+    //   if (validatedFiles.length !== files.length) {
+    //     toast.error('하나 이상의 파일이 허용되지 않은 형식입니다.');
+    //   } else {
+    //     setProjectImage(validatedFiles);
+    //   }
+    // }
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,15 +131,17 @@ export const Registration = () => {
   ];
 
   const onSubmit = () => {
-    if (logo && projectImage) {
-      createProject({ project: projectData, logo: logo, projectImage: projectImage })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    if (!(logo && projectImage)) return;
+
+    const formData = new FormData();
+    formData.append('project', JSON.stringify(projectData));
+    formData.append('logo', logo);
+    formData.append('projectImage', projectImage);
+
+    instance
+      .post('/project', formData)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   return (
