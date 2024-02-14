@@ -111,7 +111,7 @@ export const Registration = () => {
     <Wrapper>
       <SubHeader />
       <Container>
-        <Progress progress={progress} kind={'register'} onClick={setNowProgress} func={onSubmit} />
+        <Progress progress={progress} onClick={setNowProgress} func={onSubmit} path={pathname} />
         {pathname === '/register' ? registerFormArray[nowProgress] : <>deploy</>}
       </Container>
     </Wrapper>
