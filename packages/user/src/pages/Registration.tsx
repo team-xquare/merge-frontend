@@ -7,7 +7,7 @@ import {
   RegisterFormSecond,
   RegisterFormThird,
   // RegisterFormForth,
-} from '../components/Registration/Form';
+} from '../components/Registration/FormRegister';
 import { projectType } from '../types/projectType';
 import { dataWhiteSpace } from '../func/dataWhiteSpace';
 // import { createProject } from '../apis/project';
