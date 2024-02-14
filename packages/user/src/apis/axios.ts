@@ -28,7 +28,7 @@ instance.interceptors.response.use(
       //config,
       response: { status },
     } = err;
-    if (status === 403) {
+    if (status === 403 || status === 401) {
       //const token = Cookie.get('refreshToken');
       Cookie.remove('accessToken');
       Cookie.remove('refreshToken');
