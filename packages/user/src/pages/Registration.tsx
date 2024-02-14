@@ -8,6 +8,7 @@ import {
   RegisterFormThird,
   // RegisterFormForth,
 } from '../components/Registration/FormRegister';
+import { DeployFormFirst, DeployFormSecond, DeployFormThird } from '../components/Registration/FormDeploy';
 import { projectType } from '../types/projectType';
 import { dataWhiteSpace } from '../func/dataWhiteSpace';
 // import { createProject } from '../apis/project';
@@ -21,7 +22,7 @@ import { useLocation } from 'react-router-dom';
 export const Registration = () => {
   const { pathname } = useLocation();
 
-  const [progress, setProgress] = useState<number>(0);
+  const [progress, setProgress] = useState<number>(2);
   const [nowProgress, setNowProgress] = useState<number>(0);
 
   const [logo, setLogo] = useState<Blob | null>(null);
@@ -46,6 +47,8 @@ export const Registration = () => {
   };
 
   useEffect(() => {
+    if (pathname === '/deploy') return;
+
     const {
       project_name_ko,
       project_name_en,
@@ -93,6 +96,8 @@ export const Registration = () => {
     // <RegisterFormForth value={projectData} />,
   ];
 
+  const deployFormArray: ReactElement[] = [<DeployFormFirst />, <DeployFormSecond />, <DeployFormThird />];
+
   const onSubmit = () => {
     if (!(logo && projectImage)) return;
 
@@ -112,7 +117,7 @@ export const Registration = () => {
       <SubHeader />
       <Container>
         <Progress progress={progress} onClick={setNowProgress} func={onSubmit} path={pathname} />
-        {pathname === '/register' ? registerFormArray[nowProgress] : <>deploy</>}
+        {pathname === '/register' ? registerFormArray[nowProgress] : deployFormArray[nowProgress]}
       </Container>
     </Wrapper>
   );
