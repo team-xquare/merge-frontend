@@ -32,7 +32,7 @@ instance.interceptors.response.use(
       //const token = Cookie.get('refreshToken');
       Cookie.remove('accessToken');
       Cookie.remove('refreshToken');
-      window.location.href = '/login';
+      window.location.href = '/signin';
     } else {
       toast.error('오류가 발생헀습니다');
       return Promise.reject(err);
