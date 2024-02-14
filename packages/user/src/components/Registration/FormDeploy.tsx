@@ -1,46 +1,75 @@
+import { ChangeEvent } from 'react';
 import styled from '@emotion/styled';
-import { theme, Input } from '@merge/design-system';
+import { theme, Input, Button } from '@merge/design-system';
 import { useState } from 'react';
 import CheckBoxTrueImg from '../../assets/checkBoxTrue.svg';
 import CheckBoxFalseImg from '../../assets/checkBoxFalse.svg';
 import PlusButtonImg from '../../assets/PlusButton.svg';
 import TrashButtonImg from '../../assets/TrashButton.svg';
+import { deployType } from '../../types/projectType';
+import { duplication } from '../../apis/deploy';
 
-export const DeployFormFirst = () => {
+type formPropsType = {
+  value: deployType;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  setDeployData: React.Dispatch<React.SetStateAction<deployType>>;
+};
+
+export const DeployFormFirst = ({ value, onChange }: formPropsType) => {
   return (
     <Wrapper height={472}>
       <TipTextContainer>
         <Important />
         <TipText>가 있는 필드는 필수 입력란 입니다.</TipText>
       </TipTextContainer>
-      <Input
-        width={668}
-        important={true}
-        label="컨테이너 영문명"
-        placeholder="영소문자와 대시(-)로만 이루어 져야 합니다."
-        margin={['top', 0]}
-        // value={value.project_name_en}
-        name="project_name_en"
-        // onChange={onChange}
-      />
+      <div style={{ display: 'flex', alignItems: 'end' }}>
+        <Input
+          width={558}
+          important={true}
+          label="컨테이너 영문명"
+          placeholder="영소문자와 대시(-)로만 이루어 져야 합니다."
+          margin={[0, 10, 0, 0]}
+          value={value.container_name}
+          name="container_name"
+          onChange={onChange}
+        />
+        <Button
+          buttonStyle="ghost"
+          size="small"
+          onClick={() => {
+            duplication(value.container_name);
+          }}
+        >
+          중복 확인
+        </Button>
+      </div>
+
       <Input
         width={668}
         important={true}
         label="배포할 깃허브 레포지토리 링크"
         placeholder="링크"
         margin={['top', 52]}
-        // value={value.project_name_en}
-        name="project_name_en"
-        // onChange={onChange}
+        value={value.github_url}
+        name="github_url"
+        onChange={onChange}
       />
     </Wrapper>
   );
 };
 
-export const DeployFormSecond = () => {
-  const [redis, setRedis] = useState(false);
-  const [mysql, setMysql] = useState(false);
-  const [kind, setKind] = useState<number | null>(null);
+export const DeployFormSecond = ({ value, setDeployData }: formPropsType) => {
+  const onClick = (e: React.MouseEvent) => {
+    const { className } = e.target as HTMLElement;
+    const key = className.split(' ')[0] as keyof deployType;
+    const newValue = value[key];
+
+    setDeployData({ ...value, [key]: !newValue });
+  };
+
+  const onTypeChange = (type: string) => {
+    setDeployData({ ...value, service_type: type });
+  };
 
   return (
     <Wrapper height={544}>
@@ -53,28 +82,28 @@ export const DeployFormSecond = () => {
         <InputText>배포 타입을 선택해주세요</InputText>
       </TextContainer>
       <ButtonContainer>
-        <Button select={kind === 0} onClick={() => setKind(0)}>
+        <_Button select={value.service_type === 'FE'} onClick={() => onTypeChange('FE')}>
           FrontEnd
-        </Button>
-        <Button select={kind === 1} onClick={() => setKind(1)}>
+        </_Button>
+        <_Button select={value.service_type === 'BE'} onClick={() => onTypeChange('BE')}>
           BackEnd
-        </Button>
+        </_Button>
       </ButtonContainer>
       <TextContainer style={{ marginTop: '52px' }}>
         <Important />
         <InputText>Redis 사용 여부</InputText>
       </TextContainer>
-      <CheckBox onClick={() => setRedis(!redis)} check={redis}>
+      <CheckBox onClick={onClick} check={value.redis} className="redis">
         <span>Redis 사용</span>
-        <img src={redis ? CheckBoxTrueImg : CheckBoxFalseImg} />
+        <img src={value.redis ? CheckBoxTrueImg : CheckBoxFalseImg} />
       </CheckBox>
       <TextContainer style={{ marginTop: '52px' }}>
         <Important />
         <InputText>MySQL 사용 여부</InputText>
       </TextContainer>
-      <CheckBox onClick={() => setMysql(!mysql)} check={mysql}>
+      <CheckBox onClick={onClick} check={value.mysql} className="mysql">
         <span>MySQL 사용</span>
-        <img src={mysql ? CheckBoxTrueImg : CheckBoxFalseImg} />
+        <img src={value.mysql ? CheckBoxTrueImg : CheckBoxFalseImg} />
       </CheckBox>
     </Wrapper>
   );
@@ -204,7 +233,7 @@ const ButtonContainer = styled.div`
   margin-top: 14px;
 `;
 
-const Button = styled.div<{ select: boolean }>`
+const _Button = styled.div<{ select: boolean }>`
   width: 150px;
   height: 64px;
   display: flex;

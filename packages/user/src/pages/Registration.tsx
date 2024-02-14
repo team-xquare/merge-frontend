@@ -9,20 +9,21 @@ import {
   // RegisterFormForth,
 } from '../components/Registration/FormRegister';
 import { DeployFormFirst, DeployFormSecond, DeployFormThird } from '../components/Registration/FormDeploy';
-import { projectType } from '../types/projectType';
+import { deployType, projectType } from '../types/projectType';
 import { dataWhiteSpace } from '../func/dataWhiteSpace';
 // import { createProject } from '../apis/project';
 import { instance } from '../apis/axios';
 import { handleImageChange } from '../func/handleImageChange';
 import { toast } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
+import { deploy } from '../apis/deploy';
 
 // type pageKindType = 'register' | 'deploy';
 
 export const Registration = () => {
   const { pathname } = useLocation();
 
-  const [progress, setProgress] = useState<number>(2);
+  const [progress, setProgress] = useState<number>(0);
   const [nowProgress, setNowProgress] = useState<number>(0);
 
   const [logo, setLogo] = useState<Blob | null>(null);
@@ -38,10 +39,26 @@ export const Registration = () => {
   });
   const [projectImage, setProjectImage] = useState<Blob | null>(null);
 
+  const [deployData, setDeployData] = useState<deployType>({
+    container_name: '',
+    service_type: '',
+    github_url: '',
+    redis: false,
+    mysql: false,
+  });
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setProjectData({
       ...projectData,
+      [name]: value,
+    });
+  };
+
+  const onChange2 = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setDeployData({
+      ...deployData,
       [name]: value,
     });
   };
@@ -71,6 +88,19 @@ export const Registration = () => {
     }
   }, [logo, projectData, projectImage]);
 
+  useEffect(() => {
+    if (pathname !== '/deploy') return;
+
+    const { container_name, github_url, service_type } = deployData;
+
+    if (container_name && github_url) {
+      setProgress(1);
+      if (service_type) {
+        setProgress(2);
+      }
+    }
+  }, [deployData]);
+
   const registerFormArray: ReactElement[] = [
     <RegisterFormFirst
       logo={logo}
@@ -96,20 +126,34 @@ export const Registration = () => {
     // <RegisterFormForth value={projectData} />,
   ];
 
-  const deployFormArray: ReactElement[] = [<DeployFormFirst />, <DeployFormSecond />, <DeployFormThird />];
+  const deployFormArray: ReactElement[] = [
+    <DeployFormFirst value={deployData} onChange={onChange2} setDeployData={setDeployData} />,
+    <DeployFormSecond value={deployData} onChange={onChange2} setDeployData={setDeployData} />,
+    <DeployFormThird />,
+  ];
 
   const onSubmit = () => {
-    if (!(logo && projectImage)) return;
+    if (pathname !== '/deploy' && logo && projectImage) {
+      const formData = new FormData();
+      formData.append('project', JSON.stringify(projectData));
+      formData.append('logo', logo);
+      formData.append('projectImage', projectImage);
 
-    const formData = new FormData();
-    formData.append('project', JSON.stringify(projectData));
-    formData.append('logo', logo);
-    formData.append('projectImage', projectImage);
-
-    instance
-      .post('/project', formData)
-      .then(() => (window.location.href = 'my'))
-      .catch(() => toast.error('오류'));
+      instance
+        .post('/project', formData)
+        .then(() => (window.location.href = 'my'))
+        .catch(() => toast.error('오류'));
+    } else if (pathname === '/deploy' && progress >= 2) {
+      deploy(deployData)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      toast.error('Submit Error');
+    }
   };
 
   return (
