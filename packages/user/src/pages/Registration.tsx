@@ -75,7 +75,7 @@ export const Registration = () => {
     <RegisterFormSecond
       logo={logo}
       projectImage={projectImage}
-      onImageChange={(event: ChangeEvent<HTMLInputElement>) => handleImageChange(event, setLogo)}
+      onImageChange={(event: ChangeEvent<HTMLInputElement>) => handleImageChange(event, setProjectImage)}
       onChange={onChange}
       value={projectData}
     />,

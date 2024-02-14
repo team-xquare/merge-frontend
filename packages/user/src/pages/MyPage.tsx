@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { Button, theme } from '@merge/design-system';
+import { theme } from '@merge/design-system';
 import { getMyProject } from '../apis/project';
 // import { Link } from 'react-router-dom';
 
