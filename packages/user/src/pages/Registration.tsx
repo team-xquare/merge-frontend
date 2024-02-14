@@ -14,10 +14,13 @@ import { dataWhiteSpace } from '../func/dataWhiteSpace';
 import { instance } from '../apis/axios';
 import { handleImageChange } from '../func/handleImageChange';
 import { toast } from 'react-toastify';
+import { useLocation } from 'react-router-dom';
 
 // type pageKindType = 'register' | 'deploy';
 
 export const Registration = () => {
+  const { pathname } = useLocation();
+
   const [progress, setProgress] = useState<number>(0);
   const [nowProgress, setNowProgress] = useState<number>(0);
 
@@ -109,7 +112,7 @@ export const Registration = () => {
       <SubHeader />
       <Container>
         <Progress progress={progress} kind={'register'} onClick={setNowProgress} func={onSubmit} />
-        {registerFormArray[nowProgress]}
+        {pathname === '/register' ? registerFormArray[nowProgress] : <>deploy</>}
       </Container>
     </Wrapper>
   );
