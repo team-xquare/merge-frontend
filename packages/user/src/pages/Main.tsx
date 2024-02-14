@@ -3,8 +3,12 @@ import { LatestProject } from '../components/Main/LatestProject';
 import { theme } from '@merge/design-system';
 import styled from '@emotion/styled';
 import BannerImg from '../assets/banner.png';
+import TopPageButtonImg from '../assets/topPageButton.svg';
 
 export const Main = () => {
+  const scrollToTop = () => {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  };
   return (
     <Container>
       <Banner src={BannerImg} />
@@ -16,6 +20,7 @@ export const Main = () => {
       <LatestProjectContainer>
         <LatestProject />
       </LatestProjectContainer>
+      <TopPageButton onClick={scrollToTop} />
     </Container>
   );
 };
@@ -39,7 +44,7 @@ const FavoriteProjectContainer = styled.div`
 `;
 
 const Container = styled.div`
-  width: 100vw;
+  /* width: 100vw; */
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -51,4 +56,21 @@ const LatestProjectContainer = styled.div`
   width: 1128px;
   display: flex;
   margin-bottom: 100px;
+`;
+
+const TopPageButton = styled.div`
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  top: 85%;
+  left: 81%;
+  border: 1px solid ${theme.color.primary100};
+  background-image: url(${TopPageButtonImg});
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
