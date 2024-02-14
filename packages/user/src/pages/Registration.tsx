@@ -13,6 +13,7 @@ import { dataWhiteSpace } from '../func/dataWhiteSpace';
 // import { createProject } from '../apis/project';
 import { instance } from '../apis/axios';
 import { handleImageChange } from '../func/handleImageChange';
+import { toast } from 'react-toastify';
 
 // type pageKindType = 'register' | 'deploy';
 
@@ -99,8 +100,8 @@ export const Registration = () => {
 
     instance
       .post('/project', formData)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then(() => (window.location.href = 'my'))
+      .catch(() => toast.error('오류'));
   };
 
   return (
