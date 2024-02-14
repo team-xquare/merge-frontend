@@ -114,7 +114,7 @@ export const Registration = () => {
 
   return (
     <Wrapper>
-      <SubHeader />
+      <SubHeader path={pathname} />
       <Container>
         <Progress progress={progress} onClick={setNowProgress} func={onSubmit} path={pathname} />
         {pathname === '/register' ? registerFormArray[nowProgress] : deployFormArray[nowProgress]}

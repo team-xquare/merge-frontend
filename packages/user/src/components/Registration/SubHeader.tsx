@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { theme } from '@merge/design-system';
 
-export const SubHeader = (path: string) => {
+export const SubHeader = ({ path }: { path: string }) => {
   return (
     <Wrapper>
       <Heading>{path === '/deploy' ? '컨테이너 배포하기' : '프로젝트 등록하기'}</Heading>
