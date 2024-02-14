@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Button, theme } from '@merge/design-system';
 import { getMyProject } from '../apis/project';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 type projectType = {
   project_name_en: string;
@@ -48,7 +48,7 @@ export const MyPage = () => {
             );
           })}
       </Container>
-      <ButtonContainer to={'/my/hide'}>
+      {/* <ButtonContainer to={'/my/hide'}>
         <Button
           onClick={() => {
             console.log(13);
@@ -58,7 +58,7 @@ export const MyPage = () => {
         >
           숨긴 프로젝트 보기
         </Button>
-      </ButtonContainer>
+      </ButtonContainer> */}
     </Wrapper>
   );
 };
@@ -161,9 +161,9 @@ const Project = styled.div`
 //   align-items: center;
 // `;
 
-const ButtonContainer = styled(Link)`
-  position: absolute;
-  right: 36px;
-  bottom: 72px;
-  text-decoration: none;
-`;
+// const ButtonContainer = styled(Link)`
+//   position: absolute;
+//   right: 36px;
+//   bottom: 72px;
+//   text-decoration: none;
+// `;
