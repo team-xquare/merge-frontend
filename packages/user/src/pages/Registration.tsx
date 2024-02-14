@@ -1,6 +1,5 @@
 import { ChangeEvent, useState, ReactElement, useEffect } from 'react';
 import styled from '@emotion/styled';
-import { toast } from 'react-toastify';
 import { SubHeader } from '../components/Registration/SubHeader';
 import { Progress } from '../components/Registration/Progress';
 import {
@@ -13,6 +12,7 @@ import { projectType } from '../types/projectType';
 import { dataWhiteSpace } from '../func/dataWhiteSpace';
 // import { createProject } from '../apis/project';
 import { instance } from '../apis/axios';
+import { handleImageChange } from '../func/handleImageChange';
 
 // type pageKindType = 'register' | 'deploy';
 
@@ -33,60 +33,7 @@ export const Registration = () => {
   });
   const [projectImage, setProjectImage] = useState<Blob | null>(null);
 
-  const handleLogoChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files) {
-      const file = files[0];
-      const extension = file.name.split('.').pop()?.toLowerCase();
-
-      const allowedExtensions = ['png', 'jpg', 'jpeg', 'gif', 'pdf', 'tiff', 'psd', 'bmp'];
-
-      if (extension && allowedExtensions.includes(extension)) {
-        setLogo(file);
-      } else {
-        toast.error('허용되지 않은 파일 형식입니다.');
-      }
-    }
-  };
-
-  const handleProjectImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files) {
-      const file = files[0];
-      const extension = file.name.split('.').pop()?.toLowerCase();
-
-      const allowedExtensions = ['png', 'jpg', 'jpeg', 'gif', 'pdf', 'tiff', 'psd', 'bmp'];
-
-      if (extension && allowedExtensions.includes(extension)) {
-        setProjectImage(file);
-      } else {
-        toast.error('허용되지 않은 파일 형식입니다.');
-      }
-    }
-    // if (files) {
-    //   const validatedFiles = Array.from(files).filter((file) => {
-    //     const extension = file.name.split('.').pop()?.toLowerCase();
-    //     const allowedExtensions = ['png', 'jpg', 'jpeg', 'gif', 'pdf', 'tiff', 'psd', 'bmp'];
-    //     return extension && allowedExtensions.includes(extension);
-    //   });
-
-    //   if (validatedFiles.length !== files.length) {
-    //     toast.error('하나 이상의 파일이 허용되지 않은 형식입니다.');
-    //   } else {
-    //     setProjectImage(validatedFiles);
-    //   }
-    // }
-  };
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setProjectData({
-      ...projectData,
-      [name]: value,
-    });
-  };
-
-  const onAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setProjectData({
       ...projectData,
@@ -108,7 +55,7 @@ export const Registration = () => {
 
     if (logo) {
       setProgress(1);
-      if (dataWhiteSpace({ project_name_ko, project_name_en, team_name_en, description })) {
+      if (dataWhiteSpace({ project_name_ko, project_name_en, team_name_en, description }) && projectImage) {
         setProgress(2);
         if (dataWhiteSpace({ github_url, web_url, play_store_url, app_store_url })) {
           setProgress(3);
@@ -118,15 +65,27 @@ export const Registration = () => {
   }, [logo, projectData, projectImage]);
 
   const registerFormArray: ReactElement[] = [
-    <RegisterFormFirst logo={logo} func={handleLogoChange} />,
-    <RegisterFormSecond
-      value={projectData}
+    <RegisterFormFirst
+      logo={logo}
       projectImage={projectImage}
-      func1={onChange}
-      func2={onAreaChange}
-      func3={handleProjectImageChange}
+      onImageChange={(event: ChangeEvent<HTMLInputElement>) => handleImageChange(event, setLogo)}
+      onChange={onChange}
+      value={projectData}
     />,
-    <RegisterFormThird value={projectData} func={onChange} />,
+    <RegisterFormSecond
+      logo={logo}
+      projectImage={projectImage}
+      onImageChange={(event: ChangeEvent<HTMLInputElement>) => handleImageChange(event, setLogo)}
+      onChange={onChange}
+      value={projectData}
+    />,
+    <RegisterFormThird
+      logo={logo}
+      projectImage={projectImage}
+      onImageChange={(event: ChangeEvent<HTMLInputElement>) => handleImageChange(event, setLogo)}
+      onChange={onChange}
+      value={projectData}
+    />,
     // <RegisterFormForth value={projectData} />,
   ];
 
