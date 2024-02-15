@@ -6,6 +6,7 @@ import RegisterLogoImg from '../../assets/registerLogo.svg';
 // import CheckBoxFalseImg from '../../assets/checkBoxFalse.svg';
 import ScreenshotLabelImg from '../../assets/screenshotLabel.svg';
 import { projectType } from 'src/types/projectType';
+import { ImgContainer } from './ImgContainer';
 
 type formPropsType = {
   logo: Blob | null;
@@ -97,10 +98,7 @@ export const RegisterFormSecond = ({ value, projectImage, onChange, onImageChang
       <LabelScreenshotInput htmlFor="screenshot">
         <img src={ScreenshotLabelImg} />
       </LabelScreenshotInput>
-      {/* {projectImage &&
-        projectImage.map((element, index) => {
-          return <img src={URL.createObjectURL(element)} key={index} />;
-        })} */}
+      <ImgContainer></ImgContainer>
       {projectImage && <img src={URL.createObjectURL(projectImage)} />}
     </Wrapper>
   );
