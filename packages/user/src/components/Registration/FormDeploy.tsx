@@ -1,11 +1,11 @@
 import { ChangeEvent } from 'react';
 import styled from '@emotion/styled';
 import { theme, Input, Button } from '@merge/design-system';
-import { useState } from 'react';
+// import { useState } from 'react';
 import CheckBoxTrueImg from '../../assets/checkBoxTrue.svg';
 import CheckBoxFalseImg from '../../assets/checkBoxFalse.svg';
-import PlusButtonImg from '../../assets/PlusButton.svg';
-import TrashButtonImg from '../../assets/TrashButton.svg';
+// import PlusButtonImg from '../../assets/PlusButton.svg';
+// import TrashButtonImg from '../../assets/TrashButton.svg';
 import { deployType } from '../../types/projectType';
 import { duplication } from '../../apis/deploy';
 
@@ -109,67 +109,67 @@ export const DeployFormSecond = ({ value, setDeployData }: formPropsType) => {
   );
 };
 
-export const DeployFormThird = () => {
-  type inputType = {
-    key: string;
-    value: string;
-  };
+// export const DeployFormThird = () => {
+//   type inputType = {
+//     key: string;
+//     value: string;
+//   };
 
-  const input = {
-    key: '',
-    value: '',
-  };
+//   const input = {
+//     key: '',
+//     value: '',
+//   };
 
-  const [inputs, setInputs] = useState<inputType[]>([{ key: '', value: '' }]);
+//   const [inputs, setInputs] = useState<inputType[]>([{ key: '', value: '' }]);
 
-  const onPlus = () => {
-    setInputs([...inputs, input]);
-  };
+//   const onPlus = () => {
+//     setInputs([...inputs, input]);
+//   };
 
-  const onTrash = (index: number) => {
-    const newInputs = inputs.filter((_, inputIndex) => index !== inputIndex);
+//   const onTrash = (index: number) => {
+//     const newInputs = inputs.filter((_, inputIndex) => index !== inputIndex);
 
-    setInputs(newInputs);
-  };
+//     setInputs(newInputs);
+//   };
 
-  return (
-    <Wrapper height={544}>
-      <TipTextContainer>
-        <TipText>환경 변수를 입력하세요</TipText>
-      </TipTextContainer>
-      {inputs.map((element, index) => {
-        return (
-          <InputContainer key={index}>
-            <Input
-              width={176}
-              placeholder="key"
-              // value={value.project_name_en}
-              name="project_name_en"
-              // onChange={onChange}
-            />
-            <Input
-              width={440}
-              placeholder="value"
-              // value={value.project_name_en}
-              name="project_name_en"
-              // onChange={onChange}
-            />
-            {index === inputs.length - 1 ? (
-              <img src={PlusButtonImg} onClick={onPlus} />
-            ) : (
-              <img
-                src={TrashButtonImg}
-                onClick={() => {
-                  onTrash(index);
-                }}
-              />
-            )}
-          </InputContainer>
-        );
-      })}
-    </Wrapper>
-  );
-};
+//   return (
+//     <Wrapper height={544}>
+//       <TipTextContainer>
+//         <TipText>환경 변수를 입력하세요</TipText>
+//       </TipTextContainer>
+//       {inputs.map((element, index) => {
+//         return (
+//           <InputContainer key={index}>
+//             <Input
+//               width={176}
+//               placeholder="key"
+//               // value={value.project_name_en}
+//               name="project_name_en"
+//               // onChange={onChange}
+//             />
+//             <Input
+//               width={440}
+//               placeholder="value"
+//               // value={value.project_name_en}
+//               name="project_name_en"
+//               // onChange={onChange}
+//             />
+//             {index === inputs.length - 1 ? (
+//               <img src={PlusButtonImg} onClick={onPlus} />
+//             ) : (
+//               <img
+//                 src={TrashButtonImg}
+//                 onClick={() => {
+//                   onTrash(index);
+//                 }}
+//               />
+//             )}
+//           </InputContainer>
+//         );
+//       })}
+//     </Wrapper>
+//   );
+// };
 
 const Wrapper = styled.div<{ height: number }>`
   width: 832px;
@@ -249,12 +249,12 @@ const _Button = styled.div<{ select: boolean }>`
   transition: 0.05s linear;
 `;
 
-const InputContainer = styled.div`
-  width: 694px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  margin-top: 20px;
-`;
+// const InputContainer = styled.div`
+//   width: 694px;
+//   height: 40px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   gap: 20px;
+//   margin-top: 20px;
+// `;

@@ -10,7 +10,7 @@ const nullFunc = () => {
 // 'oauth 사용'
 const projectLevels: string[] = ['로고 등록', '상세 설명', '링크 입력'];
 
-const containerLevels: string[] = ['상세 설명', '타입, 사용 여부 선택', '환경 변수 입력'];
+const containerLevels: string[] = ['상세 설명', '타입, 사용 여부 선택'];
 
 type progressStateType = 'success' | 'now' | 'disable';
 

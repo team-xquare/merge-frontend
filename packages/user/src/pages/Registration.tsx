@@ -8,7 +8,7 @@ import {
   RegisterFormThird,
   // RegisterFormForth,
 } from '../components/Registration/FormRegister';
-import { DeployFormFirst, DeployFormSecond, DeployFormThird } from '../components/Registration/FormDeploy';
+import { DeployFormFirst, DeployFormSecond } from '../components/Registration/FormDeploy';
 import { deployType, projectType } from '../types/projectType';
 import { dataWhiteSpace } from '../func/dataWhiteSpace';
 // import { createProject } from '../apis/project';
@@ -129,7 +129,7 @@ export const Registration = () => {
   const deployFormArray: ReactElement[] = [
     <DeployFormFirst value={deployData} onChange={onChange2} setDeployData={setDeployData} />,
     <DeployFormSecond value={deployData} onChange={onChange2} setDeployData={setDeployData} />,
-    <DeployFormThird />,
+    // <DeployFormThird />,
   ];
 
   const onSubmit = () => {
