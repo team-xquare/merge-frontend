@@ -4,14 +4,18 @@ import { theme } from '@merge/design-system';
 import styled from '@emotion/styled';
 import BannerImg from '../assets/banner.png';
 import TopPageButtonImg from '../assets/topPageButton.svg';
+import { useRef } from 'react';
 
 export const Main = () => {
+  const banner = useRef<HTMLImageElement>(null);
   const scrollToTop = () => {
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    if (banner.current) {
+      banner.current.scrollIntoView({ behavior: 'smooth' });
+    }
   };
   return (
     <Container>
-      <Banner src={BannerImg} />
+      <Banner src={BannerImg} ref={banner} />
       <Title marginTop="">즐겨찾는 프로젝트</Title>
       <FavoriteProjectContainer>
         <FavoriteProjects />

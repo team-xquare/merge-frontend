@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import dmsLogoImg from '../../assets/logos/DMS.svg';
 import entryLogoImg from '../../assets/logos/Entry.svg';
+import OSJLogoImg from '../../assets/logos/OSJ.svg';
 import PickImg from "../../assets/logos/Pick.svg";
 import { theme } from '@merge/design-system';
 import { Link } from 'react-router-dom';
@@ -39,7 +40,7 @@ const projects: projectsType[] = [
   },
   {
     name: 'OSJ',
-    logo: dmsLogoImg,
+    logo: OSJLogoImg,
     address: '',
   },
 ];
