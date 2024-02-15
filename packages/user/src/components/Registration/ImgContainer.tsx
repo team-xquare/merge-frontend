@@ -1,7 +1,10 @@
 import styled from '@emotion/styled';
 import Apple from '../../assets/apple.png';
-import React from 'react';
 import Delete from '../../assets/delete.svg';
+
+type propsType = {
+  files: Blob[] | null;
+};
 
 type ImageProps = {
   src: string;
@@ -11,9 +14,7 @@ type ImageProps = {
 const image: ImageProps = new Image();
 image.src = Apple;
 
-const dummyArr: any = [image, image];
-
-export const ImgContainer: React.FC = () => {
+export const ImgContainer = ({ files }: propsType) => {
   const imgSize = (img: ImageProps): Boolean => {
     if (img.width > img.height) {
       return true;
@@ -24,20 +25,24 @@ export const ImgContainer: React.FC = () => {
 
   return (
     <Wrapper>
-      {dummyArr.map((element: any, index: any) => {
-        return (
-          <ImgBox key={index}>
-            <Cover>
-              <img src={Delete} />
-            </Cover>
-            <img
-              src={element.src}
-              width={imgSize(element) ? undefined : 250}
-              height={imgSize(element) ? 100 : undefined}
-            />
-          </ImgBox>
-        );
-      })}
+      {files &&
+        files.map((element: any, index: any) => {
+          const image: ImageProps = new Image();
+          image.src = URL.createObjectURL(element);
+
+          return (
+            <ImgBox key={index}>
+              <Cover>
+                <img src={Delete} />
+              </Cover>
+              <img
+                src={URL.createObjectURL(element)}
+                width={imgSize(image) ? undefined : 250}
+                height={imgSize(image) ? 100 : undefined}
+              />
+            </ImgBox>
+          );
+        })}
     </Wrapper>
   );
 };

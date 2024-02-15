@@ -13,7 +13,7 @@ import { deployType, projectType } from '../types/projectType';
 import { dataWhiteSpace } from '../func/dataWhiteSpace';
 // import { createProject } from '../apis/project';
 import { instance } from '../apis/axios';
-import { handleImageChange } from '../func/handleImageChange';
+import { handleImageChange, handleImagesChange } from '../func/handleImageChange';
 import { toast } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
 import { deploy } from '../apis/deploy';
@@ -37,7 +37,7 @@ export const Registration = () => {
     play_store_url: '',
     app_store_url: '',
   });
-  const [projectImage, setProjectImage] = useState<Blob | null>(null);
+  const [projectImage, setProjectImage] = useState<Blob[] | null>(null);
 
   const [deployData, setDeployData] = useState<deployType>({
     container_name: '',
@@ -112,7 +112,7 @@ export const Registration = () => {
     <RegisterFormSecond
       logo={logo}
       projectImage={projectImage}
-      onImageChange={(event: ChangeEvent<HTMLInputElement>) => handleImageChange(event, setProjectImage)}
+      onImageChange={(event: ChangeEvent<HTMLInputElement>) => handleImagesChange(event, projectImage, setProjectImage)}
       onChange={onChange}
       value={projectData}
     />,
@@ -137,7 +137,9 @@ export const Registration = () => {
       const formData = new FormData();
       formData.append('project', JSON.stringify(projectData));
       formData.append('logo', logo);
-      formData.append('projectImage', projectImage);
+      projectImage.forEach((element: Blob) => {
+        formData.append('projectImage', element);
+      });
 
       instance
         .post('/project', formData)

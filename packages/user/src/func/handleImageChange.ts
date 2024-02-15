@@ -17,17 +17,28 @@ export const handleImageChange = (event: ChangeEvent<HTMLInputElement>, func: (f
   }
 };
 
-// 이건 사진 여러개일때
-// if (files) {
-//   const validatedFiles = Array.from(files).filter((file) => {
-//     const extension = file.name.split('.').pop()?.toLowerCase();
-//     const allowedExtensions = ['png', 'jpg', 'jpeg', 'gif', 'pdf', 'tiff', 'psd', 'bmp'];
-//     return extension && allowedExtensions.includes(extension);
-//   });
+export const handleImagesChange = (
+  event: ChangeEvent<HTMLInputElement>,
+  prevFiles: Blob[] | null,
+  func: (file: Blob[]) => void,
+) => {
+  console.log(prevFiles);
 
-//   if (validatedFiles.length !== files.length) {
-//     toast.error('하나 이상의 파일이 허용되지 않은 형식입니다.');
-//   } else {
-//     setProjectImage(validatedFiles);
-//   }
-// }
+  const files = event.target.files;
+  if (files) {
+    const file = files[0];
+    const extension = file.name.split('.').pop()?.toLowerCase();
+
+    const allowedExtensions = ['png', 'jpg', 'jpeg', 'gif', 'pdf', 'tiff', 'psd', 'bmp'];
+
+    if (extension && allowedExtensions.includes(extension)) {
+      if (prevFiles === null) {
+        func([file]);
+      } else {
+        func([...prevFiles, file]);
+      }
+    } else {
+      toast.error('허용되지 않은 파일 형식입니다.');
+    }
+  }
+};

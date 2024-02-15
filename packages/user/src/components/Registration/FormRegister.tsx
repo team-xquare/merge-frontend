@@ -8,13 +8,13 @@ import ScreenshotLabelImg from '../../assets/screenshotLabel.svg';
 import { projectType } from 'src/types/projectType';
 import { ImgContainer } from './ImgContainer';
 
-type formPropsType = {
+interface formPropsType {
   logo: Blob | null;
-  projectImage: Blob | null;
+  projectImage: Blob[] | null;
   value: projectType;
   onImageChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onChange: (e: ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => void;
-};
+}
 
 export const RegisterFormFirst = ({ logo, onImageChange }: formPropsType) => {
   return (
@@ -98,8 +98,7 @@ export const RegisterFormSecond = ({ value, projectImage, onChange, onImageChang
       <LabelScreenshotInput htmlFor="screenshot">
         <img src={ScreenshotLabelImg} />
       </LabelScreenshotInput>
-      <ImgContainer></ImgContainer>
-      {projectImage && <img src={URL.createObjectURL(projectImage)} />}
+      <ImgContainer files={projectImage} />
     </Wrapper>
   );
 };
