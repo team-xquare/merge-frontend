@@ -2,19 +2,42 @@ import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { theme } from '@merge/design-system';
 import { getMyProject } from '../apis/project';
+import { getUserInfo } from '../apis/user';
 // import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+type userType = {
+  student_name: string;
+  school_gcn: number;
+  github: string;
+};
 
 type projectType = {
-  project_name_en: string;
+  project_name_ko: string;
   team_name_en: string;
   id: string;
   logo: string;
 };
 
 export const MyPage = () => {
+  const [userInfo, setUserInfo] = useState<userType>({
+    student_name: '',
+    school_gcn: 0,
+    github: '',
+  });
   const [projects, setProjects] = useState<projectType[] | null>();
 
   useEffect(() => {
+    getUserInfo()
+      .then((res) => {
+        const data: userType = res.data;
+
+        setUserInfo({ student_name: data.student_name, school_gcn: data.school_gcn, github: data.github });
+      })
+      .catch(() => {
+        toast.error('유저 정보를 불러오는데 실패했습니다.');
+      });
+
     getMyProject('dutexion@dsm.hs.kr')
       .then((res) => {
         setProjects(res.data);
@@ -27,10 +50,10 @@ export const MyPage = () => {
     <Wrapper>
       <Header>
         <div>
-          1학년 1반 1번
-          <span>강해민</span>
+          {userInfo.school_gcn}
+          <span>{userInfo.student_name}</span>
         </div>
-        <a href="https://github.com/nimeahgnak">https://github.com/nimeahgnak</a>
+        <a href={userInfo.github}>{userInfo.github}</a>
       </Header>
       <Container>
         {projects &&
@@ -40,7 +63,7 @@ export const MyPage = () => {
                 <img src={element.logo} />
                 <div>
                   {/* {element.admin && <Badge>관리자</Badge>} */}
-                  <div className="first">{element.project_name_en}</div>
+                  <div className="first">{element.project_name_ko}</div>
                   <div className="second">{element.team_name_en}</div>
                   {/* <div className="third">{element.}</div> */}
                 </div>
