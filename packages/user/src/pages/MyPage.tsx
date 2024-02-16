@@ -5,6 +5,8 @@ import { getMyProject } from '../apis/project';
 import { getUserInfo } from '../apis/user';
 // import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useModal } from '../hooks/useModal';
+import DotsImg from '../assets/dots.svg';
 
 type userType = {
   student_name: string;
@@ -20,12 +22,19 @@ type projectType = {
 };
 
 export const MyPage = () => {
+  const { visible, ModalWrapper, show } = useModal();
   const [userInfo, setUserInfo] = useState<userType>({
     student_name: '',
     school_gcn: 0,
     github: '',
   });
   const [projects, setProjects] = useState<projectType[] | null>();
+  const [select, setSelect] = useState<string>('');
+
+  const onMenu = (project: string) => {
+    show();
+    setSelect(project);
+  };
 
   useEffect(() => {
     getUserInfo()
@@ -45,33 +54,47 @@ export const MyPage = () => {
       })
       .catch((err) => console.log(err));
   }, []);
-
   return (
-    <Wrapper>
-      <Header>
-        <div>
-          {userInfo.school_gcn}
-          <span>{userInfo.student_name}</span>
-        </div>
-        <a href={userInfo.github}>{userInfo.github}</a>
-      </Header>
-      <Container>
-        {projects &&
-          projects.map((element, index) => {
-            return (
-              <Project key={index}>
-                <img src={element.logo} />
-                <div>
-                  {/* {element.admin && <Badge>관리자</Badge>} */}
-                  <div className="first">{element.project_name_ko}</div>
-                  <div className="second">{element.team_name_en}</div>
-                  {/* <div className="third">{element.}</div> */}
-                </div>
-              </Project>
-            );
-          })}
-      </Container>
-      {/* <ButtonContainer to={'/my/hide'}>
+    <>
+      {visible && (
+        <ModalWrapper>
+          <ModalChildWrapper>
+            <ModalButton>숨김</ModalButton>
+            <ModalButton>관리</ModalButton>
+          </ModalChildWrapper>
+        </ModalWrapper>
+      )}
+      <Wrapper>
+        <Header>
+          <div>
+            {userInfo.school_gcn}
+            <span>{userInfo.student_name}</span>
+          </div>
+          <a href={userInfo.github}>{userInfo.github}</a>
+        </Header>
+        <Container>
+          {projects &&
+            projects.map((element, index) => {
+              return (
+                <Project key={index}>
+                  <img src={element.logo} />
+                  <div>
+                    {/* {element.admin && <Badge>관리자</Badge>} */}
+                    <div className="first">{element.project_name_ko}</div>
+                    <div className="second">{element.team_name_en}</div>
+                    {/* <div className="third">{element.}</div> */}
+                    <Menu
+                      src={DotsImg}
+                      onClick={() => {
+                        onMenu(element.id);
+                      }}
+                    />
+                  </div>
+                </Project>
+              );
+            })}
+        </Container>
+        {/* <ButtonContainer to={'/my/hide'}>
         <Button
           onClick={() => {
             console.log(13);
@@ -82,7 +105,8 @@ export const MyPage = () => {
           숨긴 프로젝트 보기
         </Button>
       </ButtonContainer> */}
-    </Wrapper>
+      </Wrapper>
+    </>
   );
 };
 
@@ -135,7 +159,7 @@ const Project = styled.div`
   border: 1px solid ${theme.color.gray100};
   padding: 12px;
   border-radius: 8px;
-  img {
+  > img {
     width: 160px;
     height: 160px;
     border-radius: 4px;
@@ -167,6 +191,33 @@ const Project = styled.div`
   }
 `;
 
+const ModalChildWrapper = styled.div`
+  width: 400px;
+  height: 156px;
+  border-radius: 8px;
+  background-color: ${theme.color.white};
+  overflow: hidden;
+`;
+
+const ModalButton = styled.div`
+  width: 400px;
+  height: 78px;
+  border-bottom: 0.5px solid ${theme.color.gray200};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${theme.font.buttonLarge};
+  color: ${theme.color.primary900};
+  cursor: pointer;
+  transition: 0.1s linear;
+  & :last-child {
+    border-bottom: none;
+  }
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+`;
+
 // const Badge = styled.div`
 //   position: absolute;
 //   right: 0px;
@@ -183,6 +234,15 @@ const Project = styled.div`
 //   justify-content: center;
 //   align-items: center;
 // `;
+
+const Menu = styled.img`
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+`;
 
 // const ButtonContainer = styled(Link)`
 //   position: absolute;
