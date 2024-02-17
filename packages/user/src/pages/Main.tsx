@@ -3,7 +3,7 @@ import { LatestProject } from '../components/Main/LatestProject';
 import { theme } from '@merge/design-system';
 import styled from '@emotion/styled';
 import BannerImg from '../assets/banner.png';
-import TopPageButtonImg from '../assets/topPageButton.svg';
+import ScrollImg from "../assets/topPageButton.svg";
 import { useRef } from 'react';
 
 export const Main = () => {
@@ -63,6 +63,7 @@ const LatestProjectContainer = styled.div`
 `;
 
 const TopPageButton = styled.div`
+  background-image: url(${ScrollImg});
   position: fixed;
   width: 50px;
   height: 50px;
@@ -70,7 +71,6 @@ const TopPageButton = styled.div`
   top: 85%;
   left: 81%;
   border: 1px solid ${theme.color.primary100};
-  background-image: url(${TopPageButtonImg});
   background-repeat: no-repeat;
   background-position: center center;
 
