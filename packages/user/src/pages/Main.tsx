@@ -7,15 +7,15 @@ import TopPageButtonImg from '../assets/topPageButton.svg';
 import { useRef } from 'react';
 
 export const Main = () => {
-  const banner = useRef<HTMLImageElement>(null);
+  const container = useRef<HTMLImageElement>(null);
   const scrollToTop = () => {
-    if (banner.current) {
-      banner.current.scrollIntoView({ behavior: 'smooth' });
+    if (container.current) {
+      container.current.scroll({ top: 0, behavior: 'smooth' });
     }
   };
   return (
-    <Container>
-      <Banner src={BannerImg} ref={banner} />
+    <Container ref={container}>
+      <Banner src={BannerImg} />
       <Title marginTop="">즐겨찾는 프로젝트</Title>
       <FavoriteProjectContainer>
         <FavoriteProjects />
