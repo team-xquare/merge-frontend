@@ -2,13 +2,13 @@ import { theme } from '@merge/design-system';
 import styled from '@emotion/styled';
 
 type containerType = {
-  container_name: any;
-  repository: any;
-  last_deploy: any;
-  url: any;
+  container_name: string;
+  repository: string;
+  last_deploy: string;
+  url: string;
 };
 
-export const DeployContainter = ({ container_name, repository, last_deploy, url }: containerType) => {
+export const DeployContainter = ({ container_name, repository, last_deploy }: containerType) => {
   return (
     <Wrapper>
       <Name>{container_name}</Name>
