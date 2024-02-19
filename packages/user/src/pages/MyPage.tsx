@@ -20,6 +20,7 @@ type projectType = {
   team_name_en: string;
   id: string;
   logo: string;
+  date: string;
 };
 
 export const MyPage = () => {
@@ -85,7 +86,7 @@ export const MyPage = () => {
                     {/* {element.admin && <Badge>관리자</Badge>} */}
                     <div className="first">{element.project_name_ko}</div>
                     <div className="second">{element.team_name_en}</div>
-                    {/* <div className="third">{element.}</div> */}
+                    <div className="third">{element.date}</div>
                     <Menu
                       src={DotsImg}
                       onClick={() => {
