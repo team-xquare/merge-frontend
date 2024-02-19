@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { theme } from '@merge/design-system';
+import { theme, Button } from '@merge/design-system';
 import { getMyProject } from '../apis/project';
 import { getUserInfo } from '../apis/user';
-// import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useModal } from '../hooks/useModal';
 import DotsImg from '../assets/dots.svg';
@@ -21,6 +20,7 @@ type projectType = {
   id: string;
   logo: string;
   date: string;
+  is_hidden: boolean;
 };
 
 export const MyPage = () => {
@@ -32,6 +32,7 @@ export const MyPage = () => {
   });
   const [projects, setProjects] = useState<projectType[] | null>();
   const [select, setSelect] = useState<string>('');
+  const [seeHide, setSeeHide] = useState<boolean>(false);
 
   const onMenu = (project: string) => {
     show();
@@ -52,7 +53,6 @@ export const MyPage = () => {
     getMyProject('dutexion@dsm.hs.kr')
       .then((res) => {
         setProjects(res.data);
-        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -61,7 +61,7 @@ export const MyPage = () => {
       {visible && (
         <ModalWrapper>
           <ModalChildWrapper>
-            <ModalButton>숨김</ModalButton>
+            <ModalButton>{seeHide ? '숨김 해제' : '숨김'}</ModalButton>
             <ModalButton>
               <Link to={`/project/${select}`}>관리</Link>
             </ModalButton>
@@ -69,16 +69,44 @@ export const MyPage = () => {
         </ModalWrapper>
       )}
       <Wrapper>
-        <Header>
-          <div>
-            {userInfo.school_gcn}
-            <span>{userInfo.student_name}</span>
-          </div>
-          <a href={userInfo.github}>{userInfo.github}</a>
-        </Header>
+        {!seeHide && (
+          <Header>
+            <div>
+              {userInfo.school_gcn}
+              <span>{userInfo.student_name}</span>
+            </div>
+            <a href={userInfo.github}>{userInfo.github}</a>
+          </Header>
+        )}
+        {seeHide && <HideText>숨긴 프로젝트</HideText>}
         <Container>
           {projects &&
+            !seeHide &&
             projects.map((element, index) => {
+              if (element.is_hidden) return;
+              return (
+                <Project key={index}>
+                  <img src={element.logo} />
+                  <div>
+                    {/* {element.admin && <Badge>관리자</Badge>} */}
+                    <div className="first">{element.project_name_ko}</div>
+                    <div className="second">{element.team_name_en}</div>
+                    <div className="third">{element.date}</div>
+                    <Menu
+                      src={DotsImg}
+                      onClick={() => {
+                        onMenu(element.id);
+                      }}
+                    />
+                  </div>
+                </Project>
+              );
+            })}
+
+          {projects &&
+            seeHide &&
+            projects.map((element, index) => {
+              if (!element.is_hidden) return;
               return (
                 <Project key={index}>
                   <img src={element.logo} />
@@ -98,21 +126,31 @@ export const MyPage = () => {
               );
             })}
         </Container>
-        {/* <ButtonContainer to={'/my/hide'}>
-        <Button
-          onClick={() => {
-            console.log(13);
-          }}
-          buttonStyle="solid"
-          size="extraSmall"
-        >
-          숨긴 프로젝트 보기
-        </Button>
-      </ButtonContainer> */}
+        <ButtonContainer>
+          <Button
+            onClick={() => {
+              setSeeHide(!seeHide);
+            }}
+            buttonStyle="solid"
+            size="extraSmall"
+          >
+            {seeHide ? '안 숨긴' : '숨긴'} 프로젝트 보기
+          </Button>
+        </ButtonContainer>
       </Wrapper>
     </>
   );
 };
+
+const HideText = styled.div`
+  width: 1128px;
+  display: flex;
+  justify-content: start;
+  ${theme.font.heading4};
+  margin-top: 66px;
+  height: 70px;
+  align-items: center;
+`;
 
 const Wrapper = styled.div`
   height: calc(100vh - 52px);
@@ -257,9 +295,9 @@ const Menu = styled.img`
   cursor: pointer;
 `;
 
-// const ButtonContainer = styled(Link)`
-//   position: absolute;
-//   right: 36px;
-//   bottom: 72px;
-//   text-decoration: none;
-// `;
+const ButtonContainer = styled.div`
+  position: absolute;
+  right: 36px;
+  bottom: 72px;
+  text-decoration: none;
+`;
