@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { useModal } from '../hooks/useModal';
 import DotsImg from '../assets/dots.svg';
 import { Link } from 'react-router-dom';
+import { hideProject, unhideProject } from '../apis/project';
 
 type userType = {
   student_name: string;
@@ -39,6 +40,18 @@ export const MyPage = () => {
     setSelect(project);
   };
 
+  const onHide = () => {
+    if (!seeHide) {
+      hideProject(select)
+        .then(() => window.location.reload())
+        .catch(() => toast.error('프로젝트 숨기기를 실패했습니다.'));
+    } else {
+      unhideProject(select)
+        .then(() => window.location.reload())
+        .catch(() => toast.error('프로젝트 숨기기 해제를 실패했습니다.'));
+    }
+  };
+
   useEffect(() => {
     getUserInfo()
       .then((res) => {
@@ -53,6 +66,7 @@ export const MyPage = () => {
     getMyProject('dutexion@dsm.hs.kr')
       .then((res) => {
         setProjects(res.data);
+        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -61,7 +75,7 @@ export const MyPage = () => {
       {visible && (
         <ModalWrapper>
           <ModalChildWrapper>
-            <ModalButton>{seeHide ? '숨김 해제' : '숨김'}</ModalButton>
+            <ModalButton onClick={onHide}>{seeHide ? '숨김 해제' : '숨김'}</ModalButton>
             <ModalButton>
               <Link to={`/project/${select}`}>관리</Link>
             </ModalButton>
