@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { DeployContainter } from '../components/DeployContainter';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { getDetailProject } from '../apis/project';
-import { theme } from '@merge/design-system';
+import { theme, Button } from '@merge/design-system';
 import { getContainerList } from '../apis/deploy';
 
 type dataType = {
@@ -31,6 +31,7 @@ type containerType = {
 
 export const Project = () => {
   const { id } = useParams();
+  const link = useNavigate();
   const [data, setData] = useState<dataType>();
   const [containers, setContainers] = useState<containerType[]>();
 
@@ -84,6 +85,18 @@ export const Project = () => {
           </LinkBox>
           {containers && (
             <ContainerWrapper>
+              <ContainerTop>
+                <span>컨테이너</span>
+                <Button
+                  buttonStyle="solid"
+                  size="extraSmall"
+                  onClick={() => {
+                    link(`/deploy/${data.id}`);
+                  }}
+                >
+                  컨테이너 배포
+                </Button>
+              </ContainerTop>
               {containers.map((container, index) => {
                 return (
                   <React.Fragment key={index}>
@@ -109,6 +122,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: auto;
 `;
 
 const TopContainer = styled.div`
@@ -185,4 +199,13 @@ const ContainerWrapper = styled.div`
   align-items: center;
   gap: 20px;
   margin-top: 44px;
+`;
+
+const ContainerTop = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  ${theme.font.subTitle2};
+  color: ${theme.color.gray800};
 `;

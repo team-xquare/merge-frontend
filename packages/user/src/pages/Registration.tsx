@@ -21,7 +21,7 @@ import { deploy } from '../apis/deploy';
 // type pageKindType = 'register' | 'deploy';
 
 export const Registration = () => {
-  const { pathname } = useLocation();
+  const pathname: string = '/' + useLocation().pathname.split('/')[1];
 
   const [progress, setProgress] = useState<number>(0);
   const [nowProgress, setNowProgress] = useState<number>(0);

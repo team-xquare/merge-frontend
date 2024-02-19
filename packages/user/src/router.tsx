@@ -34,7 +34,7 @@ export const Router = createBrowserRouter([
         element: <Registration />,
       },
       {
-        path: 'deploy',
+        path: 'deploy/:id',
         element: <Registration />,
       },
       {
