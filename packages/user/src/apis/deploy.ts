@@ -30,3 +30,7 @@ export const duplication = async (name: string) => {
     toast.error('이미 사용된 컨테이너 명입니다.');
   }
 };
+
+export const getContainerList = async (id: string) => {
+  return await instance.get(`/deploy/all?project_id=${id}`);
+};

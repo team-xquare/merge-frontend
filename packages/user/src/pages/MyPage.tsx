@@ -7,6 +7,7 @@ import { getUserInfo } from '../apis/user';
 import { toast } from 'react-toastify';
 import { useModal } from '../hooks/useModal';
 import DotsImg from '../assets/dots.svg';
+import { Link } from 'react-router-dom';
 
 type userType = {
   student_name: string;
@@ -60,7 +61,9 @@ export const MyPage = () => {
         <ModalWrapper>
           <ModalChildWrapper>
             <ModalButton>숨김</ModalButton>
-            <ModalButton>관리</ModalButton>
+            <ModalButton>
+              <Link to={`/project/${select}`}>관리</Link>
+            </ModalButton>
           </ModalChildWrapper>
         </ModalWrapper>
       )}
@@ -215,6 +218,15 @@ const ModalButton = styled.div`
   }
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
+  }
+  a {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: ${theme.color.primary900};
+    text-decoration: none;
   }
 `;
 
