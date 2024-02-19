@@ -10,7 +10,7 @@ export const font = {
   heading2: fontGenerator(56, 600, -0.5),
   heading3: fontGenerator(48, 600, 0),
   heading4: fontGenerator(32, 600, 0.25),
-  heading5: fontGenerator(32, 600, 0),
+  heading5: fontGenerator(24, 600, 0),
   heading6: fontGenerator(20, 600, 0.15),
 
   subTitle1: fontGenerator(20, 600, 0.15),
