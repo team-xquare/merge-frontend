@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { signupType } from '../types/signType';
 import { signUp } from '../apis/sign';
 import { SignupFormFirst, SignupFormSecond, SignupFormThird } from '../components/Signup/index';
+import { toast } from 'react-toastify';
 
 interface signupInputType extends signupType {
   okPassword: string;
@@ -41,8 +42,11 @@ export const SignUp = () => {
     }
 
     signUp(data)
-      .then((res) => console.log(res))
-      .catch((err) => console.error(err));
+      .then(() => {
+        toast.success('회원가입에 성공하셨습니다.');
+        window.location.href = '/signin';
+      })
+      .catch(() => toast.error('회원가입에 실패하셨습니다.'));
   };
 
   return (
