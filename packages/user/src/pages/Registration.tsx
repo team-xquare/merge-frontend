@@ -45,6 +45,7 @@ export const Registration = () => {
     github_url: '',
     redis: false,
     mysql: false,
+    project_id: useLocation().pathname.split('/')[2],
   });
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {

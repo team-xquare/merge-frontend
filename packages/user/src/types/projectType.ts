@@ -15,4 +15,5 @@ export type deployType = {
   github_url: string;
   redis: boolean;
   mysql: boolean;
+  project_id: string;
 };
