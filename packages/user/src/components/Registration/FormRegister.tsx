@@ -6,26 +6,17 @@ import RegisterLogoImg from '../../assets/registerLogo.svg';
 // import CheckBoxFalseImg from '../../assets/checkBoxFalse.svg';
 import ScreenshotLabelImg from '../../assets/screenshotLabel.svg';
 import { projectType } from 'src/types/projectType';
+import { ImgContainer } from './ImgContainer';
 
-type RegisterFormFirstPropsType = {
+interface formPropsType {
   logo: Blob | null;
-  func: (event: ChangeEvent<HTMLInputElement>) => void;
-};
-
-type RegisterFormSecondPropsType = {
+  projectImage: Blob[] | null;
   value: projectType;
-  projectImage: Blob | null;
-  func1: (e: ChangeEvent<HTMLInputElement>) => void;
-  func2: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-  func3: (event: ChangeEvent<HTMLInputElement>) => void;
-};
+  onImageChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => void;
+}
 
-type RegisterFormThirdPropsType = {
-  value: projectType;
-  func: (e: ChangeEvent<HTMLInputElement>) => void;
-};
-
-export const RegisterFormFirst = ({ logo, func }: RegisterFormFirstPropsType) => {
+export const RegisterFormFirst = ({ logo, onImageChange }: formPropsType) => {
   return (
     <Wrapper height={472}>
       <TipTextContainer>
@@ -36,9 +27,9 @@ export const RegisterFormFirst = ({ logo, func }: RegisterFormFirstPropsType) =>
         <Important />
         <InputText>프로젝트 로고 등록하기</InputText>
       </TextContainer>
-      <FileInput type="file" id="logo" onChange={func} />
+      <FileInput type="file" id="logo" onChange={onImageChange} />
       <LabelLogoInput htmlFor="logo">
-        {logo === null ? (
+        {logo === null || logo === undefined ? (
           <img src={RegisterLogoImg} />
         ) : (
           <img src={URL.createObjectURL(logo)} style={{ width: '100%', height: '100%', borderRadius: '8px' }} />
@@ -48,7 +39,7 @@ export const RegisterFormFirst = ({ logo, func }: RegisterFormFirstPropsType) =>
   );
 };
 
-export const RegisterFormSecond = ({ value, projectImage, func1, func2, func3 }: RegisterFormSecondPropsType) => {
+export const RegisterFormSecond = ({ value, projectImage, onChange, onImageChange }: formPropsType) => {
   return (
     <Wrapper height={1184}>
       <TipTextContainer>
@@ -62,7 +53,7 @@ export const RegisterFormSecond = ({ value, projectImage, func1, func2, func3 }:
         placeholder="한글"
         value={value.project_name_ko}
         name="project_name_ko"
-        onChange={func1}
+        onChange={onChange}
       />
       <Input
         width={668}
@@ -72,7 +63,7 @@ export const RegisterFormSecond = ({ value, projectImage, func1, func2, func3 }:
         margin={['top', 52]}
         value={value.project_name_en}
         name="project_name_en"
-        onChange={func1}
+        onChange={onChange}
       />
       <Input
         width={668}
@@ -82,7 +73,7 @@ export const RegisterFormSecond = ({ value, projectImage, func1, func2, func3 }:
         margin={['top', 52]}
         value={value.team_name_en}
         name="team_name_en"
-        onChange={func1}
+        onChange={onChange}
       />
       <AreaTextContainer>
         <TextContainer>
@@ -98,25 +89,21 @@ export const RegisterFormSecond = ({ value, projectImage, func1, func2, func3 }:
         maxLength={500}
         value={value.description}
         name="description"
-        onChange={func2}
+        onChange={onChange}
       />
       <TextContainer style={{ marginTop: '52px' }}>
         <InputText>프로젝트 스크린샷 또는 사진 등록하기</InputText>
       </TextContainer>
-      <FileInput type="file" id="screenshot" onChange={func3} />
+      <FileInput type="file" id="screenshot" onChange={onImageChange} />
       <LabelScreenshotInput htmlFor="screenshot">
         <img src={ScreenshotLabelImg} />
       </LabelScreenshotInput>
-      {/* {projectImage &&
-        projectImage.map((element, index) => {
-          return <img src={URL.createObjectURL(element)} key={index} />;
-        })} */}
-      {projectImage && <img src={URL.createObjectURL(projectImage)} />}
+      <ImgContainer files={projectImage} />
     </Wrapper>
   );
 };
 
-export const RegisterFormThird = ({ value, func }: RegisterFormThirdPropsType) => {
+export const RegisterFormThird = ({ value, onChange }: formPropsType) => {
   return (
     <Wrapper height={560}>
       <Input
@@ -126,7 +113,7 @@ export const RegisterFormThird = ({ value, func }: RegisterFormThirdPropsType) =
         margin={['top', 0]}
         value={value.github_url}
         name="github_url"
-        onChange={func}
+        onChange={onChange}
       />
       <Input
         width={668}
@@ -135,7 +122,7 @@ export const RegisterFormThird = ({ value, func }: RegisterFormThirdPropsType) =
         margin={['top', 52]}
         value={value.web_url}
         name="web_url"
-        onChange={func}
+        onChange={onChange}
       />
       <Input
         width={668}
@@ -144,7 +131,7 @@ export const RegisterFormThird = ({ value, func }: RegisterFormThirdPropsType) =
         margin={['top', 52]}
         value={value.play_store_url}
         name="play_store_url"
-        onChange={func}
+        onChange={onChange}
       />
       <Input
         width={668}
@@ -153,7 +140,7 @@ export const RegisterFormThird = ({ value, func }: RegisterFormThirdPropsType) =
         margin={['top', 52]}
         value={value.app_store_url}
         name="app_store_url"
-        onChange={func}
+        onChange={onChange}
       />
     </Wrapper>
   );

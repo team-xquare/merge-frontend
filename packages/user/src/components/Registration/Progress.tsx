@@ -10,9 +10,7 @@ const nullFunc = () => {
 // 'oauth 사용'
 const projectLevels: string[] = ['로고 등록', '상세 설명', '링크 입력'];
 
-const containerLevels: string[] = ['상세 설명', '타입, 사용 여부 선택', '환경 변수 입력'];
-
-type pageKindType = 'register' | 'deploy';
+const containerLevels: string[] = ['상세 설명', '타입, 사용 여부 선택'];
 
 type progressStateType = 'success' | 'now' | 'disable';
 
@@ -37,21 +35,21 @@ const ProgressLevel = ({ state, level, onClick, progress, index }: ProgressState
 
 export const Progress = ({
   progress,
-  kind,
   onClick,
   func,
+  path,
 }: {
   progress: number;
-  kind: pageKindType;
   onClick: (index: number) => void;
   func: () => void;
+  path: string;
 }) => {
-  const levels = kind === 'deploy' ? containerLevels : projectLevels;
+  const levels = path === '/deploy' ? containerLevels : projectLevels;
 
   return (
     <Wrapper>
       <div>
-        <Text>{kind === 'deploy' ? '배포 정보 입력하기' : '프로젝트 등록하기'}</Text>
+        <Text>{path === '/deploy' ? '배포 정보 입력하기' : '프로젝트 등록하기'}</Text>
         <Container>
           {levels.map((level, index) => {
             return (

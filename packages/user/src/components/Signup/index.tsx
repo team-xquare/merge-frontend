@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Input, Button } from '@merge/design-system';
 import { dataWhiteSpace } from '../../func/dataWhiteSpace';
+import { idDuplicate } from '../../apis/sign';
 
 type formType = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -66,16 +67,27 @@ export const SignupFormSecond = ({ onChange, value, onNext }: formType) => {
         onChange={onChange}
         value={email}
       />
-      <Input
-        width={400}
-        label="아이디"
-        placeholder="아이디"
-        margin={['top', 36]}
-        type="text"
-        name="account_id"
-        onChange={onChange}
-        value={account_id}
-      />
+      <InputContainer>
+        <Input
+          width={260}
+          label="아이디"
+          placeholder="아이디"
+          margin={['top', 36]}
+          type="text"
+          name="account_id"
+          onChange={onChange}
+          value={account_id}
+        />
+        <Button
+          buttonStyle="ghost"
+          size="small"
+          onClick={() => {
+            idDuplicate(account_id);
+          }}
+        >
+          중복 확인
+        </Button>
+      </InputContainer>
       <Input
         width={400}
         label="깃허브 주소"
@@ -143,4 +155,11 @@ const BtnContainer = styled.div`
   width: 400px;
   display: flex;
   justify-content: end;
+`;
+
+const InputContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 400px;
+  align-items: end;
 `;

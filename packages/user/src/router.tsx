@@ -1,13 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Header } from './components/Header/index';
 import { Main } from './pages/Main';
-import { Project } from './pages/Projects/Project';
-import { MyProject } from './pages/Projects/MyProject';
+import { Project } from './pages/Project';
 import { SignIn } from './pages/SignIn';
 import { SignUp } from './pages/SignUp';
 import { Registration } from './pages/Registration';
 import { MyPage } from './pages/MyPage';
-import { HideProjects } from './pages/HideProjects';
 
 export const Router = createBrowserRouter([
   {
@@ -19,6 +17,10 @@ export const Router = createBrowserRouter([
         element: <Main />,
       },
       {
+        path: 'project/:id',
+        element: <Project />,
+      },
+      {
         path: 'signin',
         element: <SignIn />,
       },
@@ -27,28 +29,16 @@ export const Router = createBrowserRouter([
         element: <SignUp />,
       },
       {
-        path: 'project',
-        children: [
-          {
-            index: true,
-            element: <Project />,
-          },
-          {
-            path: 'my',
-            element: <MyProject />,
-          },
-        ],
-      },
-      {
         path: 'register',
         element: <Registration />,
       },
       {
+        path: 'deploy/:id',
+        element: <Registration />,
+      },
+      {
         path: 'my',
-        children: [
-          { index: true, element: <MyPage /> },
-          { path: 'hide', element: <HideProjects /> },
-        ],
+        element: <MyPage />,
       },
     ],
     errorElement: <>error</>,

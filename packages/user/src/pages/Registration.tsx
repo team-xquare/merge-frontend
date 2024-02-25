@@ -1,6 +1,5 @@
 import { ChangeEvent, useState, ReactElement, useEffect } from 'react';
 import styled from '@emotion/styled';
-import { toast } from 'react-toastify';
 import { SubHeader } from '../components/Registration/SubHeader';
 import { Progress } from '../components/Registration/Progress';
 import {
@@ -8,15 +7,22 @@ import {
   RegisterFormSecond,
   RegisterFormThird,
   // RegisterFormForth,
-} from '../components/Registration/Form';
-import { projectType } from '../types/projectType';
+} from '../components/Registration/FormRegister';
+import { DeployFormFirst, DeployFormSecond } from '../components/Registration/FormDeploy';
+import { deployType, projectType } from '../types/projectType';
 import { dataWhiteSpace } from '../func/dataWhiteSpace';
 // import { createProject } from '../apis/project';
 import { instance } from '../apis/axios';
+import { handleImageChange, handleImagesChange } from '../func/handleImageChange';
+import { toast } from 'react-toastify';
+import { useLocation } from 'react-router-dom';
+import { deploy } from '../apis/deploy';
 
 // type pageKindType = 'register' | 'deploy';
 
 export const Registration = () => {
+  const pathname: string = '/' + useLocation().pathname.split('/')[1];
+
   const [progress, setProgress] = useState<number>(0);
   const [nowProgress, setNowProgress] = useState<number>(0);
 
@@ -31,54 +37,18 @@ export const Registration = () => {
     play_store_url: '',
     app_store_url: '',
   });
-  const [projectImage, setProjectImage] = useState<Blob | null>(null);
+  const [projectImage, setProjectImage] = useState<Blob[] | null>(null);
 
-  const handleLogoChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files) {
-      const file = files[0];
-      const extension = file.name.split('.').pop()?.toLowerCase();
+  const [deployData, setDeployData] = useState<deployType>({
+    container_name: '',
+    service_type: '',
+    github_url: '',
+    redis: false,
+    mysql: false,
+    project_id: useLocation().pathname.split('/')[2],
+  });
 
-      const allowedExtensions = ['png', 'jpg', 'jpeg', 'gif', 'pdf', 'tiff', 'psd', 'bmp'];
-
-      if (extension && allowedExtensions.includes(extension)) {
-        setLogo(file);
-      } else {
-        toast.error('허용되지 않은 파일 형식입니다.');
-      }
-    }
-  };
-
-  const handleProjectImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files) {
-      const file = files[0];
-      const extension = file.name.split('.').pop()?.toLowerCase();
-
-      const allowedExtensions = ['png', 'jpg', 'jpeg', 'gif', 'pdf', 'tiff', 'psd', 'bmp'];
-
-      if (extension && allowedExtensions.includes(extension)) {
-        setProjectImage(file);
-      } else {
-        toast.error('허용되지 않은 파일 형식입니다.');
-      }
-    }
-    // if (files) {
-    //   const validatedFiles = Array.from(files).filter((file) => {
-    //     const extension = file.name.split('.').pop()?.toLowerCase();
-    //     const allowedExtensions = ['png', 'jpg', 'jpeg', 'gif', 'pdf', 'tiff', 'psd', 'bmp'];
-    //     return extension && allowedExtensions.includes(extension);
-    //   });
-
-    //   if (validatedFiles.length !== files.length) {
-    //     toast.error('하나 이상의 파일이 허용되지 않은 형식입니다.');
-    //   } else {
-    //     setProjectImage(validatedFiles);
-    //   }
-    // }
-  };
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setProjectData({
       ...projectData,
@@ -86,15 +56,17 @@ export const Registration = () => {
     });
   };
 
-  const onAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const onChange2 = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setProjectData({
-      ...projectData,
+    setDeployData({
+      ...deployData,
       [name]: value,
     });
   };
 
   useEffect(() => {
+    if (pathname === '/deploy') return;
+
     const {
       project_name_ko,
       project_name_en,
@@ -108,7 +80,7 @@ export const Registration = () => {
 
     if (logo) {
       setProgress(1);
-      if (dataWhiteSpace({ project_name_ko, project_name_en, team_name_en, description })) {
+      if (dataWhiteSpace({ project_name_ko, project_name_en, team_name_en, description }) && projectImage) {
         setProgress(2);
         if (dataWhiteSpace({ github_url, web_url, play_store_url, app_store_url })) {
           setProgress(3);
@@ -117,39 +89,82 @@ export const Registration = () => {
     }
   }, [logo, projectData, projectImage]);
 
+  useEffect(() => {
+    if (pathname !== '/deploy') return;
+
+    const { container_name, github_url, service_type } = deployData;
+
+    if (container_name && github_url) {
+      setProgress(1);
+      if (service_type) {
+        setProgress(2);
+      }
+    }
+  }, [deployData]);
+
   const registerFormArray: ReactElement[] = [
-    <RegisterFormFirst logo={logo} func={handleLogoChange} />,
-    <RegisterFormSecond
-      value={projectData}
+    <RegisterFormFirst
+      logo={logo}
       projectImage={projectImage}
-      func1={onChange}
-      func2={onAreaChange}
-      func3={handleProjectImageChange}
+      onImageChange={(event: ChangeEvent<HTMLInputElement>) => handleImageChange(event, setLogo)}
+      onChange={onChange}
+      value={projectData}
     />,
-    <RegisterFormThird value={projectData} func={onChange} />,
+    <RegisterFormSecond
+      logo={logo}
+      projectImage={projectImage}
+      onImageChange={(event: ChangeEvent<HTMLInputElement>) => handleImagesChange(event, projectImage, setProjectImage)}
+      onChange={onChange}
+      value={projectData}
+    />,
+    <RegisterFormThird
+      logo={logo}
+      projectImage={projectImage}
+      onImageChange={(event: ChangeEvent<HTMLInputElement>) => handleImageChange(event, setLogo)}
+      onChange={onChange}
+      value={projectData}
+    />,
     // <RegisterFormForth value={projectData} />,
   ];
 
+  const deployFormArray: ReactElement[] = [
+    <DeployFormFirst value={deployData} onChange={onChange2} setDeployData={setDeployData} />,
+    <DeployFormSecond value={deployData} onChange={onChange2} setDeployData={setDeployData} />,
+    // <DeployFormThird />,
+  ];
+
   const onSubmit = () => {
-    if (!(logo && projectImage)) return;
+    if (pathname !== '/deploy' && logo && projectImage) {
+      const formData = new FormData();
+      formData.append('project', JSON.stringify(projectData));
+      formData.append('logo', logo);
+      projectImage.forEach((element: Blob) => {
+        formData.append('projectImage', element);
+      });
 
-    const formData = new FormData();
-    formData.append('project', JSON.stringify(projectData));
-    formData.append('logo', logo);
-    formData.append('projectImage', projectImage);
-
-    instance
-      .post('/project', formData)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      instance
+        .post('/project', formData)
+        .then(() => (window.location.href = 'my'))
+        .catch(() => toast.error('오류'));
+    } else if (pathname === '/deploy' && progress >= 2) {
+      deploy(deployData)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      toast.error('Submit Error');
+    }
   };
 
   return (
     <Wrapper>
-      <SubHeader />
+      <SubHeader path={pathname} />
       <Container>
-        <Progress progress={progress} kind={'register'} onClick={setNowProgress} func={onSubmit} />
-        {registerFormArray[nowProgress]}
+        <Progress progress={progress} onClick={setNowProgress} func={onSubmit} path={pathname} />
+        {pathname === '/register' ? registerFormArray[nowProgress] : deployFormArray[nowProgress]}
       </Container>
     </Wrapper>
   );

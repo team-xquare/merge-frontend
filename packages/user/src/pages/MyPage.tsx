@@ -1,20 +1,68 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { Button, theme } from '@merge/design-system';
+import { theme, Button } from '@merge/design-system';
 import { getMyProject } from '../apis/project';
+import { getUserInfo } from '../apis/user';
+import { toast } from 'react-toastify';
+import { useModal } from '../hooks/useModal';
+import DotsImg from '../assets/dots.svg';
 import { Link } from 'react-router-dom';
+import { hideProject, unhideProject } from '../apis/project';
+
+type userType = {
+  student_name: string;
+  school_gcn: number;
+  github: string;
+};
 
 type projectType = {
-  project_name_en: string;
+  project_name_ko: string;
   team_name_en: string;
   id: string;
   logo: string;
+  date: string;
+  is_hidden: boolean;
 };
 
 export const MyPage = () => {
+  const { visible, ModalWrapper, show } = useModal();
+  const [userInfo, setUserInfo] = useState<userType>({
+    student_name: '',
+    school_gcn: 0,
+    github: '',
+  });
   const [projects, setProjects] = useState<projectType[] | null>();
+  const [select, setSelect] = useState<string>('');
+  const [seeHide, setSeeHide] = useState<boolean>(false);
+
+  const onMenu = (project: string) => {
+    show();
+    setSelect(project);
+  };
+
+  const onHide = () => {
+    if (!seeHide) {
+      hideProject(select)
+        .then(() => window.location.reload())
+        .catch(() => toast.error('프로젝트 숨기기를 실패했습니다.'));
+    } else {
+      unhideProject(select)
+        .then(() => window.location.reload())
+        .catch(() => toast.error('프로젝트 숨기기 해제를 실패했습니다.'));
+    }
+  };
 
   useEffect(() => {
+    getUserInfo()
+      .then((res) => {
+        const data: userType = res.data;
+
+        setUserInfo({ student_name: data.student_name, school_gcn: data.school_gcn, github: data.github });
+      })
+      .catch(() => {
+        toast.error('유저 정보를 불러오는데 실패했습니다.');
+      });
+
     getMyProject('dutexion@dsm.hs.kr')
       .then((res) => {
         setProjects(res.data);
@@ -22,46 +70,101 @@ export const MyPage = () => {
       })
       .catch((err) => console.log(err));
   }, []);
-
   return (
-    <Wrapper>
-      <Header>
-        <div>
-          1학년 1반 1번
-          <span>강해민</span>
-        </div>
-        <a href="https://github.com/nimeahgnak">https://github.com/nimeahgnak</a>
-      </Header>
-      <Container>
-        {projects &&
-          projects.map((element, index) => {
-            return (
-              <Project key={index}>
-                <img src={element.logo} />
-                <div>
-                  {/* {element.admin && <Badge>관리자</Badge>} */}
-                  <div className="first">{element.project_name_en}</div>
-                  <div className="second">{element.team_name_en}</div>
-                  {/* <div className="third">{element.}</div> */}
-                </div>
-              </Project>
-            );
-          })}
-      </Container>
-      <ButtonContainer to={'/my/hide'}>
-        <Button
-          onClick={() => {
-            console.log(13);
-          }}
-          buttonStyle="solid"
-          size="extraSmall"
-        >
-          숨긴 프로젝트 보기
-        </Button>
-      </ButtonContainer>
-    </Wrapper>
+    <>
+      {visible && (
+        <ModalWrapper>
+          <ModalChildWrapper>
+            <ModalButton onClick={onHide}>{seeHide ? '숨김 해제' : '숨김'}</ModalButton>
+            <ModalButton>
+              <Link to={`/project/${select}`}>관리</Link>
+            </ModalButton>
+          </ModalChildWrapper>
+        </ModalWrapper>
+      )}
+      <Wrapper>
+        {!seeHide && (
+          <Header>
+            <div>
+              {userInfo.school_gcn}
+              <span>{userInfo.student_name}</span>
+            </div>
+            <a href={userInfo.github}>{userInfo.github}</a>
+          </Header>
+        )}
+        {seeHide && <HideText>숨긴 프로젝트</HideText>}
+        <Container>
+          {projects &&
+            !seeHide &&
+            projects.map((element, index) => {
+              if (element.is_hidden) return;
+              return (
+                <Project key={index}>
+                  <img src={element.logo} />
+                  <div>
+                    {/* {element.admin && <Badge>관리자</Badge>} */}
+                    <div className="first">{element.project_name_ko}</div>
+                    <div className="second">{element.team_name_en}</div>
+                    <div className="third">{element.date}</div>
+                    <Menu
+                      src={DotsImg}
+                      onClick={() => {
+                        onMenu(element.id);
+                      }}
+                    />
+                  </div>
+                </Project>
+              );
+            })}
+
+          {projects &&
+            seeHide &&
+            projects.map((element, index) => {
+              if (!element.is_hidden) return;
+              return (
+                <Project key={index}>
+                  <img src={element.logo} />
+                  <div>
+                    {/* {element.admin && <Badge>관리자</Badge>} */}
+                    <div className="first">{element.project_name_ko}</div>
+                    <div className="second">{element.team_name_en}</div>
+                    <div className="third">{element.date}</div>
+                    <Menu
+                      src={DotsImg}
+                      onClick={() => {
+                        onMenu(element.id);
+                      }}
+                    />
+                  </div>
+                </Project>
+              );
+            })}
+        </Container>
+        <ButtonContainer>
+          <Button
+            onClick={() => {
+              setSeeHide(!seeHide);
+            }}
+            buttonStyle="solid"
+            size="extraSmall"
+          >
+            {seeHide ? '안 숨긴' : '숨긴'} 프로젝트 보기
+          </Button>
+        </ButtonContainer>
+      </Wrapper>
+    </>
   );
 };
+
+const HideText = styled.div`
+  width: 1128px;
+  display: flex;
+  justify-content: start;
+  ${theme.font.heading4};
+  margin-top: 66px;
+  height: 70px;
+  align-items: center;
+`;
 
 const Wrapper = styled.div`
   height: calc(100vh - 52px);
@@ -112,7 +215,7 @@ const Project = styled.div`
   border: 1px solid ${theme.color.gray100};
   padding: 12px;
   border-radius: 8px;
-  img {
+  > img {
     width: 160px;
     height: 160px;
     border-radius: 4px;
@@ -144,6 +247,42 @@ const Project = styled.div`
   }
 `;
 
+const ModalChildWrapper = styled.div`
+  width: 400px;
+  height: 156px;
+  border-radius: 8px;
+  background-color: ${theme.color.white};
+  overflow: hidden;
+`;
+
+const ModalButton = styled.div`
+  width: 400px;
+  height: 78px;
+  border-bottom: 0.5px solid ${theme.color.gray200};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${theme.font.buttonLarge};
+  color: ${theme.color.primary900};
+  cursor: pointer;
+  transition: 0.1s linear;
+  & :last-child {
+    border-bottom: none;
+  }
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  a {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: ${theme.color.primary900};
+    text-decoration: none;
+  }
+`;
+
 // const Badge = styled.div`
 //   position: absolute;
 //   right: 0px;
@@ -161,7 +300,16 @@ const Project = styled.div`
 //   align-items: center;
 // `;
 
-const ButtonContainer = styled(Link)`
+const Menu = styled.img`
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+`;
+
+const ButtonContainer = styled.div`
   position: absolute;
   right: 36px;
   bottom: 72px;

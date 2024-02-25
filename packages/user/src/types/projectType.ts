@@ -8,3 +8,12 @@ export type projectType = {
   play_store_url: string;
   app_store_url: string;
 };
+
+export type deployType = {
+  container_name: string;
+  service_type: string;
+  github_url: string;
+  redis: boolean;
+  mysql: boolean;
+  project_id: string;
+};
