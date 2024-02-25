@@ -6,6 +6,7 @@ import { login } from '../apis/sign';
 import { Cookie } from '../utils/cookie';
 import { Link } from 'react-router-dom';
 import { signinType } from 'src/types/signType';
+import { idDuplicate } from '../apis/sign';
 
 export const SignIn = () => {
   const [data, setData] = useState<signinType>({ account_id: '', password: '' });
@@ -48,15 +49,27 @@ export const SignIn = () => {
             아직 계정이 없다면? <_Link to="/signup">회원가입</_Link>
           </div>
         </Title>
-        <Input
-          width={400}
-          placeholder="아이디"
-          margin={['top', 44]}
-          type="text"
-          name="account_id"
-          onChange={onChange}
-          value={account_id}
-        />
+        <InputContainer>
+          <Input
+            width={260}
+            placeholder="아이디"
+            margin={['top', 44]}
+            type="text"
+            name="account_id"
+            onChange={onChange}
+            value={account_id}
+          />
+          <Button
+            buttonStyle="ghost"
+            size="small"
+            onClick={() => {
+              idDuplicate(account_id);
+            }}
+          >
+            중복 확인
+          </Button>
+        </InputContainer>
+
         <Input
           width={400}
           placeholder="비밀번호"
@@ -103,6 +116,13 @@ const Title = styled.div`
   div {
     margin-top: 6px;
   }
+`;
+
+const InputContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 400px;
+  align-items: end;
 `;
 
 const BtnContainer = styled.div`
