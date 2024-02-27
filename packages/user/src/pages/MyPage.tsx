@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { theme, Button } from '@merge/design-system';
+import { theme, Button, Input } from '@merge/design-system';
 import { getMyProject } from '../apis/project';
-import { getUserInfo } from '../apis/user';
+import { getUserInfo, putUserUpdate } from '../apis/user';
 import { toast } from 'react-toastify';
 import { useModal } from '../hooks/useModal';
 import DotsImg from '../assets/dots.svg';
+import UpdateImg from '../assets/update.svg';
 import { Link } from 'react-router-dom';
 import { hideProject, unhideProject } from '../apis/project';
 
@@ -16,7 +17,7 @@ type userType = {
 };
 
 type projectType = {
-  project_name_ko: string;
+  project_name: string;
   team_name_en: string;
   id: string;
   logo: string;
@@ -25,7 +26,7 @@ type projectType = {
 };
 
 export const MyPage = () => {
-  const { visible, ModalWrapper, show } = useModal();
+  const { visible, ModalWrapper, show, close } = useModal();
   const [userInfo, setUserInfo] = useState<userType>({
     student_name: '',
     school_gcn: 0,
@@ -34,10 +35,15 @@ export const MyPage = () => {
   const [projects, setProjects] = useState<projectType[] | null>();
   const [select, setSelect] = useState<string>('');
   const [seeHide, setSeeHide] = useState<boolean>(false);
+  const [link, setLink] = useState<string>('');
 
   const onMenu = (project: string) => {
-    show();
+    show('management');
     setSelect(project);
+  };
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLink(e.target.value);
   };
 
   const onHide = () => {
@@ -52,12 +58,19 @@ export const MyPage = () => {
     }
   };
 
+  const onUpdate = () => {
+    putUserUpdate(link)
+      .then(() => window.location.reload())
+      .catch(() => toast.error('정보 수정에 실패했습니다.'));
+  };
+
   useEffect(() => {
     getUserInfo()
       .then((res) => {
         const data: userType = res.data;
 
         setUserInfo({ student_name: data.student_name, school_gcn: data.school_gcn, github: data.github });
+        setLink(data.github);
       })
       .catch(() => {
         toast.error('유저 정보를 불러오는데 실패했습니다.');
@@ -70,9 +83,10 @@ export const MyPage = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
   return (
     <>
-      {visible && (
+      {visible === 'management' && (
         <ModalWrapper>
           <ModalChildWrapper>
             <ModalButton onClick={onHide}>{seeHide ? '숨김 해제' : '숨김'}</ModalButton>
@@ -82,6 +96,21 @@ export const MyPage = () => {
           </ModalChildWrapper>
         </ModalWrapper>
       )}
+      {visible === 'update' && (
+        <ModalWrapper>
+          <ModalUpdateWrapper>
+            <div>
+              <span>깃허브 링크 수정</span>
+              <span>마이페이지에서 수정할 수 있습니다.</span>
+            </div>
+            <Input width={400} label="링크" value={link} onChange={onChange} />
+            <div>
+              <div onClick={onUpdate}>확인</div>
+              <div onClick={close}>취소</div>
+            </div>
+          </ModalUpdateWrapper>
+        </ModalWrapper>
+      )}
       <Wrapper>
         {!seeHide && (
           <Header>
@@ -89,7 +118,15 @@ export const MyPage = () => {
               {userInfo.school_gcn}
               <span>{userInfo.student_name}</span>
             </div>
-            <a href={userInfo.github}>{userInfo.github}</a>
+            <div>
+              <a href={userInfo.github}>{userInfo.github}</a>
+              <img
+                src={UpdateImg}
+                onClick={() => {
+                  show('update');
+                }}
+              />
+            </div>
           </Header>
         )}
         {seeHide && <HideText>숨긴 프로젝트</HideText>}
@@ -103,7 +140,7 @@ export const MyPage = () => {
                   <img src={element.logo} />
                   <div>
                     {/* {element.admin && <Badge>관리자</Badge>} */}
-                    <div className="first">{element.project_name_ko}</div>
+                    <div className="first">{element.project_name}</div>
                     <div className="second">{element.team_name_en}</div>
                     <div className="third">{element.date}</div>
                     <Menu
@@ -126,7 +163,7 @@ export const MyPage = () => {
                   <img src={element.logo} />
                   <div>
                     {/* {element.admin && <Badge>관리자</Badge>} */}
-                    <div className="first">{element.project_name_ko}</div>
+                    <div className="first">{element.project_name}</div>
                     <div className="second">{element.team_name_en}</div>
                     <div className="third">{element.date}</div>
                     <Menu
@@ -185,16 +222,25 @@ const Header = styled.div`
   border-radius: 8px;
   ${theme.font.subTitle2};
   align-items: center;
-  & > div {
+  & > div:nth-child(1) {
     color: ${theme.color.primary800};
     span {
       color: ${theme.color.gray800};
       margin-left: 20px;
     }
   }
-  & > a {
-    text-decoration: none;
-    color: ${theme.color.link800};
+  & > div:nth-child(2) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    & > a {
+      text-decoration: none;
+      color: ${theme.color.link800};
+    }
+    & > img {
+      cursor: pointer;
+    }
   }
 `;
 
@@ -314,4 +360,53 @@ const ButtonContainer = styled.div`
   right: 36px;
   bottom: 72px;
   text-decoration: none;
+`;
+
+const ModalUpdateWrapper = styled.div`
+  width: 440px;
+  height: 236px;
+  border-radius: 8px;
+  background-color: ${theme.color.white};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  & > div:first-child {
+    margin: 36px 0 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    color: ${theme.color.gray900};
+    ${theme.font.subTitle2};
+    & > span:last-child {
+      color: ${theme.color.gray600};
+      font-size: 12px;
+      font-weight: 500;
+    }
+  }
+  & > div:last-child {
+    margin-top: 23px;
+    display: flex;
+    justify-content: center;
+    div {
+      ${theme.font.buttonSmall};
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 220px;
+      height: 44px;
+      border-color: ${theme.color.gray200};
+      border-style: solid;
+      cursor: pointer;
+    }
+    & > div:first-child {
+      border-width: 1px 1px 0 0;
+      color: ${theme.color.gray800};
+    }
+    & > div:last-child {
+      border-width: 1px 0 0 0;
+      color: ${theme.color.danger500};
+    }
+  }
 `;
