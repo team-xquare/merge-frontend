@@ -1,33 +1,34 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useMemo } from 'react';
 import styled from '@emotion/styled';
 
 export type useModalReturnType = {
-  visible: boolean;
-  show: () => void;
+  visible: string | boolean;
+  show: (arg?: string | boolean) => void;
   close: () => void;
-  ModalWrapper: ({ children }: { children: React.ReactElement }) => React.ReactElement;
+  ModalWrapper: ({ children }: { children: React.ReactNode }) => React.ReactElement;
 };
 
 export type useModalProps = {
-  defaultVisible?: boolean;
-  ModalWrapper?: ({ children }: { children: React.ReactElement }) => React.ReactElement;
+  defaultVisible?: string | boolean;
 };
 
 export const useModal = ({ defaultVisible = false }: useModalProps = {}): useModalReturnType => {
   const [visible, setVisible] = useState(defaultVisible);
 
-  const show = useCallback(() => setVisible(true), [visible]);
+  const show = useCallback((arg: string | boolean = true) => setVisible(arg), [visible]);
   const close = useCallback(() => setVisible(false), [visible]);
 
-  const ModalWrapper = ({ children }: { children: React.ReactElement }) => {
+  const ModalWrapper = useMemo(() => {
     const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
       if (event.target === event.currentTarget) {
         close();
       }
     };
 
-    return <Wrapper onClick={handleClick}>{children}</Wrapper>;
-  };
+    return ({ children }: { children: React.ReactNode }) => {
+      return <Wrapper onClick={handleClick}>{children}</Wrapper>;
+    };
+  }, [close]);
 
   return {
     visible,
