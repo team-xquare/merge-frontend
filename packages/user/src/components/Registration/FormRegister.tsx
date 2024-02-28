@@ -97,7 +97,7 @@ export const RegisterFormSecond = ({ value, projectImage, onChange, onImageChang
           <InputText>프로젝트 개요 혹은 프로젝트 설명을 작성하기</InputText>
         </TextContainer>
         <AreaTextLength>
-          <span>100</span>/500
+          <span>{value.description.length}</span>/500
         </AreaTextLength>
       </AreaTextContainer>
       <Area
