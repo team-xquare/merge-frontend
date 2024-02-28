@@ -1,4 +1,4 @@
-import { instance } from './axios';
+import { instance } from './instance';
 
 export const getUserInfo = async () => {
   return await instance.get('/user/myInfo');

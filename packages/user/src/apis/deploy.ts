@@ -1,4 +1,4 @@
-import { instance } from './axios';
+import { instance } from './instance';
 import { deployType } from '../types/projectType';
 import { toast } from 'react-toastify';
 

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "noImplicitAny": false,
     "types": ["vite-plugin-svgr/client", "vite/client"],
     "baseUrl": "./src",
     "paths": {

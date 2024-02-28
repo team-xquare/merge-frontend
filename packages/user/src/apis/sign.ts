@@ -1,4 +1,4 @@
-import { instance } from './axios';
+import { instance } from './instance';
 import { signinType, signupType } from '../types/signType';
 import { toast } from 'react-toastify';
 

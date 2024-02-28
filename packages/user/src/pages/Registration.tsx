@@ -12,7 +12,7 @@ import { DeployFormFirst, DeployFormSecond } from '../components/Registration/Fo
 import { deployType, projectType } from '../types/projectType';
 import { dataWhiteSpace } from '../func/dataWhiteSpace';
 // import { createProject } from '../apis/project';
-import { instance } from '../apis/axios';
+import { instance } from '../apis/instance';
 import { handleImageChange, handleImagesChange } from '../func/handleImageChange';
 import { toast } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
