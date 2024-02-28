@@ -1,13 +1,12 @@
-FROM node:18-alpine as nodebuilder
+FROM node:18.12.0 AS builder
 
 WORKDIR /app
 
 RUN apk add --no-cache libc6-compat
 
 COPY manifests ./
-COPY package.json yarn.lock ./
 
-RUN yarn install
+RUN yarn install --immutable
 
 COPY packs ./
 
@@ -26,7 +25,7 @@ server {\
     }\
 }" > /etc/nginx/conf.d/default.conf
 
-COPY --from=nodebuilder /app/packages/user/dist /usr/share/nginx/html
+COPY --from=builder /app/packages/user/dist /usr/share/nginx/html
 
 # 3000포트 열기
 EXPOSE 3000
