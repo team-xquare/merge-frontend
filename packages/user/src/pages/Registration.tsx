@@ -28,7 +28,7 @@ export const Registration = () => {
 
   const [logo, setLogo] = useState<Blob | null>(null);
   const [projectData, setProjectData] = useState<projectType>({
-    project_name_ko: '',
+    project_name: '',
     project_name_en: '',
     team_name_en: '',
     description: '',
@@ -67,24 +67,12 @@ export const Registration = () => {
   useEffect(() => {
     if (pathname === '/deploy') return;
 
-    const {
-      project_name_ko,
-      project_name_en,
-      team_name_en,
-      description,
-      github_url,
-      web_url,
-      play_store_url,
-      app_store_url,
-    } = projectData;
+    const { project_name, project_name_en, team_name_en, description } = projectData;
 
     if (logo) {
       setProgress(1);
-      if (dataWhiteSpace({ project_name_ko, project_name_en, team_name_en, description }) && projectImage) {
-        setProgress(2);
-        if (dataWhiteSpace({ github_url, web_url, play_store_url, app_store_url })) {
-          setProgress(3);
-        }
+      if (dataWhiteSpace({ project_name, project_name_en, team_name_en, description })) {
+        setProgress(3);
       }
     }
   }, [logo, projectData, projectImage]);
@@ -134,18 +122,25 @@ export const Registration = () => {
   ];
 
   const onSubmit = () => {
-    if (pathname !== '/deploy' && logo && projectImage) {
+    if (pathname !== '/deploy' && logo) {
+      console.log(projectData);
+
       const formData = new FormData();
       formData.append('project', JSON.stringify(projectData));
       formData.append('logo', logo);
-      projectImage.forEach((element: Blob) => {
-        formData.append('projectImage', element);
-      });
+      if (projectImage) {
+        projectImage.forEach((element: Blob) => {
+          formData.append('projectImage', element);
+        });
+      }
 
       instance
         .post('/project', formData)
         .then(() => (window.location.href = 'my'))
-        .catch(() => toast.error('오류'));
+        .catch((err) => {
+          console.log(err);
+          toast.error('오류');
+        });
     } else if (pathname === '/deploy' && progress >= 2) {
       deploy(deployData)
         .then((res) => {

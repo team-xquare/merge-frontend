@@ -1,17 +1,17 @@
 import styled from '@emotion/styled';
-import { DeployContainter } from '../components/DeployContainter';
-import { useNavigate, useParams } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+// import { DeployContainter } from '../components/DeployContainter';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { getDetailProject } from '../apis/project';
-import { theme, Button } from '@merge/design-system';
-import { getContainerList } from '../apis/deploy';
+import { theme } from '@merge/design-system';
+// import { getContainerList } from '../apis/deploy';
 
 type dataType = {
   id: string;
   logo: string;
   student_name: string;
   team_name_en: string;
-  project_name_ko: string;
+  project_name: string;
   project_name_en: string;
   description: string;
   app_store_url: string;
@@ -22,18 +22,18 @@ type dataType = {
   is_managed_by_me: Boolean;
 };
 
-type containerType = {
-  container_name: string;
-  repository: string;
-  last_deploy: string;
-  url: string;
-};
+// type containerType = {
+//   container_name: string;
+//   repository: string;
+//   last_deploy: string;
+//   url: string;
+// };
 
 export const Project = () => {
   const { id } = useParams();
-  const link = useNavigate();
+  // const link = useNavigate();
   const [data, setData] = useState<dataType>();
-  const [containers, setContainers] = useState<containerType[]>();
+  // const [containers, setContainers] = useState<containerType[]>();
 
   useEffect(() => {
     if (!id) return;
@@ -41,13 +41,13 @@ export const Project = () => {
     getDetailProject(id)
       .then((res) => {
         setData(res.data);
-        if (res.data.is_managed_by_me) {
-          getContainerList(res.data.id)
-            .then((res) => {
-              setContainers([...res.data.deploy_list]);
-            })
-            .catch((err) => console.log(err));
-        }
+        //   if (res.data.is_managed_by_me) {
+        //     getContainerList(res.data.id)
+        //       .then((res) => {
+        //         // setContainers([...res.data.deploy_list]);
+        //       })
+        //       .catch((err) => console.log(err));
+        //   }
       })
       .catch(() => (window.location.href = '/'));
   }, []);
@@ -60,7 +60,7 @@ export const Project = () => {
             <Logo src={data.logo} />
             <div>
               <Date>2007-03-19</Date>
-              <Name>{data.project_name_ko}</Name>
+              <Name>{data.project_name}</Name>
               <TeamName>{data.team_name_en}</TeamName>
             </div>
           </TopContainer>
@@ -69,21 +69,27 @@ export const Project = () => {
             {data.description}
           </Description>
           <LinkBox>
-            <div>배포 링크</div>
-            <div>
-              <span>웹 주소</span>
-              <a href={data.web_url}>{data.web_url}</a>
-            </div>
-            <div>
-              <span>플레이 스토어</span>
-              <a href={data.play_store_url}>{data.play_store_url}</a>
-            </div>
-            <div>
-              <span>앱 스토어</span>
-              <a href={data.app_store_url}>{data.app_store_url}</a>
-            </div>
+            {(data.web_url || data.play_store_url || data.app_store_url) && <div>배포 링크</div>}
+            {data.web_url && (
+              <div>
+                <span>웹 주소</span>
+                <a href={data.web_url}>{data.web_url}</a>
+              </div>
+            )}
+            {data.play_store_url && (
+              <div>
+                <span>플레이 스토어</span>
+                <a href={data.play_store_url}>{data.play_store_url}</a>
+              </div>
+            )}
+            {data.app_store_url && (
+              <div>
+                <span>앱 스토어</span>
+                <a href={data.app_store_url}>{data.app_store_url}</a>
+              </div>
+            )}
           </LinkBox>
-          {containers && (
+          {/* {containers && (
             <ContainerWrapper>
               <ContainerTop>
                 <span>컨테이너</span>
@@ -110,7 +116,7 @@ export const Project = () => {
                 );
               })}
             </ContainerWrapper>
-          )}
+          )} */}
         </>
       )}
     </Wrapper>
@@ -192,20 +198,20 @@ const LinkBox = styled.div`
   }
 `;
 
-const ContainerWrapper = styled.div`
-  width: 668px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  margin-top: 44px;
-`;
+// const ContainerWrapper = styled.div`
+//   width: 668px;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   gap: 20px;
+//   margin-top: 44px;
+// `;
 
-const ContainerTop = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  ${theme.font.subTitle2};
-  color: ${theme.color.gray800};
-`;
+// const ContainerTop = styled.div`
+//   width: 100%;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   ${theme.font.subTitle2};
+//   color: ${theme.color.gray800};
+// `;

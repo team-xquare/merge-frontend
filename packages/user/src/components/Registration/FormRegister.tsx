@@ -1,12 +1,13 @@
 import { ChangeEvent } from 'react';
 import styled from '@emotion/styled';
-import { theme, Input } from '@merge/design-system';
+import { theme, Input, Button } from '@merge/design-system';
 import RegisterLogoImg from '../../assets/registerLogo.svg';
 // import CheckBoxTrueImg from '../../assets/checkBoxTrue.svg';
 // import CheckBoxFalseImg from '../../assets/checkBoxFalse.svg';
 import ScreenshotLabelImg from '../../assets/screenshotLabel.svg';
 import { projectType } from 'src/types/projectType';
 import { ImgContainer } from './ImgContainer';
+import { projectDuplicate } from '../../apis/project';
 
 interface formPropsType {
   logo: Blob | null;
@@ -49,22 +50,33 @@ export const RegisterFormSecond = ({ value, projectImage, onChange, onImageChang
       <Input
         width={668}
         important={true}
-        label="프로젝트 명(한글)"
-        placeholder="한글"
-        value={value.project_name_ko}
-        name="project_name_ko"
+        label="프로젝트 명"
+        placeholder="유저에게 표시 할 이름을 적어주세요"
+        value={value.project_name}
+        name="project_name"
         onChange={onChange}
       />
-      <Input
-        width={668}
-        important={true}
-        label="프로젝트 명(영어)"
-        placeholder="영어"
-        margin={['top', 52]}
-        value={value.project_name_en}
-        name="project_name_en"
-        onChange={onChange}
-      />
+      <InputContainer>
+        <Input
+          width={528}
+          important={true}
+          label="프로젝트 명(영어)"
+          placeholder="영어"
+          margin={['top', 52]}
+          value={value.project_name_en}
+          name="project_name_en"
+          onChange={onChange}
+        />
+        <Button
+          buttonStyle="ghost"
+          size="small"
+          onClick={() => {
+            projectDuplicate(value.project_name_en);
+          }}
+        >
+          중복 확인
+        </Button>
+      </InputContainer>
       <Input
         width={668}
         important={true}
@@ -175,6 +187,13 @@ const Wrapper = styled.div<{ height: number }>`
   flex-direction: column;
   background-color: ${theme.color.white};
   border-radius: 12px;
+`;
+
+const InputContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 668px;
+  align-items: end;
 `;
 
 const Important = styled.div`

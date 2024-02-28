@@ -72,7 +72,7 @@ export const Progress = ({
         </Container>
       </div>
       <ButtonContainer>
-        <Button buttonStyle="solid" size="medium" onClick={func} isDisable={false}>
+        <Button buttonStyle="solid" size="medium" onClick={func} isDisable={!(progress === levels.length)}>
           등록하기
         </Button>
       </ButtonContainer>

@@ -28,7 +28,7 @@ export const SignIn = () => {
         window.location.href = '/';
       })
       .catch((err) => {
-        console.error(err);
+        console.log(err);
       });
   };
 
