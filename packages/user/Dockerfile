@@ -2,7 +2,7 @@ FROM node:18.12.0 AS builder
 
 WORKDIR /app
 
-RUN apk add --no-cache libc6-compat
+RUN apt-get update && apt-get install -y libc6-compat
 
 COPY manifests ./
 
