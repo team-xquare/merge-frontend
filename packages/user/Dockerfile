@@ -1,32 +1,18 @@
-FROM node:18.12.0 AS builder
+# 가져올 이미지를 정의
+FROM node:18.12.0
 
+# 경로 설정하기
 WORKDIR /app
 
-COPY manifests ./
+COPY package.json .
 
-RUN yarn install --immutable
+RUN yarn install
 
-COPY packs ./
+COPY . .
 
-RUN yarn run build
+ARG BASE_URL
+ENV VITE_SERVER_BASE_URL $BASE_URL
 
-# 실행 단계
-FROM nginx:alpine AS runner
-
-RUN echo "\
-server {\
-    listen 3000;\
-    location / {\
-        root   /usr/share/nginx/html;\
-        index  index.html index.htm;\
-        try_files \$uri \$uri/ /index.html =404;\
-    }\
-}" > /etc/nginx/conf.d/default.conf
-
-COPY --from=builder /app/packages/user/dist /usr/share/nginx/html
-
-# 3000포트 열기
 EXPOSE 3000
 
-# Nginx 시작
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["yarn", "dev"]
