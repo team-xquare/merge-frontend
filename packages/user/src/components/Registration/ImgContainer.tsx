@@ -4,6 +4,7 @@ import Delete from '../../assets/delete.svg';
 
 type propsType = {
   files: Blob[] | null;
+  onDelete: (num: number) => void;
 };
 
 type ImageProps = {
@@ -14,7 +15,7 @@ type ImageProps = {
 const image: ImageProps = new Image();
 image.src = Apple;
 
-export const ImgContainer = ({ files }: propsType) => {
+export const ImgContainer = ({ files, onDelete }: propsType) => {
   const imgSize = (img: ImageProps): Boolean => {
     if (img.width > img.height) {
       return true;
@@ -31,7 +32,12 @@ export const ImgContainer = ({ files }: propsType) => {
           image.src = URL.createObjectURL(element);
 
           return (
-            <ImgBox key={index}>
+            <ImgBox
+              key={index}
+              onClick={() => {
+                onDelete(index);
+              }}
+            >
               <Cover>
                 <img src={Delete} />
               </Cover>

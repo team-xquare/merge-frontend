@@ -64,6 +64,16 @@ export const Registration = () => {
     });
   };
 
+  const onDeleteProjectImg = (num: number) => {
+    const newArr: Blob[] | undefined = projectImage?.filter((_, index) => num !== index);
+
+    if (newArr === undefined) {
+      setProjectImage(null);
+    } else {
+      setProjectImage(newArr);
+    }
+  };
+
   useEffect(() => {
     if (pathname === '/deploy') return;
 
@@ -103,6 +113,7 @@ export const Registration = () => {
       projectImage={projectImage}
       onImageChange={(event: ChangeEvent<HTMLInputElement>) => handleImagesChange(event, projectImage, setProjectImage)}
       onChange={onChange}
+      onDelete={onDeleteProjectImg}
       value={projectData}
     />,
     <RegisterFormThird

@@ -17,6 +17,10 @@ interface formPropsType {
   onChange: (e: ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
+interface SecondFormPropsType extends formPropsType {
+  onDelete: (num: number) => void;
+}
+
 export const RegisterFormFirst = ({ logo, onImageChange }: formPropsType) => {
   return (
     <Wrapper height={472}>
@@ -40,7 +44,7 @@ export const RegisterFormFirst = ({ logo, onImageChange }: formPropsType) => {
   );
 };
 
-export const RegisterFormSecond = ({ value, projectImage, onChange, onImageChange }: formPropsType) => {
+export const RegisterFormSecond = ({ value, projectImage, onChange, onImageChange, onDelete }: SecondFormPropsType) => {
   return (
     <Wrapper height={1184}>
       <TipTextContainer>
@@ -110,7 +114,7 @@ export const RegisterFormSecond = ({ value, projectImage, onChange, onImageChang
       <LabelScreenshotInput htmlFor="screenshot">
         <img src={ScreenshotLabelImg} />
       </LabelScreenshotInput>
-      <ImgContainer files={projectImage} />
+      <ImgContainer files={projectImage} onDelete={onDelete} />
     </Wrapper>
   );
 };
