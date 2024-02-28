@@ -162,7 +162,9 @@ export const MyPage = () => {
               if (!element.is_hidden) return;
               return (
                 <Project key={index}>
-                  <img src={element.logo} />
+                  <Link to={`/project/${element.id}`}>
+                    <img src={element.logo} />
+                  </Link>
                   <div>
                     {/* {element.admin && <Badge>관리자</Badge>} */}
                     <div className="first">{element.project_name}</div>
@@ -214,6 +216,7 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.div`
+  flex: none;
   width: 1128px;
   height: 70px;
   padding: 0 40px;

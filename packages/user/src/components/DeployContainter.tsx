@@ -1,5 +1,6 @@
 import { theme } from '@merge/design-system';
 import styled from '@emotion/styled';
+import React from 'react';
 
 type containerType = {
   container_name: string;
