@@ -1,4 +1,11 @@
-export type projectType = {
+export interface ProjectType {
+  id: string;
+  project_name: string;
+  team_name_en: string;
+  logo: string;
+}
+
+export interface ProjectRegisterType {
   project_name: string;
   project_name_en: string;
   team_name_en: string;
@@ -7,13 +14,4 @@ export type projectType = {
   web_url: string;
   play_store_url: string;
   app_store_url: string;
-};
-
-export type deployType = {
-  container_name: string;
-  service_type: string;
-  github_url: string;
-  redis: boolean;
-  mysql: boolean;
-  project_id: string;
-};
+}

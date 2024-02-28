@@ -1,15 +1,9 @@
 import styled from '@emotion/styled';
 import { theme } from '@merge/design-system';
 import { Link } from 'react-router-dom';
+import { ProjectType } from '../../types/projectType';
 
-type projectsType = {
-  id: string;
-  project_name: string;
-  team_name_en: string;
-  logo: string;
-};
-
-export const LatestProject = ({ projects }: { projects: projectsType[] }) => {
+export const LatestProject = ({ projects }: { projects: ProjectType[] }) => {
   return (
     <LatestProjectContainer>
       {projects.map((project, index) => {

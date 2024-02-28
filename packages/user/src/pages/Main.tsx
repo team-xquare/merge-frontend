@@ -1,38 +1,33 @@
+import { useEffect, useRef, useState } from 'react';
+import styled from '@emotion/styled';
+import { toast } from 'react-toastify';
+import { theme } from '@merge/design-system';
 import { FavoriteProjects } from '../components/Main/FavoriteProject';
 import { LatestProject } from '../components/Main/LatestProject';
-import { theme } from '@merge/design-system';
-import styled from '@emotion/styled';
-import BannerImg from '../assets/banner.png';
-import ScrollImg from '../assets/topPageButton.svg';
-import { useEffect, useRef, useState } from 'react';
 import { getProjects } from '../apis/project';
-
-type projectsType = {
-  id: string;
-  project_name: string;
-  team_name_en: string;
-  logo: string;
-};
+import BannerImg from '../assets/banner.png';
+import TopPageButtonImg from '../assets/topPageButton.svg';
+import { ProjectType } from '../types/projectType';
 
 export const Main = () => {
-  const [projects, setProjects] = useState<projectsType[]>();
+  const [projects, setProjects] = useState<ProjectType[]>();
 
-  const container = useRef<HTMLImageElement>(null);
+  const wrapper = useRef<HTMLImageElement>(null);
 
   const scrollToTop = () => {
-    if (container.current) {
-      container.current.scroll({ top: 0, behavior: 'smooth' });
+    if (wrapper.current) {
+      wrapper.current.scroll({ top: 0, behavior: 'smooth' });
     }
   };
 
   useEffect(() => {
     getProjects()
-      .then((res: any) => setProjects(res.data))
-      .catch((err: any) => console.log(err));
+      .then((res) => setProjects(res.data))
+      .catch((err) => toast.error(err.response.data.message));
   }, []);
 
   return (
-    <Container ref={container}>
+    <Wrapper ref={wrapper}>
       <Banner src={BannerImg} />
       <Title marginTop="">즐겨찾는 프로젝트</Title>
       <FavoriteProjectContainer>
@@ -40,10 +35,20 @@ export const Main = () => {
       </FavoriteProjectContainer>
       <Title marginTop="56px">최근 등록 된 프로젝트</Title>
       <LatestProjectContainer>{projects && <LatestProject projects={projects} />}</LatestProjectContainer>
-      <TopPageButton onClick={scrollToTop} />
-    </Container>
+      <TopPageButton onClick={scrollToTop}>
+        <img src={TopPageButtonImg} />
+      </TopPageButton>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+`;
 
 const Banner = styled.img`
   width: 1128px;
@@ -63,15 +68,6 @@ const FavoriteProjectContainer = styled.div`
   width: 740px;
 `;
 
-const Container = styled.div`
-  /* width: 100vw; */
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: auto;
-`;
-
 const LatestProjectContainer = styled.div`
   width: 1128px;
   display: flex;
@@ -79,17 +75,16 @@ const LatestProjectContainer = styled.div`
 `;
 
 const TopPageButton = styled.div`
-  background-image: url(${ScrollImg});
-  position: fixed;
   width: 50px;
   height: 50px;
-  border-radius: 50%;
-  top: 85%;
-  left: 81%;
+  position: fixed;
+  bottom: 106px;
+  right: 298px;
   border: 1px solid ${theme.color.primary100};
-  background-repeat: no-repeat;
-  background-position: center center;
-
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &:hover {
     cursor: pointer;
   }
