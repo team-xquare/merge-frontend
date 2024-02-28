@@ -144,6 +144,9 @@ const TopContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-top: 92px;
+  > div {
+    width: 518px;
+  }
 `;
 
 const Logo = styled.img`
@@ -156,17 +159,23 @@ const Logo = styled.img`
 const Date = styled.div`
   ${theme.font.subTitle2};
   color: ${theme.color.primary500};
+  width: 100%;
+  text-align: end;
 `;
 
 const Name = styled.div`
   ${theme.font.heading4};
   color: ${theme.color.gray900};
   margin: 6px 0;
+  width: 100%;
+  text-align: end;
 `;
 
 const TeamName = styled.div`
   ${theme.font.heading5};
   color: ${theme.color.gray600};
+  width: 100%;
+  text-align: end;
 `;
 
 const Description = styled.div`
