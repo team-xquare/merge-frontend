@@ -2,10 +2,7 @@
   "compilerOptions": {
     "noImplicitAny": false,
     "types": ["vite-plugin-svgr/client", "vite/client"],
-    "baseUrl": "./src",
-    "paths": {
-      "*": ["*", "apis/*"]
-    },
+    "baseUrl": ".",
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
