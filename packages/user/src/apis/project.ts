@@ -8,6 +8,10 @@ type createProjectType = {
   projectImage: File[];
 };
 
+export const getProjects = async () => {
+  return await instance.get('/project/list');
+};
+
 export const getDetailProject = async (id: string) => {
   return await instance.get(`/project/detail?id=${id}`);
 };

@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import BannerImg from '../assets/banner.png';
 import ScrollImg from '../assets/topPageButton.svg';
 import { useEffect, useRef, useState } from 'react';
-import { getProjects } from '../apis/main';
+import { getProjects } from '../apis/project';
 
 type projectsType = {
   id: string;
