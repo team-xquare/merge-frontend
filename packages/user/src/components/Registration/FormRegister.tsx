@@ -1,18 +1,18 @@
 import { ChangeEvent } from 'react';
-import styled from '@emotion/styled';
-import { theme, Input, Button } from '@merge/design-system';
+import { Input, Button } from '@merge/design-system';
 import RegisterLogoImg from '../../assets/registerLogo.svg';
 // import CheckBoxTrueImg from '../../assets/checkBoxTrue.svg';
 // import CheckBoxFalseImg from '../../assets/checkBoxFalse.svg';
 import ScreenshotLabelImg from '../../assets/screenshotLabel.svg';
-import { projectType } from 'src/types/projectType';
+import { ProjectRegisterType } from '../../types/projectType';
 import { ImgContainer } from './ImgContainer';
 import { projectDuplicate } from '../../apis/project';
+import * as _ from './style';
 
 interface formPropsType {
   logo: Blob | null;
   projectImage: Blob[] | null;
-  value: projectType;
+  value: ProjectRegisterType;
   onImageChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onChange: (e: ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
@@ -23,34 +23,34 @@ interface SecondFormPropsType extends formPropsType {
 
 export const RegisterFormFirst = ({ logo, onImageChange }: formPropsType) => {
   return (
-    <Wrapper height={472}>
-      <TipTextContainer>
-        <Important />
-        <TipText>가 있는 필드는 필수 입력란 입니다.</TipText>
-      </TipTextContainer>
-      <TextContainer>
-        <Important />
-        <InputText>프로젝트 로고 등록하기</InputText>
-      </TextContainer>
-      <FileInput type="file" id="logo" onChange={onImageChange} />
-      <LabelLogoInput htmlFor="logo">
+    <_.Wrapper height={472}>
+      <_.TipTextContainer>
+        <_.Important />
+        <_.TipText>가 있는 필드는 필수 입력란 입니다.</_.TipText>
+      </_.TipTextContainer>
+      <_.TextContainer>
+        <_.Important />
+        <_.InputText>프로젝트 로고 등록하기</_.InputText>
+      </_.TextContainer>
+      <_.FileInput type="file" id="logo" onChange={onImageChange} />
+      <_.LabelLogoInput htmlFor="logo">
         {logo === null || logo === undefined ? (
           <img src={RegisterLogoImg} />
         ) : (
           <img src={URL.createObjectURL(logo)} style={{ width: '100%', height: '100%', borderRadius: '8px' }} />
         )}
-      </LabelLogoInput>
-    </Wrapper>
+      </_.LabelLogoInput>
+    </_.Wrapper>
   );
 };
 
 export const RegisterFormSecond = ({ value, projectImage, onChange, onImageChange, onDelete }: SecondFormPropsType) => {
   return (
-    <Wrapper height={1184}>
-      <TipTextContainer>
-        <Important />
-        <TipText>가 있는 필드는 필수 입력란 입니다.</TipText>
-      </TipTextContainer>
+    <_.Wrapper height={1184}>
+      <_.TipTextContainer>
+        <_.Important />
+        <_.TipText>가 있는 필드는 필수 입력란 입니다.</_.TipText>
+      </_.TipTextContainer>
       <Input
         width={668}
         important={true}
@@ -60,7 +60,7 @@ export const RegisterFormSecond = ({ value, projectImage, onChange, onImageChang
         name="project_name"
         onChange={onChange}
       />
-      <InputContainer>
+      <_.InputContainer>
         <Input
           width={528}
           important={true}
@@ -80,7 +80,7 @@ export const RegisterFormSecond = ({ value, projectImage, onChange, onImageChang
         >
           중복 확인
         </Button>
-      </InputContainer>
+      </_.InputContainer>
       <Input
         width={668}
         important={true}
@@ -91,37 +91,37 @@ export const RegisterFormSecond = ({ value, projectImage, onChange, onImageChang
         name="team_name_en"
         onChange={onChange}
       />
-      <AreaTextContainer>
-        <TextContainer>
-          <Important />
-          <InputText>프로젝트 개요 혹은 프로젝트 설명을 작성하기</InputText>
-        </TextContainer>
-        <AreaTextLength>
+      <_.AreaTextContainer>
+        <_.TextContainer>
+          <_.Important />
+          <_.InputText>프로젝트 개요 혹은 프로젝트 설명을 작성하기</_.InputText>
+        </_.TextContainer>
+        <_.AreaTextLength>
           <span>{value.description.length}</span>/500
-        </AreaTextLength>
-      </AreaTextContainer>
-      <Area
+        </_.AreaTextLength>
+      </_.AreaTextContainer>
+      <_.Area
         placeholder="프로젝트 설명을 작성해주세요."
         maxLength={500}
         value={value.description}
         name="description"
         onChange={onChange}
       />
-      <TextContainer style={{ marginTop: '52px' }}>
-        <InputText>프로젝트 스크린샷 또는 사진 등록하기</InputText>
-      </TextContainer>
-      <FileInput type="file" id="screenshot" onChange={onImageChange} />
-      <LabelScreenshotInput htmlFor="screenshot">
+      <_.TextContainer style={{ marginTop: '52px' }}>
+        <_.InputText>프로젝트 스크린샷 또는 사진 등록하기</_.InputText>
+      </_.TextContainer>
+      <_.FileInput type="file" id="screenshot" onChange={onImageChange} />
+      <_.LabelScreenshotInput htmlFor="screenshot">
         <img src={ScreenshotLabelImg} />
-      </LabelScreenshotInput>
+      </_.LabelScreenshotInput>
       <ImgContainer files={projectImage} onDelete={onDelete} />
-    </Wrapper>
+    </_.Wrapper>
   );
 };
 
 export const RegisterFormThird = ({ value, onChange }: formPropsType) => {
   return (
-    <Wrapper height={560}>
+    <_.Wrapper height={560}>
       <Input
         width={668}
         label="깃허브 주소"
@@ -158,7 +158,7 @@ export const RegisterFormThird = ({ value, onChange }: formPropsType) => {
         name="app_store_url"
         onChange={onChange}
       />
-    </Wrapper>
+    </_.Wrapper>
   );
 };
 
@@ -181,130 +181,3 @@ export const RegisterFormThird = ({ value, onChange }: formPropsType) => {
 //     </Wrapper>
 //   );
 // };
-
-const Wrapper = styled.div<{ height: number }>`
-  width: 832px;
-  height: ${({ height }) => height + 'px'};
-  margin-bottom: ${({ height }) => height >= 1000 && '94px'};
-  padding: 62px 68px 0 68px;
-  display: flex;
-  flex-direction: column;
-  background-color: ${theme.color.white};
-  border-radius: 12px;
-`;
-
-const InputContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 668px;
-  align-items: end;
-`;
-
-const Important = styled.div`
-  width: 5px;
-  height: 5px;
-  background-color: ${theme.color.primaryA400};
-  margin-right: 4px;
-  border-radius: 50%;
-`;
-
-const TipText = styled.div`
-  ${theme.font.body2};
-  color: ${theme.color.gray600};
-`;
-
-const InputText = styled.div`
-  ${theme.font.label};
-  color: ${theme.color.gray900};
-`;
-
-const TipTextContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 36px;
-`;
-
-const TextContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const LabelLogoInput = styled.label`
-  width: 230px;
-  height: 230px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${theme.color.gray50};
-  margin-top: 14px;
-  border-radius: 8px;
-  cursor: pointer;
-`;
-
-const FileInput = styled.input`
-  width: 0;
-  height: 0;
-`;
-
-const AreaTextContainer = styled.div`
-  width: 668px;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 52px;
-  margin-bottom: 14px;
-`;
-
-const AreaTextLength = styled.div`
-  color: ${theme.color.primary400};
-  ${theme.font.subTitle3};
-  span {
-    color: ${theme.color.primaryA200};
-  }
-`;
-
-const Area = styled.textarea`
-  width: 668px;
-  height: 216px;
-  ${theme.font.caption};
-  border-radius: 8px;
-  background-color: ${theme.color.gray50};
-  color: ${theme.color.gray800};
-  padding: 8px 24px;
-  resize: none;
-  border: 1px solid ${theme.color.gray50};
-  &::placeholder {
-    color: ${theme.color.gray500};
-  }
-  &:hover {
-    border: 1px solid ${theme.color.gray300};
-  }
-  &:focus {
-    outline: 1px solid ${theme.color.primary500};
-  }
-`;
-
-// const CheckBox = styled.div<{ check: boolean }>`
-//   width: 668px;
-//   height: 40px;
-//   padding: 0 40px;
-//   display: flex;
-//   background-color: ${theme.color.gray50};
-//   border-radius: 12px;
-//   margin-top: 14px;
-//   color: ${({ check }) => (check ? theme.color.primaryA200 : theme.color.gray500)};
-//   align-items: center;
-//   justify-content: space-between;
-//   cursor: pointer;
-// `;
-
-const LabelScreenshotInput = styled.label`
-  width: 668px;
-  height: 160px;
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${theme.color.gray50};
-  margin-top: 14px;
-  cursor: pointer;
-`;
