@@ -78,7 +78,7 @@ export const Project = () => {
               <TeamName>{data.team_name_en}</TeamName>
             </div>
           </TopContainer>
-          {data.project_image && (
+          {data.project_image && data.project_image.length > 0 && (
             <ImgContainer>
               <div>
                 <img src={ChevronImg} onClick={onImgCountMinus} />
