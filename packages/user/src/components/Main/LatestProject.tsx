@@ -3,18 +3,18 @@ import { theme } from '@merge/design-system';
 import { Link } from 'react-router-dom';
 
 type projectsType = {
-  project_id: string,
-  project_name: string,
-  team_name_en: string,
-  logo: string
-}
+  id: string;
+  project_name: string;
+  team_name_en: string;
+  logo: string;
+};
 
 export const LatestProject = ({ projects }: { projects: projectsType[] }) => {
   return (
     <LatestProjectContainer>
       {projects.map((project, index) => {
         return (
-          <FlexContainer key={index} to={`project/${project.project_id}`}>
+          <FlexContainer key={index} to={`project/${project.id}`}>
             <ProjectImg src={project.logo} />
             <NameContainer>
               <ProjectName>{project.project_name}</ProjectName>
@@ -43,8 +43,8 @@ const LatestProjectContainer = styled.div`
 `;
 
 const ProjectImg = styled.img`
-  width: 200;
-  height: 170px;
+  width: 200px;
+  height: 200px;
   margin-bottom: 4px;
   border: 1px solid ${theme.color.gray100};
   border-radius: 10px;
@@ -58,8 +58,10 @@ const NameContainer = styled.div`
 
 const ProjectName = styled.div`
   ${theme.font.subTitle2};
+  color: ${theme.color.gray800};
 `;
 
 const TeamName = styled.div`
   ${theme.font.body1};
+  color: ${theme.color.primary400};
 `;

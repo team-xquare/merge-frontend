@@ -3,16 +3,16 @@ import { LatestProject } from '../components/Main/LatestProject';
 import { theme } from '@merge/design-system';
 import styled from '@emotion/styled';
 import BannerImg from '../assets/banner.png';
-import ScrollImg from "../assets/topPageButton.svg";
+import ScrollImg from '../assets/topPageButton.svg';
 import { useEffect, useRef, useState } from 'react';
-import { getProjects } from '../apis/main'
+import { getProjects } from '../apis/main';
 
 type projectsType = {
-  project_id: string,
-  project_name: string,
-  team_name_en: string,
-  logo: string
-}
+  id: string;
+  project_name: string;
+  team_name_en: string;
+  logo: string;
+};
 
 export const Main = () => {
   const [projects, setProjects] = useState<projectsType[]>();
@@ -27,9 +27,9 @@ export const Main = () => {
 
   useEffect(() => {
     getProjects()
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err))
-  }, [])
+      .then((res) => setProjects(res.data))
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <Container ref={container}>
@@ -39,9 +39,7 @@ export const Main = () => {
         <FavoriteProjects />
       </FavoriteProjectContainer>
       <Title marginTop="56px">최근 등록 된 프로젝트</Title>
-      <LatestProjectContainer>
-        {projects && <LatestProject projects={projects} />}
-      </LatestProjectContainer>
+      <LatestProjectContainer>{projects && <LatestProject projects={projects} />}</LatestProjectContainer>
       <TopPageButton onClick={scrollToTop} />
     </Container>
   );
