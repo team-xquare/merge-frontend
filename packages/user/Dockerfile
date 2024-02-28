@@ -1,6 +1,8 @@
-FROM node:18.12.0 AS builder
+FROM node:16-alpine AS builder
 
 WORKDIR /app
+
+RUN apk add --no-cache libc6-compat
 
 COPY manifests ./
 
