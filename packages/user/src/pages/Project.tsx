@@ -1,10 +1,9 @@
 import styled from '@emotion/styled';
-// import { DeployContainter } from '../components/DeployContainter';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getDetailProject } from '../apis/project';
 import { theme } from '@merge/design-system';
-// import { getContainerList } from '../apis/deploy';
+import ChevronImg from '../assets/chevron.svg';
 
 type dataType = {
   id: string;
@@ -33,6 +32,7 @@ export const Project = () => {
   const { id } = useParams();
   // const link = useNavigate();
   const [data, setData] = useState<dataType>();
+  const [imgCount, setImgCount] = useState<number>(0);
   // const [containers, setContainers] = useState<containerType[]>();
 
   useEffect(() => {
@@ -41,16 +41,30 @@ export const Project = () => {
     getDetailProject(id)
       .then((res) => {
         setData(res.data);
-        //   if (res.data.is_managed_by_me) {
-        //     getContainerList(res.data.id)
-        //       .then((res) => {
-        //         // setContainers([...res.data.deploy_list]);
-        //       })
-        //       .catch((err) => console.log(err));
-        //   }
+        console.log(res);
       })
       .catch(() => (window.location.href = '/'));
   }, []);
+
+  const onImgCountPlus = () => {
+    if (data?.project_image) {
+      if (imgCount < data.project_image.length - 1) {
+        setImgCount((prev) => prev + 1);
+      } else {
+        setImgCount(0);
+      }
+    }
+  };
+
+  const onImgCountMinus = () => {
+    if (data?.project_image) {
+      if (imgCount > 0) {
+        setImgCount((prev) => prev - 1);
+      } else {
+        setImgCount(data.project_image.length - 1);
+      }
+    }
+  };
 
   return (
     <Wrapper>
@@ -64,6 +78,22 @@ export const Project = () => {
               <TeamName>{data.team_name_en}</TeamName>
             </div>
           </TopContainer>
+          {data.project_image && (
+            <ImgContainer>
+              <div>
+                <img src={ChevronImg} onClick={onImgCountMinus} />
+                <ImgBox>
+                  <img src={data.project_image[imgCount]} />
+                </ImgBox>
+                <img src={ChevronImg} style={{ transform: 'rotate(180deg)' }} onClick={onImgCountPlus} />
+              </div>
+              <ImgCountContainer>
+                {data.project_image.map((_, index) => {
+                  return <ImgCount selected={index === imgCount} />;
+                })}
+              </ImgCountContainer>
+            </ImgContainer>
+          )}
           <Description>
             <span>프로젝트 내용</span>
             {data.description?.split('\n').map((element) => {
@@ -132,6 +162,7 @@ export const Project = () => {
 
 const Wrapper = styled.div`
   width: 100vw;
+  height: calc(100vh - 52px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -212,22 +243,47 @@ const LinkBox = styled.div`
     color: ${theme.color.link800};
     text-decoration: none;
   }
+  margin-bottom: 100px;
 `;
 
-// const ContainerWrapper = styled.div`
-//   width: 668px;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   gap: 20px;
-//   margin-top: 44px;
-// `;
+const ImgContainer = styled.div`
+  width: 772px;
+  height: 296px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px;
+  & > div:first-child {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    & > img {
+      cursor: pointer;
+    }
+  }
+`;
 
-// const ContainerTop = styled.div`
-//   width: 100%;
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   ${theme.font.subTitle2};
-//   color: ${theme.color.gray800};
-// `;
+const ImgBox = styled.div`
+  width: 668px;
+  height: 280px;
+  display: flex;
+  overflow: hidden;
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ImgCountContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  height: 8px;
+  margin-top: 8px;
+`;
+
+const ImgCount = styled.div<{ selected: boolean }>`
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: ${({ selected }) => (selected ? theme.color.primary400 : theme.color.primary50)};
+`;
