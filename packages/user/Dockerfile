@@ -25,7 +25,7 @@ server {\
     }\
 }" > /etc/nginx/conf.d/default.conf
 
-COPY --from=builder /app/packages/user/dist /usr/share/nginx/html
+COPY --from=nodebuilder /app/packages/user/dist /usr/share/nginx/html
 
 # 3000포트 열기
 EXPOSE 3000
