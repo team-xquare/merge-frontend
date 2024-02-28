@@ -4,15 +4,33 @@ import { theme } from '@merge/design-system';
 import styled from '@emotion/styled';
 import BannerImg from '../assets/banner.png';
 import ScrollImg from "../assets/topPageButton.svg";
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { getProjects } from '../apis/main'
+
+type projectsType = {
+  project_id: string,
+  project_name: string,
+  team_name_en: string,
+  logo: string
+}
 
 export const Main = () => {
+  const [projects, setProjects] = useState<projectsType[]>();
+
   const container = useRef<HTMLImageElement>(null);
+
   const scrollToTop = () => {
     if (container.current) {
       container.current.scroll({ top: 0, behavior: 'smooth' });
     }
   };
+
+  useEffect(() => {
+    getProjects()
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+  }, [])
+
   return (
     <Container ref={container}>
       <Banner src={BannerImg} />
@@ -22,7 +40,7 @@ export const Main = () => {
       </FavoriteProjectContainer>
       <Title marginTop="56px">최근 등록 된 프로젝트</Title>
       <LatestProjectContainer>
-        <LatestProject />
+        {projects && <LatestProject projects={projects} />}
       </LatestProjectContainer>
       <TopPageButton onClick={scrollToTop} />
     </Container>
