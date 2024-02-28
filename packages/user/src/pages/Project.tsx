@@ -213,6 +213,7 @@ const Description = styled.div`
   margin-top: 60px;
   width: 668px;
   display: flex;
+  word-break: break-all;
   flex-direction: column;
   justify-content: center;
   gap: 12px;
