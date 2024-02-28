@@ -1,108 +1,24 @@
 import styled from '@emotion/styled';
 import { theme } from '@merge/design-system';
-import temporaryImg from '../../assets/temporary.svg';
 import { Link } from 'react-router-dom';
-import dmsLogoImg from '../../assets/logos/DMS.svg';
-import OSJLogoImg from '../../assets/logos/OSJ.svg';
 
 type projectsType = {
-  name: string;
-  team: string;
-  picture: string;
-  link: string;
-};
+  project_id: string,
+  project_name: string,
+  team_name_en: string,
+  logo: string
+}
 
-const projects: projectsType[] = [
-  {
-    name: '정이라고 하자',
-    team: '정민',
-    picture: dmsLogoImg,
-    link: '',
-  },
-  {
-    name: '정이라고 하자',
-    team: '정민',
-    picture: OSJLogoImg,
-    link: '',
-  },
-  {
-    name: '정이라고 하자',
-    team: '정민',
-    picture: temporaryImg,
-    link: '',
-  },
-  {
-    name: '정이라고 하자',
-    team: '정민',
-    picture: temporaryImg,
-    link: '',
-  },
-  {
-    name: '정이라고 하자',
-    team: '정민',
-    picture: temporaryImg,
-    link: '',
-  },
-  {
-    name: '정이라고 하자',
-    team: '정민',
-    picture: temporaryImg,
-    link: '',
-  },
-  {
-    name: '정이라고 하자',
-    team: '정민',
-    picture: temporaryImg,
-    link: '',
-  },
-  {
-    name: '정이라고 하자',
-    team: '정민',
-    picture: temporaryImg,
-    link: '',
-  },
-  {
-    name: '정이라고 하자',
-    team: '정민',
-    picture: temporaryImg,
-    link: '',
-  },
-  {
-    name: '정이라고 하자',
-    team: '정민',
-    picture: temporaryImg,
-    link: '',
-  },
-  {
-    name: '정이라고 하자',
-    team: '정민',
-    picture: temporaryImg,
-    link: '',
-  },
-  {
-    name: '정이라고 하자',
-    team: '정민',
-    picture: temporaryImg,
-    link: '',
-  },
-  {
-    name: '정이라고 하자',
-    team: '정민',
-    picture: temporaryImg,
-    link: '',
-  },
-];
-
-export const LatestProject = () => {
+export const LatestProject = ({ projects }: { projects: projectsType[] }) => {
   return (
     <LatestProjectContainer>
       {projects.map((project, index) => {
         return (
-          <FlexContainer key={index} to={project.link}>
-            <ProjectImg src={project.picture} />
+          <FlexContainer key={index} to={`project/${project.project_id}`}>
+            <ProjectImg src={project.logo} />
             <NameContainer>
-              <ProjectName>{project.name}</ProjectName>
-              <TeamName>{project.team}</TeamName>
+              <ProjectName>{project.project_name}</ProjectName>
+              <TeamName>{project.team_name_en}</TeamName>
             </NameContainer>
           </FlexContainer>
         );
