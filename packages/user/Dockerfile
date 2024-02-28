@@ -1,6 +1,6 @@
 FROM alpine:3.18 AS builder
 
-ENV NODE_VERSION 18.19.1
+ENV NODE_VERSION 18.12.0
 
 WORKDIR /app
 
