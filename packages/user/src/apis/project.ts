@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { instance } from './instance';
 import { projectType } from '../types/projectType';
 import { toast } from 'react-toastify';
@@ -9,7 +10,8 @@ type createProjectType = {
 };
 
 export const getProjects = async () => {
-  return await instance.get('/project/list');
+  const url = import.meta.env.VITE_SERVER_BASE_URL;
+  return await axios.get(`${url}/project/list`);
 };
 
 export const getDetailProject = async (id: string) => {
