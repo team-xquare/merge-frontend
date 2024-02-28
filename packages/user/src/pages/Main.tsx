@@ -27,8 +27,8 @@ export const Main = () => {
 
   useEffect(() => {
     getProjects()
-      .then((res) => setProjects(res.data))
-      .catch((err) => console.log(err));
+      .then((res: any) => setProjects(res.data))
+      .catch((err: any) => console.log(err));
   }, []);
 
   return (
