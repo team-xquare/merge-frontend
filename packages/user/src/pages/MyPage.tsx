@@ -137,7 +137,9 @@ export const MyPage = () => {
               if (element.is_hidden) return;
               return (
                 <Project key={index}>
-                  <img src={element.logo} />
+                  <Link to={`/project/${element.id}`}>
+                    <img src={element.logo} />
+                  </Link>
                   <div>
                     {/* {element.admin && <Badge>관리자</Badge>} */}
                     <div className="first">{element.project_name}</div>
@@ -261,11 +263,17 @@ const Project = styled.div`
   border: 1px solid ${theme.color.gray100};
   padding: 12px;
   border-radius: 8px;
-  > img {
+  > a {
     width: 160px;
     height: 160px;
     border-radius: 4px;
+    > img {
+      width: 160px;
+      height: 160px;
+      border-radius: 4px;
+    }
   }
+
   > div {
     position: relative;
     & > .first {
