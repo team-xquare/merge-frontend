@@ -66,7 +66,14 @@ export const Project = () => {
           </TopContainer>
           <Description>
             <span>프로젝트 내용</span>
-            {data.description}
+            {data.description?.split('\n').map((element) => {
+              return (
+                <>
+                  {element}
+                  <br />
+                </>
+              );
+            })}
           </Description>
           <LinkBox>
             {(data.web_url || data.play_store_url || data.app_store_url) && <div>배포 링크</div>}
