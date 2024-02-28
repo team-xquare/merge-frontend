@@ -8,7 +8,7 @@ RUN yarn install --immutable
 
 COPY packs ./
 
-RUN yarn workspace @merge/user build
+RUN yarn run build
 
 # 실행 단계
 FROM nginx:alpine AS runner
