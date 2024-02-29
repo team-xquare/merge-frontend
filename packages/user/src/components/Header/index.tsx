@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
+import { Outlet } from 'react-router-dom';
 import { theme } from '@merge/design-system';
 import { Logo } from './Logo';
 import { Menu } from './Menu';
-import { Outlet } from 'react-router-dom';
 import { Cookie } from '../../utils/cookie';
 
 export const Header = () => {

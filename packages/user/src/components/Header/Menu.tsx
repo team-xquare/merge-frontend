@@ -1,12 +1,8 @@
 import styled from '@emotion/styled';
-import { Button } from '@merge/design-system';
 import { Link, useNavigate } from 'react-router-dom';
+import { Button } from '@merge/design-system';
 
-type menuProps = {
-  isLogin: boolean;
-};
-
-export const Menu = ({ isLogin }: menuProps) => {
+export const Menu = ({ isLogin }: { isLogin: boolean }) => {
   const link = useNavigate();
 
   const onSignIn = () => {

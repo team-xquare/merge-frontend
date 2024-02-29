@@ -33,10 +33,6 @@ export const Router = createBrowserRouter([
         element: <Registration />,
       },
       {
-        path: 'deploy/:id',
-        element: <Registration />,
-      },
-      {
         path: 'my',
         element: <MyPage />,
       },

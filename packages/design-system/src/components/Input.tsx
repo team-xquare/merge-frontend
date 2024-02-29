@@ -1,8 +1,10 @@
-import React, { InputHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes, useState } from 'react';
 import styled from '@emotion/styled';
 import { marginCssType, marginToCss, marginType } from '../utils/margin';
 import { theme } from '../style/index';
 import { css } from '@emotion/react';
+import EyeImg from '../asset/eye.svg';
+import EyeCloseImg from '../asset/eye-closed.svg';
 
 //type inputStyleType = 'field' | 'fieldLabel';
 
@@ -28,6 +30,8 @@ export const Input = ({
   important,
   ...props
 }: input) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   return (
     <Wrapper width={width} margin={margin} label={!!label} supportText={!!supportText}>
       {label && (
@@ -36,7 +40,23 @@ export const Input = ({
           {label}
         </Label>
       )}
-      <InputBox {...props} isDisable={isDisable} disabled={isDisable && true} err={err} onChange={onChange} />
+      <InputBox
+        {...props}
+        isDisable={isDisable}
+        disabled={isDisable && true}
+        err={err}
+        onChange={onChange}
+        type={props.type === 'password' && isOpen ? 'text' : props.type}
+      />
+      {props.type === 'password' && (
+        <ViewInput
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+        >
+          <img src={isOpen ? EyeImg : EyeCloseImg} />
+        </ViewInput>
+      )}
       {supportText && <Support err={err}>{supportText}</Support>}
     </Wrapper>
   );
@@ -117,4 +137,13 @@ const Important = styled.div`
   background-color: ${theme.color.primaryA400};
   margin-right: 4px;
   border-radius: 50%;
+`;
+
+const ViewInput = styled.div`
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  right: 24px;
+  bottom: 8px;
+  cursor: pointer;
 `;

@@ -78,7 +78,7 @@ export const Project = () => {
               <TeamName>{data.team_name_en}</TeamName>
             </div>
           </TopContainer>
-          {data.project_image && (
+          {data.project_image && data.project_image.length > 0 && (
             <ImgContainer>
               <div>
                 <img src={ChevronImg} onClick={onImgCountMinus} />
@@ -213,6 +213,7 @@ const Description = styled.div`
   margin-top: 60px;
   width: 668px;
   display: flex;
+  word-break: break-all;
   flex-direction: column;
   justify-content: center;
   gap: 12px;
