@@ -7,7 +7,7 @@ import ScreenshotLabelImg from '../../assets/screenshotLabel.svg';
 import { ProjectRegisterType } from '../../types/projectType';
 import { ImgContainer } from './ImgContainer';
 import { projectDuplicate } from '../../apis/project';
-import * as _ from './Style';
+import * as _ from './style.tsx';
 
 interface formPropsType {
   logo: Blob | null;

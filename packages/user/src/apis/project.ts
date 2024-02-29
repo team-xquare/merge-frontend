@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { instance } from './instance';
-import { projectType } from '../types/projectType';
+import { ProjectRegisterType } from '../types/projectType';
 import { toast } from 'react-toastify';
 
 type createProjectType = {
-  project: projectType;
+  project: ProjectRegisterType;
   logo: File;
   projectImage: File[];
 };
