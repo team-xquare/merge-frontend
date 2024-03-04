@@ -3,6 +3,7 @@ import { signinType, signupType } from '../types/signType';
 import { toast } from 'react-toastify';
 
 export const signUp = async (data: signupType) => {
+  if (data.okPassword) delete data.okPassword;
   return await instance.post('/auth', data);
 };
 

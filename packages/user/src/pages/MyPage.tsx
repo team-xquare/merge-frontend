@@ -14,6 +14,8 @@ type userType = {
   student_name: string;
   school_gcn: number;
   github: string;
+  email: string;
+  account_id: string;
 };
 
 type projectType = {
@@ -27,11 +29,7 @@ type projectType = {
 
 export const MyPage = () => {
   const { visible, ModalWrapper, show, close } = useModal();
-  const [userInfo, setUserInfo] = useState<userType>({
-    student_name: '',
-    school_gcn: 0,
-    github: '',
-  });
+  const [userInfo, setUserInfo] = useState<userType>();
   const [projects, setProjects] = useState<projectType[] | null>();
   const [select, setSelect] = useState<string>('');
   const [seeHide, setSeeHide] = useState<boolean>(false);
@@ -69,20 +67,32 @@ export const MyPage = () => {
       .then((res) => {
         const data: userType = res.data;
 
-        setUserInfo({ student_name: data.student_name, school_gcn: data.school_gcn, github: data.github });
+        setUserInfo({
+          student_name: data.student_name,
+          school_gcn: data.school_gcn,
+          github: data.github,
+          email: data.email,
+          account_id: data.account_id,
+        });
         setLink(data.github);
       })
       .catch(() => {
         toast.error('유저 정보를 불러오는데 실패했습니다.');
       });
+  }, []);
 
-    getMyProject('dutexion@dsm.hs.kr')
+  useEffect(() => {
+    if (!userInfo) return;
+
+    getMyProject(userInfo.email)
       .then((res) => {
         setProjects(res.data);
         console.log(res.data);
       })
-      .catch((err) => console.log(err));
-  }, []);
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  }, [userInfo]);
 
   return (
     <>
@@ -112,11 +122,13 @@ export const MyPage = () => {
         </ModalWrapper>
       )}
       <Wrapper>
-        {!seeHide && (
+        {!seeHide && userInfo && (
           <Header>
             <div>
               {userInfo.school_gcn}
-              <span>{userInfo.student_name}</span>
+              <span>
+                {userInfo.student_name} ({userInfo.account_id})
+              </span>
             </div>
             <div>
               <a href={userInfo.github}>{userInfo.github}</a>

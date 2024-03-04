@@ -10,4 +10,5 @@ export interface signupType {
   school_gcn: string;
   email: string;
   account_id: string;
+  okPassword: string | undefined;
 }

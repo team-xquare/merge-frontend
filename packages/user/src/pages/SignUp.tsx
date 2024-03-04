@@ -52,7 +52,12 @@ export const SignUp = () => {
   return (
     <Wrapper>
       <Container1>
-        <img src={SignImg} />
+        <img
+          src={SignImg}
+          onClick={() => {
+            console.log(data);
+          }}
+        />
       </Container1>
       <Container2>
         <Title>

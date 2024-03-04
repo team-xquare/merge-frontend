@@ -42,7 +42,11 @@ instance.interceptors.response.use(
           window.location.href = '/signin';
         });
     } else {
-      toast.error('오류가 발생헀습니다');
+      if (err.response.data.message) {
+        toast.error(err.response.data.message);
+      } else {
+        toast.error('오류가 발생헀습니다');
+      }
       return Promise.reject(err);
     }
   },
