@@ -82,6 +82,10 @@ export const MyPage = () => {
   }, []);
 
   useEffect(() => {
+    if (userInfo && visible !== 'update') setLink(userInfo.github);
+  }, [visible]);
+
+  useEffect(() => {
     if (!userInfo) return;
 
     getMyProject(userInfo.email)
@@ -99,10 +103,17 @@ export const MyPage = () => {
       {visible === 'management' && (
         <ModalWrapper>
           <ModalChildWrapper>
-            <ModalButton onClick={onHide}>{seeHide ? '숨김 해제' : '숨김'}</ModalButton>
-            <ModalButton>
-              <Link to={`/project/${select}`}>관리</Link>
+            <ModalButton
+              onClick={() => {
+                show('secret');
+              }}
+            >
+              Secret key 발급
             </ModalButton>
+            <ModalButton onClick={onHide}>{seeHide ? '숨김 해제' : '숨김'}</ModalButton>
+            {/* <ModalButton>
+              <Link to={`/project/${select}`}>관리</Link>
+            </ModalButton> */}
           </ModalChildWrapper>
         </ModalWrapper>
       )}
@@ -121,6 +132,7 @@ export const MyPage = () => {
           </ModalUpdateWrapper>
         </ModalWrapper>
       )}
+      {visible === 'secret' && <ModalWrapper>hello</ModalWrapper>}
       <Wrapper>
         {!seeHide && userInfo && (
           <Header>
