@@ -8,12 +8,8 @@ import { signUp } from '../apis/sign';
 import { SignupFormFirst, SignupFormSecond, SignupFormThird } from '../components/Signup/index';
 import { toast } from 'react-toastify';
 
-interface signupInputType extends signupType {
-  okPassword: string;
-}
-
 export const SignUp = () => {
-  const [data, setData] = useState<signupInputType>({
+  const [data, setData] = useState<signupType>({
     student_name: '',
     github: '',
     password: '',
@@ -71,7 +67,9 @@ export const SignUp = () => {
         </Progress>
         {progress === 1 && <SignupFormFirst onChange={onChange} value={[student_name, school_gcn]} onNext={onNext} />}
         {progress === 2 && <SignupFormSecond onChange={onChange} value={[email, account_id, github]} onNext={onNext} />}
-        {progress === 3 && <SignupFormThird onChange={onChange} value={[password, okPassword]} onNext={onNext} />}
+        {progress === 3 && okPassword && (
+          <SignupFormThird onChange={onChange} value={[password, okPassword]} onNext={onNext} />
+        )}
       </Container2>
     </Wrapper>
   );
